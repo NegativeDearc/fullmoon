@@ -7,14 +7,18 @@ from app_scc.views.view import scc
 from app_main.views.view import main
 
 
+view_list = [scc, main]
+
+
 def create_app(conf):
     app = Flask(__name__)
-    # 注册静态文件地址
-    scc.static_folder = conf.static_path
-    main.static_folder = conf.static_path
-    # 注册蓝图
-    app.register_blueprint(scc)
-    app.register_blueprint(main)
+    for view in view_list:
+        # register static fold path to blueprint
+        view.static_folder = conf.static_path
+        view.template_folder = conf.template_path(postfix=view.name)
+        # register blueprint to app
+        app.register_blueprint(view)
+
     app.config.from_object(conf)
     return app
 

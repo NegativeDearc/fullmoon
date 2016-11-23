@@ -1,11 +1,24 @@
 # -*- coding:utf-8 -*-
 
-from flask import Blueprint
+from flask import Blueprint, render_template
 
-main = Blueprint('main',__name__,template_folder='templates')
+main = Blueprint('main',__name__)
 
 
 @main.route('/')
 @main.route('/index')
 def main_root():
-    return str('main page')
+    print main.root_path
+    print main.static_folder
+    print main.template_folder
+    return render_template('WelcomePage.html')
+
+
+@main.route('/login')
+def main_login():
+    return True
+
+
+@main.route('/administrator')
+def main_administrator():
+    return '1'

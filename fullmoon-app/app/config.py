@@ -3,10 +3,25 @@ import os
 
 
 class Config(object):
-    # 蓝图注册static文件夹地址
-    static_path = os.path.join(os.path.dirname(__file__),'static')
+    # register static fold path for all blueprint
+    static_path = os.path.join(os.path.dirname(__file__), 'static')
+
+    # register template fold path for all blueprint
+    @classmethod
+    def template_path(self, postfix=None):
+        return os.path.join(os.path.dirname(__file__), 'templates', str(postfix))
+
+    # security keys of flask
     SECRET_KEY = '26e9e25a-b0b5-11e6-9db0-60f81dba2c0c'
-    SQLALCHEMY_DATABASE_URI = os.path.join(os.path.dirname(__file__),'models/')
+    # sqlalchemry settings
+    # For Unix: sqlite:////absolute/path/to/database
+    # For Win: sqlite:///c:/absolute/path/to/database
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////' + \
+                              os.path.abspath(
+                                  os.path.join(os.path.dirname(__file__),'models','test.db')
+                              )
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ECHO = True
 
 
 class ProductionConfig(Config):
@@ -14,7 +29,9 @@ class ProductionConfig(Config):
 
 
 class DevelopmentConfig(Config):
-    pass
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    # only for test database initialization
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 
 
 config = {
