@@ -14,9 +14,9 @@ class Config(object):
     # security keys of flask
     SECRET_KEY = '26e9e25a-b0b5-11e6-9db0-60f81dba2c0c'
     # sqlalchemry settings
-    # For Unix: sqlite:////absolute/path/to/database
-    # For Win: sqlite:///c:/absolute/path/to/database
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////' + \
+    # For Unix: sqlite:/// /absolute/path/to/database
+    # For Win: sqlite:/// c:/absolute/path/to/database
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
                               os.path.abspath(
                                   os.path.join(os.path.dirname(__file__),'models','test.db')
                               )

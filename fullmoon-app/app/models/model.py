@@ -1,8 +1,12 @@
 # -*- coding:utf-8 -*-
-from sqlalchemy import CheckConstraint
+from sqlalchemy import CheckConstraint, UniqueConstraint
 from .. import db
 
+# if you want use db.create_all()
+# import all db models after import db from app
 
+
+# noinspection PyPackageRequirements,PyPackageRequirements
 class Article(db.Model):
     """
     A table store all articles for user.
@@ -17,16 +21,19 @@ class Article(db.Model):
     }
     """
     __tablename__ = "Article"
-    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True,nullable=False,unique=True)
+    # use table configuration to constraint columns or table
+    __table_args__ = (
+        # set constraint of status
+        CheckConstraint('status IN ("PUBLISHED","DRAFTED","ARCHIVED","DELETED")',name='check_status'),
+        UniqueConstraint('id','title')
+    )
+    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True,nullable=False)
     title = db.Column(db.String(25),nullable=True)
     content = db.Column(db.String(2000), nullable=True)
     tags = db.Column(db.String(25), nullable=True)
     create_date = db.Column(db.DATETIME, nullable=False)
     edit_date = db.Column(db.DATETIME, nullable=False)
     status = db.Column(db.String(10),nullable=False)
-
-    # set constraint of status
-    CheckConstraint('status IN ("PUBLISHED","DRAFTED","ARCHIVED","DELETED")',name='check_status')
 
 
 # class Comment(db):
