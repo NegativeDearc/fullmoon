@@ -14,9 +14,9 @@ def main_root():
     return render_template('WelcomePage.html')
 
 
-@main.route('/login')
+@main.route('/login',methods=['GET','POST'])
 def main_login():
-    return render_template('You Must Login.html')
+    return render_template('YouMustLogin.html')
 
 
 @main.route('/about')
