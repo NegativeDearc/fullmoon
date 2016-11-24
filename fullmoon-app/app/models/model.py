@@ -36,8 +36,8 @@ class Article(db.Model):
     status = db.Column(db.String(10),nullable=False)
 
 
-# class Comment(db):
-#     pass
+class Comment(db):
+    pass
 
 
 class Login(db.Model):
@@ -50,8 +50,21 @@ class Login(db.Model):
     password = db.Column(db.String(100),unique=True,nullable=False)
 
 
-# class Secure(db):
-#     pass
+class Secure(db):
+    """
+    table store visitor ip address and lock the unauthorised visitor
+    """
+    __tablename__ = "Secure"
+    __table_args__ = (
+        UniqueConstraint("id"),
+        CheckConstraint('status IN ("LOCKED","UNLOCKED","BLACKLIST")')
+    )
+    id = db.Column(db.INTEGER,primary_key=True,autoincrement=True)
+    ip_address = db.Column(db.String(15))
+    blacklist = db.Column(db.BOOLEAN)
+    visited_times_in_five_minutes = db.Column(db.INTEGER)
+    unlock_time = db.Column(db.DATETIME)
+    status = db.Column(db.String(10))
 
 if __name__ == "__main__":
     print db

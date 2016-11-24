@@ -1,0 +1,53 @@
+卷 Windows8_OS 的文件夹 PATH 列表
+卷序列号为 000000A5 903B:B1C8
+C:.
+│  requirements.txt
+│  run_development.py
+│  run_production.py
+│  tree.txt
+│  __init__.py
+│  
+└─app
+    │  config.py
+    │  config.pyc
+    │  __init__.py
+    │  __init__.pyc
+    │  
+    ├─app_cxw
+    │      __init__.py
+    │      
+    ├─app_main
+    │  │  __init__.py
+    │  │  __init__.pyc
+    │  │  
+    │  └─views
+    │          view.py
+    │          view.pyc
+    │          __init__.py
+    │          __init__.pyc
+    │          
+    ├─app_scc
+    │  │  __init__.py
+    │  │  __init__.pyc
+    │  │  
+    │  └─views
+    │          view.py
+    │          view.pyc
+    │          __init__.py
+    │          __init__.pyc
+    │          
+    ├─models
+    │      model.py
+    │      __init__.py
+    │      
+    ├─static
+    │      bootstrap.min.css
+    │      bootstrap.min.js
+    │      jquery.min.js
+    │      vue.js
+    │      vue.min.js
+    │      
+    └─templates
+        └─main
+                WelcomePage.html
+                
