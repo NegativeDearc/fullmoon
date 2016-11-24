@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('main.static',filename='bootstrap.min.css') }}">
+    <script src="{{ url_for('main.static',filename='jquery.min.js') }}"></script>
+    <script src="{{ url_for('main.static',filename='bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('main.static',filename='trianglify.min.js') }}"></script>
+    <title>You Need Login</title>
+</head>
+<style>
+    .navbar-default,.navbar-collapse,.navbar-form {
+        background-color: transparent;
+        color: #e7e7e7;
+        border-color: transparent!important
+    }
+    .navbar-default,.navbar-brand { color: #ffffff!important; }
+    a.navbar-brand:hover{ font-size: 20px;}
+    .navbar-form > .btn,.navbar-form > .btn-default {
+        color: #ffffff;
+        background-color: transparent;
+        border-color: #ffffff;
+    }
+    .navbar-form > .btn:hover,.navbar-form > .btn-default:hover {
+        color: #ffffff;
+        background-color: #31b0d5;
+        border-color: #31b0d5;
+    }
+
+    .container {margin-top: 200px;}
+    .messages {color: red;font-style: oblique}
+</style>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <!-- toggle for responsive screen -->
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" aria-controls="navbar" aria-expanded="false" data-target="#fullmoon-navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="" class="navbar-brand">Full Moon</a><!-- logo for navibar -->
+        </div><!--navbar header-->
+
+        <!-- navbar links -->
+        <div class="collapse navbar-collapse navbar-responsive-collapse" id="fullmoon-navbar">
+            <form action="" class="navbar-form navbar-right">
+                <a href="{{ url_for('main.main_root') }}" class="btn btn-default" type="submit">Go Back to Main</a>
+                <a href="" class="btn btn-default" type="submit">Source Code</a>
+            </form>
+        </div><!-- navbar-collapse -->
+    </div><!--container-fluid-->
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please Sign In</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" method="post">
+{#                    <input type="hidden" name="_crsf_token" value="{{ crsf_token() }}">#}
+                    <input type="hidden" value="{{ next or '' }}" name="next">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Name" name="usr"
+                                       autofocus required autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="pwd"
+                                       type="password" required autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                            <div class="messages">
+                                {% for messages in get_flashed_messages()%}
+                                {{ messages }}
+                                {% endfor %}
+                            </div>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                </label>
+                            </div>
+                            <input type="submit" class="btn btn-success btn-block" value="Login">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var pattern = Trianglify({
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
+    document.body.setAttribute('style', 'background-image:url( '+ pattern.png() + ')');
+</script>
+</body>
+</html>

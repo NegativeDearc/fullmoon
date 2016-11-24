@@ -16,7 +16,12 @@ def main_root():
 
 @main.route('/login')
 def main_login():
-    return True
+    return render_template('You Must Login.html')
+
+
+@main.route('/about')
+def main_about():
+    return render_template('About the Website.html')
 
 
 @main.route('/administrator')
