@@ -1,16 +1,12 @@
 # -*- coding:utf-8 -*-
-
 from flask import Blueprint, render_template
 
-main = Blueprint('main',__name__)
+main = Blueprint('main', __name__)
 
 
 @main.route('/')
 @main.route('/index')
 def main_root():
-    print main.root_path
-    print main.static_folder
-    print main.template_folder
     return render_template('WelcomePage.html')
 
 

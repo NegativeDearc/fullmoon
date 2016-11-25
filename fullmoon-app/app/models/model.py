@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-from sqlalchemy import CheckConstraint, UniqueConstraint
-from .. import db
+from sqlalchemy import CheckConstraint, UniqueConstraint, desc
+from app import db
 
 # if you want use db.create_all()
 # import all db models after import db from app
@@ -17,6 +17,7 @@ class Article(db.Model):
         tags:
         create_date:
         edit_date:
+        read_times
         status:
     }
     """
@@ -33,7 +34,20 @@ class Article(db.Model):
     tags = db.Column(db.String(25), nullable=True)
     create_date = db.Column(db.DATETIME, nullable=False)
     edit_date = db.Column(db.DATETIME, nullable=False)
+    # read_times = db.Column(db.INTEGER,default=1,nullable=False)
     status = db.Column(db.String(10),nullable=False)
+
+    @staticmethod
+    def latest_article():
+        '''
+        choose the lastest 10 artical information for showcase
+        :return:
+        '''
+        return db.session.query(Article.title, Article.content, Article.tags, Article.create_date).\
+            filter(Article.status=='PUBLISHED').\
+            order_by(desc(Article.create_date)).\
+            limit(10).\
+            all()
 
 
 # class Comment(db.Model):

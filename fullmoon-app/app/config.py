@@ -3,6 +3,7 @@ import os
 
 
 class Config(object):
+    CONFIG_NAME = 'config'
     # register static fold path for all blueprint
     static_path = os.path.join(os.path.dirname(__file__), 'static')
 
@@ -20,21 +21,25 @@ class Config(object):
                               os.path.abspath(
                                   os.path.join(os.path.dirname(__file__),'models','test.db')
                               )
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_ECHO = True
 
 
 class ProductionConfig(Config):
-    pass
+    CONFIG_NAME = 'production'
+    DEBUG = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 class DevelopmentConfig(Config):
+    CONFIG_NAME = 'development'
+    DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     # only for test database initialization
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 
 
 config = {
     'production': ProductionConfig,
-    'Development': DevelopmentConfig
+    'development': DevelopmentConfig
 }

@@ -3,25 +3,28 @@
 from flask import Flask, request, session, abort
 from config import config
 from flask.ext.sqlalchemy import SQLAlchemy
-from app_scc.views.view import scc
-from app_main.views.view import main
-
 import os
 
-
-view_list = [scc, main]
+db = SQLAlchemy()
 
 
 def create_app(conf):
+    #
+    from views.scc_view import scc
+    from views.main_view import main
+    view_list = [scc, main]
+
     app = Flask(__name__)
+
     for view in view_list:
         # register static fold path to blueprint
         view.static_folder = conf.static_path
         view.template_folder = conf.template_path(postfix=view.name)
         # register blueprint to app
         app.register_blueprint(view)
-
     app.config.from_object(conf)
+    # to apply config to sqlalchemy, must init after app applied config
+    db.init_app(app)
     return app
 
 
@@ -38,7 +41,14 @@ def generate_csrf_token():
     return session['_crsf_token']
 
 
-app = create_app(config['Development'])
+app = create_app(config['development'])
 app.jinja_env.globals['crsf_token'] = generate_csrf_token
 
-db = SQLAlchemy(app)
+if not app.debug:
+    print True
+    # in production,logs must be recorded
+    # from app.logs.log import DebugFalseLog
+    #
+    # handler = DebugFalseLog().get_handler()
+    # app.logger.addHandler(handler)
+    pass

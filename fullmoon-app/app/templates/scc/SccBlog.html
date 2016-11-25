@@ -7,9 +7,69 @@
     <link rel="stylesheet" href="{{ url_for('main.static',filename='bootstrap.min.css') }}">
     <script src="{{ url_for('main.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('main.static',filename='bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('main.static',filename='masonry.min.js') }}"></script>
+    <script src="{{ url_for('main.static',filename='imagesloaded.min.js') }}"></script>
     <title>SCC's Blog</title>
+    <style>
+        body {background: #212121}
+        .navbar-default,.navbar-collapse {
+            background: #313131;
+            border: #313131;
+        }
+        .navbar-default > a {color: #ffffff;}
+
+        #ct2 {margin-top: 80px;}
+
+        .media-box {
+            padding:10px;
+            margin-top: 15px;
+            border-radius: 5px;
+            color: #ffffff;
+            background: #292929;
+            border-top: 1px solid #363636;
+            border-bottom: 1px solid #161616;
+            box-shadow: 0 2px 2px 2px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
-<a href="{{ url_for('scc.scc_administrator') }}">admin</a>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <!-- toggle for responsive screen -->
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" aria-controls="navbar" aria-expanded="false" data-target="#fullmoon-navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="" class="navbar-brand">Full Moon</a><!-- logo for navibar -->
+        </div><!--navbar header-->
+
+        <!-- navbar links -->
+        <div class="collapse navbar-collapse navbar-responsive-collapse" id="fullmoon-navbar">
+            <form action="" class="navbar-form navbar-right">
+                <a href="{{ url_for('main.main_about') }}" class="btn btn-default" type="submit">About This Site</a>
+                <a href="" class="btn btn-default" type="submit">Source Code</a>
+            </form>
+        </div><!-- navbar-collapse -->
+    </div><!--container-fluid-->
+</nav>
+<!-- article:show the latest 10 articles from database -->
+<div class="container" id="ct2">
+    {% for item in latest_10 %}
+        <div class="media-box">
+            <div class="media">
+                <a href="" class="media-left"><img src="" alt="" width="64" height="64"></a>
+                <div class="media-left">{{ item[3] }}</div><!--create date-->
+                <div class="media-left">{{ item[2] }}</div><!--tags-->
+                <div class="media-body">
+                    <h4 class="media-heading">{{ item[0] }}</h4>
+                    <div>{{ item[1][:100] }}</div><!--first 100 words-->
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 </body>
 </html>
