@@ -20,6 +20,11 @@ def main_about():
     return render_template('About the Website.html')
 
 
+@main.route('/editor')
+def main_edit():
+    return render_template('ArticleEditor.html')
+
+
 @main.route('/administrator')
 def main_administrator():
     return '1'

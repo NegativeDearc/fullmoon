@@ -71,6 +71,10 @@ class Login(db.Model):
         pass
 
     def get_id(self):
+        '''
+
+        :return: unicode
+        '''
         pass
 
     def verify_password(self):
