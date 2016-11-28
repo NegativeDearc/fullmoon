@@ -6,7 +6,6 @@ from app import db
 # import all db models after import db from app
 
 
-# noinspection PyPackageRequirements,PyPackageRequirements
 class Article(db.Model):
     """
     A table store all articles for user.
@@ -37,18 +36,17 @@ class Article(db.Model):
     # read_times = db.Column(db.INTEGER,default=1,nullable=False)
     status = db.Column(db.String(10),nullable=False)
 
-    @staticmethod
-    def latest_article():
-        '''
-        choose the lastest 10 artical information for showcase
-        :return:
-        '''
-        return db.session.query(Article.title, Article.content, Article.tags, Article.create_date).\
-            filter(Article.status=='PUBLISHED').\
-            order_by(desc(Article.create_date)).\
-            limit(10).\
-            all()
+    @classmethod
+    def latest_article(cls, page=1):
+        n = page * 5
+        return cls.query.\
+            filter(cls.status=='PUBLISHED').\
+            order_by(desc(cls.create_date)).\
+            all()[n-5:n]
 
+    @classmethod
+    def pagination(cls, page):
+        return cls.query.paginate(page,per_page=5,error_out=True)
 
 # class Comment(db.Model):
 #     pass
@@ -81,5 +79,11 @@ class Secure(db.Model):
     status = db.Column(db.String(10))
 
 
-# class Visit(db.Model):
-#     pass
+class Visit(db.Model):
+    """
+    table store website visit times
+    """
+    __tablename__ = "Visit"
+    id = db.Column(db.INTEGER,primary_key=True,autoincrement=True)
+    times = db.Column(db.INTEGER)
+    update_time = db.Column(db.DATETIME)

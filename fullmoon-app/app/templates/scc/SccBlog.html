@@ -17,6 +17,11 @@
             border: #313131;
         }
         .navbar-default > a {color: #ffffff;}
+        .navbar-form > a {
+            background-color: transparent;
+            color: #ffffff;
+            border: transparent;
+        }
 
         #ct2 {margin-top: 80px;}
 
@@ -49,8 +54,7 @@
         <!-- navbar links -->
         <div class="collapse navbar-collapse navbar-responsive-collapse" id="fullmoon-navbar">
             <form action="" class="navbar-form navbar-right">
-                <a href="{{ url_for('main.main_about') }}" class="btn btn-default" type="submit">About This Site</a>
-                <a href="" class="btn btn-default" type="submit">Source Code</a>
+                <a href="" class="btn btn-default" type="submit" data-toggle="#login">Add New Article</a>
             </form>
         </div><!-- navbar-collapse -->
     </div><!--container-fluid-->
@@ -61,15 +65,26 @@
         <div class="media-box">
             <div class="media">
                 <a href="" class="media-left"><img src="" alt="" width="64" height="64"></a>
-                <div class="media-left">{{ item[3] }}</div><!--create date-->
-                <div class="media-left">{{ item[2] }}</div><!--tags-->
+                <div class="media-left">{{ item.create_date }}</div><!--create date-->
+                <div class="media-left">{{ item.tags}}</div><!--tags-->
                 <div class="media-body">
-                    <h4 class="media-heading">{{ item[0] }}</h4>
-                    <div>{{ item[1][:100] }}</div><!--first 100 words-->
+                    <h4 class="media-heading">{{ item.title }}</h4><!--title-->
+                    <div>{{ item.content[:100] }}</div><!--first 100 words-->
                 </div>
             </div>
         </div>
     {% endfor %}
 </div>
+<!-- pagination for articles -->
+    <nav>
+        <ul class="pager">
+    {% if pagination.has_next %}
+            <li><a href="{{ url_for("scc.scc_root",page=pagination.next_num) }}" target="_self">Next</a></li>
+    {% endif %}
+    {% if pagination.has_prev %}
+            <li><a href="{{ url_for("scc.scc_root",page=pagination.prev_num) }}" target="_self">Previous</a></li>
+    {% endif %}
+        </ul>
+    </nav>
 </body>
 </html>
