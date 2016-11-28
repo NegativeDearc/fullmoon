@@ -22,6 +22,15 @@
             color: #ffffff;
             border: transparent;
         }
+        .dropdown-menu {
+            background: #313131;
+        }
+        .dropdown-menu > li > a {
+            color: #ffffff!important;
+        }
+        .dropdown-menu > li > a:hover {
+            color: #313131!important;
+        }
 
         #ct2 {margin-top: 80px;}
 
@@ -34,6 +43,14 @@
             border-top: 1px solid #363636;
             border-bottom: 1px solid #161616;
             box-shadow: 0 2px 2px 2px rgba(0,0,0,0.1);
+        }
+        .pager > li > a {
+            color: #449d44;
+        }
+        .pager > li > a:hover{
+            background: #449d44;
+            color: #ffffff;
+            border: #449d44;
         }
     </style>
 </head>
@@ -48,7 +65,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="" class="navbar-brand">Full Moon</a><!-- logo for navibar -->
+            <a href="" class="navbar-brand dropdown-toggle" data-toggle="dropdown">Full Moon<span class="caret"></span></a><!-- logo for navibar -->
+            <!-- drop list for id #full-moon-drop-list-->
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="">test1</a></li>
+                <li><a href="">test2</a></li>
+                <li class="divider"></li>
+                <li><a href="">test3</a></li>
+            </ul>
         </div><!--navbar header-->
 
         <!-- navbar links -->
@@ -65,11 +89,11 @@
         <div class="media-box">
             <div class="media">
                 <a href="" class="media-left"><img src="" alt="" width="64" height="64"></a>
-                <div class="media-left">{{ item.create_date }}</div><!--create date-->
-                <div class="media-left">{{ item.tags}}</div><!--tags-->
+                <div class="media-left"><span class="label label-success">{{ item.tags}}</span></div><!--tags-->
                 <div class="media-body">
                     <h4 class="media-heading">{{ item.title }}</h4><!--title-->
-                    <div>{{ item.content[:100] }}</div><!--first 100 words-->
+                    <small>{{ item.create_date.strftime("%Y-%m-%d %H:%M") }}</small><!--create date-->
+                    <div>{{ item.content[:70] }}</div><!--first 100 words-->
                 </div>
             </div>
         </div>
