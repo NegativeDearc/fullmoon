@@ -3,9 +3,11 @@
 from flask import Flask, request, session, abort
 from config import config
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import LoginManager
 import os
 
 db = SQLAlchemy()
+lm = LoginManager()
 
 
 def create_app(conf):
@@ -25,6 +27,7 @@ def create_app(conf):
     app.config.from_object(conf)
     # to apply config to sqlalchemy, must init after app applied config
     db.init_app(app)
+    lm.init_app(app)
     return app
 
 

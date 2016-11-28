@@ -61,6 +61,21 @@ class Login(db.Model):
     user = db.Column(db.String(100),unique=True,nullable=False)
     password = db.Column(db.String(100),unique=True,nullable=False)
 
+    def is_authenticated(self):
+        pass
+
+    def is_active(self):
+        pass
+
+    def is_anonymous(self):
+        pass
+
+    def get_id(self):
+        pass
+
+    def verify_password(self):
+        pass
+
 
 class Secure(db.Model):
     """
