@@ -6,13 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title></title>
     <link rel="stylesheet" href="{{ url_for('main.static',filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('main.static',filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
 
     <script src="{{ url_for('main.static',filename='ckeditor/ckeditor.js') }}"></script>
     <script src="{{ url_for('main.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('main.static',filename='bootstrap.min.js') }}"></script>
-
+    <style>
+        #postcard {background-color: #1d75b3}
+        #postcard > h1 {color: #FFFFFF;text-align: center}
+        .container {margin-top: 1px;}
+        .jumbotron > .container {
+            margin-bottom: -30px;
+        }
+        .jumbotron > .container > ul > li > a {
+            font-size: 20px;
+            color: #FFFFFF;
+        }
+        .jumbotron > .container > ul > li > a:hover {
+            color: #1d75b3;
+        }
+    </style>
 </head>
 <body>
-<textarea id="TextArea1" cols="20" rows="2" class="ckeditor"></textarea>
+<!-- -->
+<div class="jumbotron" id="postcard">
+    <h1>Welcome to the Administrator Backend.</h1>
+    <hr style="width: 150px;">
+    <div class="container">
+        <ul class="nav nav-pills nav-justified" role="tablist">
+            <li><a href="#new-article" data-toggle="tab"><i class="fa fa-plus"></i>&nbsp;Add New</a></li>
+            <li><a href="#manage-article" data-toggle="tab"><i class="fa fa-dashboard"></i>&nbsp;Manage Old</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="tab-content">
+    <!--manage articels in database-->
+    <div id="manage-article" class="container tab-pane">
+
+    </div>
+    <!--ckeditor-->
+    <div class="container tab-pane" id="new-article">
+        <form action="" method="post">
+            <input type="hidden" name="_crsf_token" value="{{ crsf_token() }}">
+            <textarea id="TextArea1" cols="20" rows="2" class="ckeditor" name="ckeditor"></textarea>
+        <input type="submit" class="btn btn-default">
+    </form>
+    </div>
+</div>
+
 </body>
 </html>

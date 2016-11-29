@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
 main = Blueprint('main', __name__)
 
@@ -20,8 +20,10 @@ def main_about():
     return render_template('About the Website.html')
 
 
-@main.route('/editor')
+@main.route('/editor', methods=['GET','POST'])
 def main_edit():
+    if request.method == "POST":
+        print request.form
     return render_template('ArticleEditor.html')
 
 
