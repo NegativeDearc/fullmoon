@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
+from app.models.model import Article
 
 main = Blueprint('main', __name__)
 
@@ -22,9 +23,14 @@ def main_about():
 
 @main.route('/editor', methods=['GET','POST'])
 def main_edit():
+    article_for_administration = Article.administration_article()
+    print article_for_administration
+    for x in article_for_administration:
+        print x.__class__()
     if request.method == "POST":
         print request.form
-    return render_template('ArticleEditor.html')
+        return redirect(url_for('main.main_edit'))
+    return render_template('ArticleEditor.html',article_for_administration=article_for_administration)
 
 
 @main.route('/administrator')

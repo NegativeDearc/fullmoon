@@ -33,6 +33,7 @@ class Article(db.Model):
     tags = db.Column(db.String(25), nullable=True)
     create_date = db.Column(db.DATETIME, nullable=False)
     edit_date = db.Column(db.DATETIME, nullable=False)
+    # category = db.Column(db.String(20), nullable=False)
     # read_times = db.Column(db.INTEGER,default=1,nullable=False)
     status = db.Column(db.String(10),nullable=False)
 
@@ -47,6 +48,10 @@ class Article(db.Model):
     @classmethod
     def pagination(cls, page):
         return cls.query.paginate(page,per_page=5,error_out=True)
+
+    @classmethod
+    def administration_article(cls,category="all"):
+        return cls.query.all()
 
 # class Comment(db.Model):
 #     pass

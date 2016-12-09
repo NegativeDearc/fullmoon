@@ -43,17 +43,83 @@
 <div class="tab-content">
     <!--manage articels in database-->
     <div id="manage-article" class="container tab-pane">
-
+        <select name="" id="">
+            <option value="">--Category--</option>
+            <option value="">1</option>
+            <option value="">2</option>
+            <option value="">3</option>
+        </select>
+        <div class="table">
+            <table class="table table-striped table-condensed">
+            <tr>
+                <td>标题</td>
+                <td>标签</td>
+                <td>正文</td>
+                <td>创建日期</td>
+                <td>状态</td>
+                <td colspan="2">操作</td>
+            </tr>
+                {% for article in article_for_administration %}
+                    <tr>
+                    <td id="{{ article.id }}" style="display: none;"></td>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.tags }}</td>
+                    <td>{{ article.content[:40] }}</td>
+                    <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
+                    <td>
+                        <select name="" id="">
+                            <option value="">{{ article.status }}</option>
+                        </select>
+                    </td>
+                    <td><i class="fa fa-pencil" style="color: blue"></i></td>
+                    <td><i class="fa fa-trash-o" style="color: red"></i></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
     <!--ckeditor-->
     <div class="container tab-pane" id="new-article">
         <form action="" method="post">
             <input type="hidden" name="_crsf_token" value="{{ crsf_token() }}">
-            <textarea id="TextArea1" cols="20" rows="2" class="ckeditor" name="ckeditor"></textarea>
-        <input type="submit" class="btn btn-default">
+            <div class="table">
+                <table class="table table-condensed table-bordered">
+                    <tr>
+                        <td>文章标题</td>
+                        <td><input type="text" name="article_title"></td>
+                    </tr>
+                    <tr>
+                        <td>文章分类</td>
+                        <td>
+                            <select name="" id="">
+                                <option value="">--分类--</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <textarea id="TextArea1" cols="20" rows="2" class="ckeditor" name="ckeditor"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
     </form>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("li a").click(function () {
+            $("h1,hr").hide();
+        });
+        
+        $("i .fa-pencil").click(function () {
 
+        });
+
+        $("i .fa-trash-o").click(function () {
+
+        });
+    })
+</script>
 </body>
 </html>
