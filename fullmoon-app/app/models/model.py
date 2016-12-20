@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 from sqlalchemy import CheckConstraint, UniqueConstraint, desc
 from app import db
-
 # if you want use db.create_all()
 # import all db models after import db from app
 
@@ -10,14 +9,15 @@ class Article(db.Model):
     """
     A table store all articles for user.
     Include {
-        id:
-        title:
-        content:
-        tags:
-        create_date:
-        edit_date:
-        read_times
-        status:
+        id: autoincrement primary key
+        uuid:unique id for article,generate by time
+        title:title of article
+        content:content of article
+        tags:tags generate by machine learning
+        create_date:the created time of article,can't be edit or update,how?
+        edit_date:date time when the article edited
+        read_times:record read times when the article was read. use js?
+        status:status of article "PUBLISHED","DRAFTED","ARCHIVED","DELETED"
     }
     """
     __tablename__ = "Article"
@@ -28,13 +28,14 @@ class Article(db.Model):
         UniqueConstraint('id','title')
     )
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True,nullable=False)
+    uuid = db.Column(db.String(20),nullable=False)
     title = db.Column(db.String(25),nullable=True)
     content = db.Column(db.String(2000), nullable=True)
     tags = db.Column(db.String(25), nullable=True)
     create_date = db.Column(db.DATETIME, nullable=False)
     edit_date = db.Column(db.DATETIME, nullable=False)
-    # category = db.Column(db.String(20), nullable=False)
-    # read_times = db.Column(db.INTEGER,default=1,nullable=False)
+    category = db.Column(db.String(20), nullable=False)
+    read_times = db.Column(db.INTEGER,default=1,nullable=False)
     status = db.Column(db.String(10),nullable=False)
 
     @classmethod
@@ -60,6 +61,11 @@ class Article(db.Model):
 class Login(db.Model):
     """
     table store user name and password
+    Include {
+        id:autoincrement primary key
+        user:user name encrypted by salt,can't be read
+        password:encrypted by salt,can't be read
+    }
     """
     __tablename__ = 'Login'
     id = db.Column(db.INTEGER,primary_key=True,autoincrement=True,unique=True)
@@ -76,10 +82,6 @@ class Login(db.Model):
         pass
 
     def get_id(self):
-        '''
-
-        :return: unicode
-        '''
         pass
 
     def verify_password(self):

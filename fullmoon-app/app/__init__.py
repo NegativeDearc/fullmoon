@@ -11,12 +11,13 @@ lm = LoginManager()
 
 
 def create_app(conf):
-    #
     from views.scc_view import scc
     from views.main_view import main
     view_list = [scc, main]
 
     app = Flask(__name__)
+    # apply config to app,must before init of SQLAlchemy and LoginManager
+    app.config.from_object(conf)
 
     for view in view_list:
         # register static fold path to blueprint
@@ -24,8 +25,8 @@ def create_app(conf):
         view.template_folder = conf.template_path(postfix=view.name)
         # register blueprint to app
         app.register_blueprint(view)
-    app.config.from_object(conf)
-    # to apply config to sqlalchemy, must init after app applied config
+
+    # to apply config to SQLAlchemy, must init after app applied config
     db.init_app(app)
     lm.init_app(app)
     return app
