@@ -2,11 +2,11 @@
 
 from flask import Flask, request, session, abort
 from config import config
-from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 import os
+from models.model import db
 
-db = SQLAlchemy()
+
 lm = LoginManager()
 
 
@@ -28,6 +28,9 @@ def create_app(conf):
 
     # to apply config to SQLAlchemy, must init after app applied config
     db.init_app(app)
+    # http://blog.csdn.net/yannanxiu/article/details/53426359
+    # encountered same problem, can't use factory models
+    db.app = app
     lm.init_app(app)
     return app
 
@@ -48,11 +51,11 @@ def generate_csrf_token():
 app = create_app(config['development'])
 app.jinja_env.globals['crsf_token'] = generate_csrf_token
 
-if not app.debug:
-    print True
-    # in production,logs must be recorded
-    # from app.logs.log import DebugFalseLog
-    #
-    # handler = DebugFalseLog().get_handler()
-    # app.logger.addHandler(handler)
-    pass
+# if not app.debug:
+#     print True
+#     # in production,logs must be recorded
+#     # from app.logs.log import DebugFalseLog
+#     #
+#     # handler = DebugFalseLog().get_handler()
+#     # app.logger.addHandler(handler)
+#     pass
