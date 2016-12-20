@@ -18,7 +18,7 @@ def main_login():
 
 @main.route('/about')
 def main_about():
-    return render_template('About the Website.html')
+    return render_template('AboutTheWebsite.html')
 
 
 @main.route('/editor', methods=['GET','POST'])

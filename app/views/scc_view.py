@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint, render_template, request
 from app.models.model import Article
-from app import db
 
 scc = Blueprint('scc',__name__,template_folder='templates',url_prefix='/scc')
 

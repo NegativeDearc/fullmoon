@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
-
 from flask import Flask, request, session, abort
 from config import config
 from flask.ext.login import LoginManager
 import os
-from models.model import db
+from models.database import db
 
 
 lm = LoginManager()
@@ -16,8 +15,14 @@ def create_app(conf):
     view_list = [scc, main]
 
     app = Flask(__name__)
-    # apply config to app,must before init of SQLAlchemy and LoginManager
+    # to apply config to app,must before init of SQLAlchemy and LoginManager
     app.config.from_object(conf)
+    db.init_app(app)
+    # http://blog.csdn.net/yannanxiu/article/details/53426359
+    # http://www.pythondoc.com/flask-sqlalchemy/api.html#flask.ext.sqlalchemy.SQLAlchemy.init_app
+    # http://librelist.com/browser/flask/2010/8/30/sqlalchemy-init-app-problem/
+    db.app = app
+    lm.init_app(app)
 
     for view in view_list:
         # register static fold path to blueprint
@@ -25,13 +30,6 @@ def create_app(conf):
         view.template_folder = conf.template_path(postfix=view.name)
         # register blueprint to app
         app.register_blueprint(view)
-
-    # to apply config to SQLAlchemy, must init after app applied config
-    db.init_app(app)
-    # http://blog.csdn.net/yannanxiu/article/details/53426359
-    # encountered same problem, can't use factory models
-    db.app = app
-    lm.init_app(app)
     return app
 
 
@@ -51,11 +49,11 @@ def generate_csrf_token():
 app = create_app(config['development'])
 app.jinja_env.globals['crsf_token'] = generate_csrf_token
 
-# if not app.debug:
-#     print True
-#     # in production,logs must be recorded
-#     # from app.logs.log import DebugFalseLog
-#     #
-#     # handler = DebugFalseLog().get_handler()
-#     # app.logger.addHandler(handler)
-#     pass
+if not app.debug:
+    print True
+    # in production,logs must be recorded
+    # from app.logs.log import DebugFalseLog
+    #
+    # handler = DebugFalseLog().get_handler()
+    # app.logger.addHandler(handler)
+    pass

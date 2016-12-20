@@ -1,9 +1,8 @@
 # -*- coding:utf-8 -*-
-from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import CheckConstraint, UniqueConstraint, desc
+from database import db
 # if you want use db.create_all()
 # import all db models after import db from app
-db = SQLAlchemy()
 
 
 class Article(db.Model):

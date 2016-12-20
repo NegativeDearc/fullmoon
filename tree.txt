@@ -1,0 +1,557 @@
+.
+├── app
+│   ├── __init__.py
+│   ├── __init__.pyc
+│   ├── config.py
+│   ├── config.pyc
+│   ├── logs
+│   │   ├── __init__.py
+│   │   └── log.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── __init__.pyc
+│   │   ├── database.py
+│   │   ├── database.pyc
+│   │   ├── model.py
+│   │   ├── model.pyc
+│   │   └── test.db
+│   ├── static
+│   │   ├── bootstrap.min.css
+│   │   ├── bootstrap.min.js
+│   │   ├── ckeditor
+│   │   │   ├── CHANGES.md
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── adapters
+│   │   │   │   └── jquery.js
+│   │   │   ├── build-config.js
+│   │   │   ├── ckeditor.js
+│   │   │   ├── config.js
+│   │   │   ├── contents.css
+│   │   │   ├── lang
+│   │   │   │   ├── af.js
+│   │   │   │   ├── ar.js
+│   │   │   │   ├── bg.js
+│   │   │   │   ├── bn.js
+│   │   │   │   ├── bs.js
+│   │   │   │   ├── ca.js
+│   │   │   │   ├── cs.js
+│   │   │   │   ├── cy.js
+│   │   │   │   ├── da.js
+│   │   │   │   ├── de-ch.js
+│   │   │   │   ├── de.js
+│   │   │   │   ├── el.js
+│   │   │   │   ├── en-au.js
+│   │   │   │   ├── en-ca.js
+│   │   │   │   ├── en-gb.js
+│   │   │   │   ├── en.js
+│   │   │   │   ├── eo.js
+│   │   │   │   ├── es.js
+│   │   │   │   ├── et.js
+│   │   │   │   ├── eu.js
+│   │   │   │   ├── fa.js
+│   │   │   │   ├── fi.js
+│   │   │   │   ├── fo.js
+│   │   │   │   ├── fr-ca.js
+│   │   │   │   ├── fr.js
+│   │   │   │   ├── gl.js
+│   │   │   │   ├── gu.js
+│   │   │   │   ├── he.js
+│   │   │   │   ├── hi.js
+│   │   │   │   ├── hr.js
+│   │   │   │   ├── hu.js
+│   │   │   │   ├── id.js
+│   │   │   │   ├── is.js
+│   │   │   │   ├── it.js
+│   │   │   │   ├── ja.js
+│   │   │   │   ├── ka.js
+│   │   │   │   ├── km.js
+│   │   │   │   ├── ko.js
+│   │   │   │   ├── ku.js
+│   │   │   │   ├── lt.js
+│   │   │   │   ├── lv.js
+│   │   │   │   ├── mk.js
+│   │   │   │   ├── mn.js
+│   │   │   │   ├── ms.js
+│   │   │   │   ├── nb.js
+│   │   │   │   ├── nl.js
+│   │   │   │   ├── no.js
+│   │   │   │   ├── oc.js
+│   │   │   │   ├── pl.js
+│   │   │   │   ├── pt-br.js
+│   │   │   │   ├── pt.js
+│   │   │   │   ├── ro.js
+│   │   │   │   ├── ru.js
+│   │   │   │   ├── si.js
+│   │   │   │   ├── sk.js
+│   │   │   │   ├── sl.js
+│   │   │   │   ├── sq.js
+│   │   │   │   ├── sr-latn.js
+│   │   │   │   ├── sr.js
+│   │   │   │   ├── sv.js
+│   │   │   │   ├── th.js
+│   │   │   │   ├── tr.js
+│   │   │   │   ├── tt.js
+│   │   │   │   ├── ug.js
+│   │   │   │   ├── uk.js
+│   │   │   │   ├── vi.js
+│   │   │   │   ├── zh-cn.js
+│   │   │   │   └── zh.js
+│   │   │   ├── plugins
+│   │   │   │   ├── a11yhelp
+│   │   │   │   │   └── dialogs
+│   │   │   │   │       ├── a11yhelp.js
+│   │   │   │   │       └── lang
+│   │   │   │   │           ├── _translationstatus.txt
+│   │   │   │   │           ├── af.js
+│   │   │   │   │           ├── ar.js
+│   │   │   │   │           ├── bg.js
+│   │   │   │   │           ├── ca.js
+│   │   │   │   │           ├── cs.js
+│   │   │   │   │           ├── cy.js
+│   │   │   │   │           ├── da.js
+│   │   │   │   │           ├── de-ch.js
+│   │   │   │   │           ├── de.js
+│   │   │   │   │           ├── el.js
+│   │   │   │   │           ├── en-gb.js
+│   │   │   │   │           ├── en.js
+│   │   │   │   │           ├── eo.js
+│   │   │   │   │           ├── es.js
+│   │   │   │   │           ├── et.js
+│   │   │   │   │           ├── eu.js
+│   │   │   │   │           ├── fa.js
+│   │   │   │   │           ├── fi.js
+│   │   │   │   │           ├── fo.js
+│   │   │   │   │           ├── fr-ca.js
+│   │   │   │   │           ├── fr.js
+│   │   │   │   │           ├── gl.js
+│   │   │   │   │           ├── gu.js
+│   │   │   │   │           ├── he.js
+│   │   │   │   │           ├── hi.js
+│   │   │   │   │           ├── hr.js
+│   │   │   │   │           ├── hu.js
+│   │   │   │   │           ├── id.js
+│   │   │   │   │           ├── it.js
+│   │   │   │   │           ├── ja.js
+│   │   │   │   │           ├── km.js
+│   │   │   │   │           ├── ko.js
+│   │   │   │   │           ├── ku.js
+│   │   │   │   │           ├── lt.js
+│   │   │   │   │           ├── lv.js
+│   │   │   │   │           ├── mk.js
+│   │   │   │   │           ├── mn.js
+│   │   │   │   │           ├── nb.js
+│   │   │   │   │           ├── nl.js
+│   │   │   │   │           ├── no.js
+│   │   │   │   │           ├── oc.js
+│   │   │   │   │           ├── pl.js
+│   │   │   │   │           ├── pt-br.js
+│   │   │   │   │           ├── pt.js
+│   │   │   │   │           ├── ro.js
+│   │   │   │   │           ├── ru.js
+│   │   │   │   │           ├── si.js
+│   │   │   │   │           ├── sk.js
+│   │   │   │   │           ├── sl.js
+│   │   │   │   │           ├── sq.js
+│   │   │   │   │           ├── sr-latn.js
+│   │   │   │   │           ├── sr.js
+│   │   │   │   │           ├── sv.js
+│   │   │   │   │           ├── th.js
+│   │   │   │   │           ├── tr.js
+│   │   │   │   │           ├── tt.js
+│   │   │   │   │           ├── ug.js
+│   │   │   │   │           ├── uk.js
+│   │   │   │   │           ├── vi.js
+│   │   │   │   │           ├── zh-cn.js
+│   │   │   │   │           └── zh.js
+│   │   │   │   ├── about
+│   │   │   │   │   └── dialogs
+│   │   │   │   │       ├── about.js
+│   │   │   │   │       ├── hidpi
+│   │   │   │   │       │   └── logo_ckeditor.png
+│   │   │   │   │       └── logo_ckeditor.png
+│   │   │   │   ├── clipboard
+│   │   │   │   │   └── dialogs
+│   │   │   │   │       └── paste.js
+│   │   │   │   ├── colordialog
+│   │   │   │   │   └── dialogs
+│   │   │   │   │       ├── colordialog.css
+│   │   │   │   │       └── colordialog.js
+│   │   │   │   ├── copyformatting
+│   │   │   │   │   ├── cursors
+│   │   │   │   │   │   ├── cursor-disabled.svg
+│   │   │   │   │   │   └── cursor.svg
+│   │   │   │   │   └── styles
+│   │   │   │   │       └── copyformatting.css
+│   │   │   │   ├── dialog
+│   │   │   │   │   └── dialogDefinition.js
+│   │   │   │   ├── div
+│   │   │   │   │   └── dialogs
+│   │   │   │   │       └── div.js
+│   │   │   │   ├── find
+│   │   │   │   │   └── dialogs
+│   │   │   │   │       └── find.js
+│   │   │   │   ├── flash
+│   │   │   │   │   ├── dialogs
+│   │   │   │   │   │   └── flash.js
+│   │   │   │   │   └── images
+│   │   │   │   │       └── placeholder.png
+│   │   │   │   ├── forms
+│   │   │   │   │   ├── dialogs
+│   │   │   │   │   │   ├── button.js
+│   │   │   │   │   │   ├── checkbox.js
+│   │   │   │   │   │   ├── form.js
+│   │   │   │   │   │   ├── hiddenfield.js
+│   │   │   │   │   │   ├── radio.js
+│   │   │   │   │   │   ├── select.js
+│   │   │   │   │   │   ├── textarea.js
+│   │   │   │   │   │   └── textfield.js
+│   │   │   │   │   └── images
+│   │   │   │   │       └── hiddenfield.gif
+│   │   │   │   ├── icons.png
+│   │   │   │   ├── icons_hidpi.png
+│   │   │   │   ├── iframe
+│   │   │   │   │   ├── dialogs
+│   │   │   │   │   │   └── iframe.js
+│   │   │   │   │   └── images
+│   │   │   │   │       └── placeholder.png
+│   │   │   │   ├── image
+│   │   │   │   │   ├── dialogs
+│   │   │   │   │   │   └── image.js
+│   │   │   │   │   └── images
+│   │   │   │   │       └── noimage.png
+│   │   │   │   ├── link
+│   │   │   │   │   ├── dialogs
+│   │   │   │   │   │   ├── anchor.js
+│   │   │   │   │   │   └── link.js
+│   │   │   │   │   └── images
+│   │   │   │   │       ├── anchor.png
+│   │   │   │   │       └── hidpi
+│   │   │   │   │           └── anchor.png
+│   │   │   │   ├── liststyle
+│   │   │   │   │   └── dialogs
+│   │   │   │   │       └── liststyle.js
+│   │   │   │   ├── magicline
+│   │   │   │   │   └── images
+│   │   │   │   │       ├── hidpi
+│   │   │   │   │       │   ├── icon-rtl.png
+│   │   │   │   │       │   └── icon.png
+│   │   │   │   │       ├── icon-rtl.png
+│   │   │   │   │       └── icon.png
+│   │   │   │   ├── pagebreak
+│   │   │   │   │   └── images
+│   │   │   │   │       └── pagebreak.gif
+│   │   │   │   ├── pastefromword
+│   │   │   │   │   └── filter
+│   │   │   │   │       └── default.js
+│   │   │   │   ├── preview
+│   │   │   │   │   └── preview.html
+│   │   │   │   ├── scayt
+│   │   │   │   │   ├── CHANGELOG.md
+│   │   │   │   │   ├── LICENSE.md
+│   │   │   │   │   ├── README.md
+│   │   │   │   │   ├── dialogs
+│   │   │   │   │   │   ├── options.js
+│   │   │   │   │   │   └── toolbar.css
+│   │   │   │   │   └── skins
+│   │   │   │   │       └── moono-lisa
+│   │   │   │   │           └── scayt.css
+│   │   │   │   ├── showblocks
+│   │   │   │   │   └── images
+│   │   │   │   │       ├── block_address.png
+│   │   │   │   │       ├── block_blockquote.png
+│   │   │   │   │       ├── block_div.png
+│   │   │   │   │       ├── block_h1.png
+│   │   │   │   │       ├── block_h2.png
+│   │   │   │   │       ├── block_h3.png
+│   │   │   │   │       ├── block_h4.png
+│   │   │   │   │       ├── block_h5.png
+│   │   │   │   │       ├── block_h6.png
+│   │   │   │   │       ├── block_p.png
+│   │   │   │   │       └── block_pre.png
+│   │   │   │   ├── smiley
+│   │   │   │   │   ├── dialogs
+│   │   │   │   │   │   └── smiley.js
+│   │   │   │   │   └── images
+│   │   │   │   │       ├── angel_smile.gif
+│   │   │   │   │       ├── angel_smile.png
+│   │   │   │   │       ├── angry_smile.gif
+│   │   │   │   │       ├── angry_smile.png
+│   │   │   │   │       ├── broken_heart.gif
+│   │   │   │   │       ├── broken_heart.png
+│   │   │   │   │       ├── confused_smile.gif
+│   │   │   │   │       ├── confused_smile.png
+│   │   │   │   │       ├── cry_smile.gif
+│   │   │   │   │       ├── cry_smile.png
+│   │   │   │   │       ├── devil_smile.gif
+│   │   │   │   │       ├── devil_smile.png
+│   │   │   │   │       ├── embaressed_smile.gif
+│   │   │   │   │       ├── embarrassed_smile.gif
+│   │   │   │   │       ├── embarrassed_smile.png
+│   │   │   │   │       ├── envelope.gif
+│   │   │   │   │       ├── envelope.png
+│   │   │   │   │       ├── heart.gif
+│   │   │   │   │       ├── heart.png
+│   │   │   │   │       ├── kiss.gif
+│   │   │   │   │       ├── kiss.png
+│   │   │   │   │       ├── lightbulb.gif
+│   │   │   │   │       ├── lightbulb.png
+│   │   │   │   │       ├── omg_smile.gif
+│   │   │   │   │       ├── omg_smile.png
+│   │   │   │   │       ├── regular_smile.gif
+│   │   │   │   │       ├── regular_smile.png
+│   │   │   │   │       ├── sad_smile.gif
+│   │   │   │   │       ├── sad_smile.png
+│   │   │   │   │       ├── shades_smile.gif
+│   │   │   │   │       ├── shades_smile.png
+│   │   │   │   │       ├── teeth_smile.gif
+│   │   │   │   │       ├── teeth_smile.png
+│   │   │   │   │       ├── thumbs_down.gif
+│   │   │   │   │       ├── thumbs_down.png
+│   │   │   │   │       ├── thumbs_up.gif
+│   │   │   │   │       ├── thumbs_up.png
+│   │   │   │   │       ├── tongue_smile.gif
+│   │   │   │   │       ├── tongue_smile.png
+│   │   │   │   │       ├── tounge_smile.gif
+│   │   │   │   │       ├── whatchutalkingabout_smile.gif
+│   │   │   │   │       ├── whatchutalkingabout_smile.png
+│   │   │   │   │       ├── wink_smile.gif
+│   │   │   │   │       └── wink_smile.png
+│   │   │   │   ├── specialchar
+│   │   │   │   │   └── dialogs
+│   │   │   │   │       ├── lang
+│   │   │   │   │       │   ├── _translationstatus.txt
+│   │   │   │   │       │   ├── af.js
+│   │   │   │   │       │   ├── ar.js
+│   │   │   │   │       │   ├── bg.js
+│   │   │   │   │       │   ├── ca.js
+│   │   │   │   │       │   ├── cs.js
+│   │   │   │   │       │   ├── cy.js
+│   │   │   │   │       │   ├── da.js
+│   │   │   │   │       │   ├── de-ch.js
+│   │   │   │   │       │   ├── de.js
+│   │   │   │   │       │   ├── el.js
+│   │   │   │   │       │   ├── en-gb.js
+│   │   │   │   │       │   ├── en.js
+│   │   │   │   │       │   ├── eo.js
+│   │   │   │   │       │   ├── es.js
+│   │   │   │   │       │   ├── et.js
+│   │   │   │   │       │   ├── eu.js
+│   │   │   │   │       │   ├── fa.js
+│   │   │   │   │       │   ├── fi.js
+│   │   │   │   │       │   ├── fr-ca.js
+│   │   │   │   │       │   ├── fr.js
+│   │   │   │   │       │   ├── gl.js
+│   │   │   │   │       │   ├── he.js
+│   │   │   │   │       │   ├── hr.js
+│   │   │   │   │       │   ├── hu.js
+│   │   │   │   │       │   ├── id.js
+│   │   │   │   │       │   ├── it.js
+│   │   │   │   │       │   ├── ja.js
+│   │   │   │   │       │   ├── km.js
+│   │   │   │   │       │   ├── ko.js
+│   │   │   │   │       │   ├── ku.js
+│   │   │   │   │       │   ├── lt.js
+│   │   │   │   │       │   ├── lv.js
+│   │   │   │   │       │   ├── nb.js
+│   │   │   │   │       │   ├── nl.js
+│   │   │   │   │       │   ├── no.js
+│   │   │   │   │       │   ├── oc.js
+│   │   │   │   │       │   ├── pl.js
+│   │   │   │   │       │   ├── pt-br.js
+│   │   │   │   │       │   ├── pt.js
+│   │   │   │   │       │   ├── ru.js
+│   │   │   │   │       │   ├── si.js
+│   │   │   │   │       │   ├── sk.js
+│   │   │   │   │       │   ├── sl.js
+│   │   │   │   │       │   ├── sq.js
+│   │   │   │   │       │   ├── sv.js
+│   │   │   │   │       │   ├── th.js
+│   │   │   │   │       │   ├── tr.js
+│   │   │   │   │       │   ├── tt.js
+│   │   │   │   │       │   ├── ug.js
+│   │   │   │   │       │   ├── uk.js
+│   │   │   │   │       │   ├── vi.js
+│   │   │   │   │       │   ├── zh-cn.js
+│   │   │   │   │       │   └── zh.js
+│   │   │   │   │       └── specialchar.js
+│   │   │   │   ├── table
+│   │   │   │   │   └── dialogs
+│   │   │   │   │       └── table.js
+│   │   │   │   ├── tabletools
+│   │   │   │   │   └── dialogs
+│   │   │   │   │       └── tableCell.js
+│   │   │   │   ├── templates
+│   │   │   │   │   ├── dialogs
+│   │   │   │   │   │   ├── templates.css
+│   │   │   │   │   │   └── templates.js
+│   │   │   │   │   └── templates
+│   │   │   │   │       ├── default.js
+│   │   │   │   │       └── images
+│   │   │   │   │           ├── template1.gif
+│   │   │   │   │           ├── template2.gif
+│   │   │   │   │           └── template3.gif
+│   │   │   │   └── wsc
+│   │   │   │       ├── LICENSE.md
+│   │   │   │       ├── README.md
+│   │   │   │       ├── dialogs
+│   │   │   │       │   ├── ciframe.html
+│   │   │   │       │   ├── tmpFrameset.html
+│   │   │   │       │   ├── wsc.css
+│   │   │   │       │   ├── wsc.js
+│   │   │   │       │   └── wsc_ie.js
+│   │   │   │       └── skins
+│   │   │   │           └── moono-lisa
+│   │   │   │               └── wsc.css
+│   │   │   ├── samples
+│   │   │   │   ├── css
+│   │   │   │   │   └── samples.css
+│   │   │   │   ├── img
+│   │   │   │   │   ├── github-top.png
+│   │   │   │   │   ├── header-bg.png
+│   │   │   │   │   ├── header-separator.png
+│   │   │   │   │   ├── logo.png
+│   │   │   │   │   └── navigation-tip.png
+│   │   │   │   ├── index.html
+│   │   │   │   ├── js
+│   │   │   │   │   ├── sample.js
+│   │   │   │   │   └── sf.js
+│   │   │   │   ├── old
+│   │   │   │   │   ├── ajax.html
+│   │   │   │   │   ├── api.html
+│   │   │   │   │   ├── appendto.html
+│   │   │   │   │   ├── assets
+│   │   │   │   │   │   ├── inlineall
+│   │   │   │   │   │   │   └── logo.png
+│   │   │   │   │   │   ├── outputxhtml
+│   │   │   │   │   │   │   └── outputxhtml.css
+│   │   │   │   │   │   ├── posteddata.php
+│   │   │   │   │   │   ├── sample.jpg
+│   │   │   │   │   │   └── uilanguages
+│   │   │   │   │   │       └── languages.js
+│   │   │   │   │   ├── datafiltering.html
+│   │   │   │   │   ├── dialog
+│   │   │   │   │   │   ├── assets
+│   │   │   │   │   │   │   └── my_dialog.js
+│   │   │   │   │   │   └── dialog.html
+│   │   │   │   │   ├── divreplace.html
+│   │   │   │   │   ├── enterkey
+│   │   │   │   │   │   └── enterkey.html
+│   │   │   │   │   ├── htmlwriter
+│   │   │   │   │   │   ├── assets
+│   │   │   │   │   │   │   └── outputforflash
+│   │   │   │   │   │   │       ├── outputforflash.fla
+│   │   │   │   │   │   │       ├── outputforflash.swf
+│   │   │   │   │   │   │       └── swfobject.js
+│   │   │   │   │   │   ├── outputforflash.html
+│   │   │   │   │   │   └── outputhtml.html
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   ├── inlineall.html
+│   │   │   │   │   ├── inlinebycode.html
+│   │   │   │   │   ├── inlinetextarea.html
+│   │   │   │   │   ├── jquery.html
+│   │   │   │   │   ├── magicline
+│   │   │   │   │   │   └── magicline.html
+│   │   │   │   │   ├── readonly.html
+│   │   │   │   │   ├── replacebyclass.html
+│   │   │   │   │   ├── replacebycode.html
+│   │   │   │   │   ├── sample.css
+│   │   │   │   │   ├── sample.js
+│   │   │   │   │   ├── sample_posteddata.php
+│   │   │   │   │   ├── tabindex.html
+│   │   │   │   │   ├── toolbar
+│   │   │   │   │   │   └── toolbar.html
+│   │   │   │   │   ├── uicolor.html
+│   │   │   │   │   ├── uilanguages.html
+│   │   │   │   │   ├── wysiwygarea
+│   │   │   │   │   │   └── fullpage.html
+│   │   │   │   │   └── xhtmlstyle.html
+│   │   │   │   └── toolbarconfigurator
+│   │   │   │       ├── css
+│   │   │   │       │   └── fontello.css
+│   │   │   │       ├── font
+│   │   │   │       │   ├── LICENSE.txt
+│   │   │   │       │   ├── config.json
+│   │   │   │       │   ├── fontello.eot
+│   │   │   │       │   ├── fontello.svg
+│   │   │   │       │   ├── fontello.ttf
+│   │   │   │       │   └── fontello.woff
+│   │   │   │       ├── index.html
+│   │   │   │       ├── js
+│   │   │   │       │   ├── abstracttoolbarmodifier.js
+│   │   │   │       │   ├── fulltoolbareditor.js
+│   │   │   │       │   ├── toolbarmodifier.js
+│   │   │   │       │   └── toolbartextmodifier.js
+│   │   │   │       └── lib
+│   │   │   │           └── codemirror
+│   │   │   │               ├── LICENSE
+│   │   │   │               ├── codemirror.css
+│   │   │   │               ├── codemirror.js
+│   │   │   │               ├── javascript.js
+│   │   │   │               ├── neo.css
+│   │   │   │               ├── show-hint.css
+│   │   │   │               └── show-hint.js
+│   │   │   ├── skins
+│   │   │   │   └── moono-lisa
+│   │   │   │       ├── dialog.css
+│   │   │   │       ├── dialog_ie.css
+│   │   │   │       ├── dialog_ie8.css
+│   │   │   │       ├── dialog_iequirks.css
+│   │   │   │       ├── editor.css
+│   │   │   │       ├── editor_gecko.css
+│   │   │   │       ├── editor_ie.css
+│   │   │   │       ├── editor_ie8.css
+│   │   │   │       ├── editor_iequirks.css
+│   │   │   │       ├── icons.png
+│   │   │   │       ├── icons_hidpi.png
+│   │   │   │       ├── images
+│   │   │   │       │   ├── arrow.png
+│   │   │   │       │   ├── close.png
+│   │   │   │       │   ├── hidpi
+│   │   │   │       │   │   ├── close.png
+│   │   │   │       │   │   ├── lock-open.png
+│   │   │   │       │   │   ├── lock.png
+│   │   │   │       │   │   └── refresh.png
+│   │   │   │       │   ├── lock-open.png
+│   │   │   │       │   ├── lock.png
+│   │   │   │       │   ├── refresh.png
+│   │   │   │       │   └── spinner.gif
+│   │   │   │       └── readme.md
+│   │   │   └── styles.js
+│   │   ├── font-awesome-4.7.0
+│   │   │   ├── css
+│   │   │   │   ├── font-awesome.css
+│   │   │   │   └── font-awesome.min.css
+│   │   │   └── fonts
+│   │   │       ├── FontAwesome.otf
+│   │   │       ├── fontawesome-webfont.eot
+│   │   │       ├── fontawesome-webfont.svg
+│   │   │       ├── fontawesome-webfont.ttf
+│   │   │       ├── fontawesome-webfont.woff
+│   │   │       └── fontawesome-webfont.woff2
+│   │   ├── home-bg.jpg
+│   │   ├── jquery.min.js
+│   │   └── trianglify.min.js
+│   ├── templates
+│   │   ├── main
+│   │   │   ├── AboutTheWebsite.html
+│   │   │   ├── ArticleEditor.html
+│   │   │   ├── WelcomePage.html
+│   │   │   └── YouMustLogin.html
+│   │   └── scc
+│   │       └── SccBlog.html
+│   ├── tests
+│   │   ├── __init__.py
+│   │   └── test.py
+│   └── views
+│       ├── __init__.py
+│       ├── __init__.pyc
+│       ├── main_view.py
+│       ├── main_view.pyc
+│       ├── scc_view.py
+│       └── scc_view.pyc
+├── requirements.txt
+├── run_app.py
+└── tree.txt
+
+112 directories, 442 files
