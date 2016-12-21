@@ -4,6 +4,7 @@ from config import config
 from flask.ext.login import LoginManager
 import os
 from models.database import db
+from uuid import uuid1
 
 
 lm = LoginManager()
@@ -46,8 +47,13 @@ def generate_csrf_token():
     return session['_crsf_token']
 
 
+def generate_uuid():
+    return uuid1().__str__()
+
+
 app = create_app(config['development'])
 app.jinja_env.globals['crsf_token'] = generate_csrf_token
+app.jinja_env.globals['uuid'] = generate_uuid
 
 if not app.debug:
     print True

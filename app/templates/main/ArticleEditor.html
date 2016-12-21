@@ -83,7 +83,7 @@
     <div class="container tab-pane" id="new-article">
         <form action="" method="post" id="article_form">
             <input type="hidden" name="_crsf_token" id="_crsf_token" value="{{ crsf_token() }}">
-            <input type="hidden"><!--insert uuid here,updated only when the page refreshed-->
+            <input type="hidden" name="_uuid" id="_uuid" value="{{ uuid() }}"><!--insert uuid here,updated only when the page refreshed-->
             <div class="table">
                 <table class="table table-condensed table-bordered" id="article_table">
                     <tr>
@@ -127,6 +127,7 @@
             editor.addCommand('save',{
                 exec:function () {
                     var flag = 'add_article';//flag indicator to distinguish different POST requests
+                    var uuid = $("#_uuid").val();
                     var crsf_token = $("#_crsf_token").val();
                     var article_title = $("#article_title").val();
                     var article_category = $("#article_category").val();
@@ -134,11 +135,10 @@
                     var article_content = editor.getData();//get html source code of editor,through the id
                     var article_edit_date = new Date().toISOString();//add edit time here
                     //CKEDITOR.instances['article_content'].setData() set Data to CKEDITOR
-                    console.log(article_title,article_category,article_status,article_content);
-                    console.log($SCRIPT_ROOT);
+                    //console.log(article_title,article_category,article_status,article_content);
                     $.ajax({
                         type:'POST',
-                        data:"_crsf_token="+crsf_token+"&&title="+article_title+"&&category="+article_category+"&&status="+article_status+"&&content="+escape(article_content),
+                        data:"uuid="+uuid+"&&_crsf_token="+crsf_token+"&&title="+article_title+"&&category="+article_category+"&&status="+article_status+"&&content="+escape(article_content),
                         success:function (res) {
                             if(res == "") {
                                 console.log('success');

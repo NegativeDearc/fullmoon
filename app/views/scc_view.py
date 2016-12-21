@@ -12,6 +12,8 @@ def scc_root(page=1):
     return render_template('SccBlog.html',latest_10=latest_10,pagination=pagination)
 
 
-@scc.route('/administrator')
-def scc_administrator():
-    return 'test'
+@scc.route('/blog/article/<string:uuid>')
+def scc_administrator(uuid):
+    article_by_uuid = Article.get_article_by_uuid(uuid=uuid)
+    print article_by_uuid
+    return render_template('ArticleTemplate.html',article_by_uuid = article_by_uuid)

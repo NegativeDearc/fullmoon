@@ -41,7 +41,7 @@ class Article(db.Model):
     status = db.Column(db.String(10),nullable=False)
 
     def __init__(self,form={}):
-        self.uuid = uuid.uuid1().__str__()
+        self.uuid = form.get('uuid',None)
         self.title = form.get('title',None)
         self.content = form.get('content',None)
         self.tags = None
@@ -52,7 +52,15 @@ class Article(db.Model):
         self.status = form.get('status',None)
 
     @classmethod
+    def get_article_by_uuid(cls,uuid):
+        # get article by query of uuid
+        # write uuid judgement here,use re module as a practise
+        # 0e3a6e0f-c720-11e6-852c-f4066974556c
+        return cls.query.filter(cls.uuid==uuid,cls.status=='PUBLISHED').first_or_404()
+
+    @classmethod
     def latest_article(cls, page=1):
+        # get articles which are in published status
         n = page * 5
         return cls.query.\
             filter(cls.status=='PUBLISHED').\
@@ -61,10 +69,12 @@ class Article(db.Model):
 
     @classmethod
     def pagination(cls, page):
+        # get paginate of query
         return cls.query.paginate(page,per_page=5,error_out=True)
 
     @classmethod
     def administration_article(cls,category="all"):
+        # get the article by category
         return cls.query.all()
 
 # class Comment(db.Model):
