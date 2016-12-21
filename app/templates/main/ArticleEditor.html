@@ -25,6 +25,7 @@
         .jumbotron > .container > ul > li > a:hover {
             color: #1d75b3;
         }
+        #article_table > tbody > tr > td:first-child {text-align: center;vertical-align: middle!important;}
     </style>
 </head>
 <body>
@@ -61,7 +62,7 @@
             </tr>
                 {% for article in article_for_administration %}
                     <tr>
-                    <td id="{{ article.id }}" style="display: none;"></td>
+                    <td id="{{ article.id }}&{{ article.uuid }}" style="display: none;"></td>
                     <td>{{ article.title }}</td>
                     <td>{{ article.tags }}</td>
                     <td>{{ article.content[:40] }}</td>
@@ -80,25 +81,35 @@
     </div>
     <!--ckeditor-->
     <div class="container tab-pane" id="new-article">
-        <form action="" method="post">
-            <input type="hidden" name="_crsf_token" value="{{ crsf_token() }}">
+        <form action="" method="post" id="article_form">
+            <input type="hidden" name="_crsf_token" id="_crsf_token" value="{{ crsf_token() }}">
+            <input type="hidden"><!--insert uuid here,updated only when the page refreshed-->
             <div class="table">
-                <table class="table table-condensed table-bordered">
+                <table class="table table-condensed table-bordered" id="article_table">
                     <tr>
                         <td>文章标题</td>
-                        <td><input type="text" name="article_title"></td>
+                        <td><input type="text" name="title" required="required" id="article_title"></td>
                     </tr>
                     <tr>
                         <td>文章分类</td>
                         <td>
-                            <select name="" id="">
+                            <select name="category" id="article_category">
                                 <option value="">--分类--</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
+                        <td>文章状态</td>
+                        <td>
+                            <select name="status" id="article_status">
+                                <option value="DRAFTED">草稿</option>
+                                <option value="PUBLISHED">发布</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="2">
-                            <textarea id="TextArea1" cols="20" rows="2" class="ckeditor" name="ckeditor"></textarea>
+                            <textarea id="article_content" cols="20" rows="2" class="ckeditor" name="content"></textarea>
                         </td>
                     </tr>
                 </table>
@@ -107,11 +118,43 @@
     </div>
 </div>
 <script>
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}
     $(document).ready(function () {
+        //use ajax not to refresh the page
+        var editor = CKEDITOR.instances['article_content'];
+        editor.on('instanceReady',function (event) {
+            //when add a new article, clear all data of form
+            editor.addCommand('save',{
+                exec:function () {
+                    var flag = 'add_article';//flag indicator to distinguish different POST requests
+                    var crsf_token = $("#_crsf_token").val();
+                    var article_title = $("#article_title").val();
+                    var article_category = $("#article_category").val();
+                    var article_status = $("#article_status").val();
+                    var article_content = editor.getData();//get html source code of editor,through the id
+                    var article_edit_date = new Date().toISOString();//add edit time here
+                    //CKEDITOR.instances['article_content'].setData() set Data to CKEDITOR
+                    console.log(article_title,article_category,article_status,article_content);
+                    console.log($SCRIPT_ROOT);
+                    $.ajax({
+                        type:'POST',
+                        data:"_crsf_token="+crsf_token+"&&title="+article_title+"&&category="+article_category+"&&status="+article_status+"&&content="+escape(article_content),
+                        success:function (res) {
+                            if(res == "") {
+                                console.log('success');
+                            } else {console.log('fail')}
+                        }
+                    });//ajax here
+                }//exec function
+            });//editor.addCommand() function
+        });//editor.on() function
+
+
+        //for manager page
         $("li a").click(function () {
             $("h1,hr").hide();
         });
-        
+
         $("i .fa-pencil").click(function () {
             /*
             solution 1:click and redirect to the url of article (use uuid)/editor

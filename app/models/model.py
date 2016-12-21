@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 from sqlalchemy import CheckConstraint, UniqueConstraint, desc
 from database import db
+import uuid
+from datetime import datetime
 # if you want use db.create_all()
 # import all db models after import db from app
 
@@ -27,8 +29,8 @@ class Article(db.Model):
         CheckConstraint('status IN ("PUBLISHED","DRAFTED","ARCHIVED","DELETED")',name='article_check_status'),
         UniqueConstraint('id','title')
     )
-    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True,nullable=False)
-    uuid = db.Column(db.String(20),nullable=False)
+    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True,nullable=False,unique=True)
+    uuid = db.Column(db.String(20),nullable=False,unique=True)
     title = db.Column(db.String(25),nullable=True)
     content = db.Column(db.String(2000), nullable=True)
     tags = db.Column(db.String(25), nullable=True)
@@ -37,6 +39,17 @@ class Article(db.Model):
     category = db.Column(db.String(20), nullable=False)
     read_times = db.Column(db.INTEGER,default=1,nullable=False)
     status = db.Column(db.String(10),nullable=False)
+
+    def __init__(self,form={}):
+        self.uuid = uuid.uuid1().__str__()
+        self.title = form.get('title',None)
+        self.content = form.get('content',None)
+        self.tags = None
+        self.create_date = datetime.now()
+        self.edit_date = datetime.now()
+        self.category = ''
+        self.read_times = ''
+        self.status = form.get('status',None)
 
     @classmethod
     def latest_article(cls, page=1):
