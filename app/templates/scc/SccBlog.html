@@ -92,7 +92,7 @@
                 <div class="media-body">
                     <h4 class="media-heading">{{ item.title }}</h4><!--title-->
                     <small>{{ item.create_date.strftime("%Y-%m-%d %H:%M") }}</small><!--create date-->
-                    <div>{{ item.content[:70] }}</div><!--first 100 words-->
+                    <div>{{ item.content[:70]|safe }}</div><!--first 100 words-->
                 </div>
             </div>
         </div>

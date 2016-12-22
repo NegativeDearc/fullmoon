@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from sqlalchemy import CheckConstraint, UniqueConstraint, desc
+from sqlalchemy.orm.exc import NoResultFound
 from database import db
 import uuid
 from datetime import datetime
@@ -24,6 +25,7 @@ class Article(db.Model):
     """
     __tablename__ = "Article"
     # use table configuration to constraint columns or table
+    # not null != ''
     __table_args__ = (
         # set constraint of status
         CheckConstraint('status IN ("PUBLISHED","DRAFTED","ARCHIVED","DELETED")',name='article_check_status'),
@@ -31,8 +33,8 @@ class Article(db.Model):
     )
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True,nullable=False,unique=True)
     uuid = db.Column(db.String(20),nullable=False,unique=True)
-    title = db.Column(db.String(25),nullable=True)
-    content = db.Column(db.String(2000), nullable=True)
+    title = db.Column(db.String(25),nullable=False)
+    content = db.Column(db.String(2000), nullable=False)
     tags = db.Column(db.String(25), nullable=True)
     create_date = db.Column(db.DATETIME, nullable=False)
     edit_date = db.Column(db.DATETIME, nullable=False)
@@ -52,11 +54,55 @@ class Article(db.Model):
         self.status = form.get('status',None)
 
     @classmethod
-    def get_article_by_uuid(cls,uuid):
+    def update_article(cls,form={}):
+        # update by request form, be careful with the date time handling
+        # "2016-12-22T03:30:24.160Z"
+        # %a 星期的简写。如 星期三为Web
+        # %A 星期的全写。如 星期三为Wednesday
+        # %b 月份的简写。如4月份为Apr
+        # %B 月份的全写。如4月份为April
+        # %c:  日期时间的字符串表示。（如： 04/07/10 10:43:39）
+        # %d:  日在这个月中的天数（是这个月的第几天）
+        # %f:  微秒（范围[0,999999]）
+        # %H:  小时（24小时制，[0, 23]）
+        # %I:  小时（12小时制，[0, 11]）
+        # %j:  日在年中的天数 [001,366]（是当年的第几天）
+        # %m:  月份（[01,12]）
+        # %M:  分钟（[00,59]）
+        # %p:  AM或者PM
+        # %S:  秒（范围为[00,61]，为什么不是[00, 59]）
+        # %U:  周在当年的周数当年的第几周），星期天作为周的第一天
+        # %w:  今天在这周的天数，范围为[0, 6]，6表示星期天
+        # %W:  周在当年的周数（是当年的第几周），星期一作为周的第一天
+        # %x:  日期字符串（如：04/07/10）
+        # %X:  时间字符串（如：10:43:39）
+        # %y:  2个数字表示的年份
+        # %Y:  4个数字表示的年份
+        # %z:  与utc时间的间隔 （如果是本地时间，返回空字符串）
+        # %Z:  时区名称（如果是本地时间，返回空字符串）
+        cls.query.filter(cls.uuid == form.get('uuid')).update({
+            'title':form.get('title'),
+            'content':form.get('content'),
+            # UTC 时间，需要加上8小时才是中国时间GMT+8
+            'edit_date':datetime.strptime(form.get('edit_date'),'%Y-%m-%dT%H:%M:%S.%fZ'),
+            'status':form.get('status')
+        })
+        db.session.commit()
+        return True
+
+    @classmethod
+    def get_article_by_uuid(cls,uuid,abort=True):
         # get article by query of uuid
         # write uuid judgement here,use re module as a practise
         # 0e3a6e0f-c720-11e6-852c-f4066974556c
-        return cls.query.filter(cls.uuid==uuid,cls.status=='PUBLISHED').first_or_404()
+        if abort:
+            return cls.query.filter(cls.uuid==uuid,cls.status=='PUBLISHED').first_or_404()
+        else:
+            try:
+                cls.query.filter(cls.uuid == uuid).one()
+                return True
+            except NoResultFound:
+                return False
 
     @classmethod
     def latest_article(cls, page=1):

@@ -81,6 +81,17 @@
     </div>
     <!--ckeditor-->
     <div class="container tab-pane" id="new-article">
+        <!--flashed messages write here when ajax received status-->
+        <div class="alert alert-info" style="display: none;" id="message_add">
+            <strong>新增成功!</strong> 文章已被添加至数据库，再次提交可以进行修改。注意文章发布状态！
+        </div>
+        <div class="alert alert-success" style="display: none;" id="message_update">
+            <strong>更新成功!</strong> 文章已经被更新到数据库，再次保存继续更新文章。注意文章发布状态！
+        </div>
+        <div class="alert alert-warning" style="display: none;" id="message_failed">
+            <strong>操作失败!</strong> There was a problem with your operation.
+        </div>
+        <!--form-->
         <form action="" method="post" id="article_form">
             <input type="hidden" name="_crsf_token" id="_crsf_token" value="{{ crsf_token() }}">
             <input type="hidden" name="_uuid" id="_uuid" value="{{ uuid() }}"><!--insert uuid here,updated only when the page refreshed-->
@@ -133,23 +144,47 @@
                     var article_category = $("#article_category").val();
                     var article_status = $("#article_status").val();
                     var article_content = editor.getData();//get html source code of editor,through the id
-                    var article_edit_date = new Date().toISOString();//add edit time here
+                    var article_edit_date = new Date().toISOString();//UTC +00
                     //CKEDITOR.instances['article_content'].setData() set Data to CKEDITOR
                     //console.log(article_title,article_category,article_status,article_content);
                     $.ajax({
                         type:'POST',
-                        data:"uuid="+uuid+"&&_crsf_token="+crsf_token+"&&title="+article_title+"&&category="+article_category+"&&status="+article_status+"&&content="+escape(article_content),
+                        data:"edit_date="+article_edit_date+"&&uuid="+uuid+"&&_crsf_token="+crsf_token+"&&title="+article_title+"&&category="+article_category+"&&status="+article_status+"&&content="+article_content,
+                        dataType:'json',
                         success:function (res) {
-                            if(res == "") {
-                                console.log('success');
-                            } else {console.log('fail')}
-                        }
+                            if(res['message'] == "update") {
+                                $("#message_update").show().delay(3000).fadeOut();
+                            }
+                            if(res['message'] == "add") {
+                                $("#message_add").show().delay(3000).fadeOut();
+                            }
+                        },//success
+                        error:function (res) {
+                            $("#message_failed").show().delay(4000).fadeOut();
+                        }//error
                     });//ajax here
                 }//exec function
             });//editor.addCommand() function
+            //new page logical here
+            editor.addCommand('newpage',{
+                exec:function () {
+                    //reset the form
+                    $("#article_form")[0].reset();
+                    //update uuid
+                    $.ajax({
+                        url:$SCRIPT_ROOT + 'api/tools/uuid/',
+                        type:'POST',
+                        dataType:'json',
+                        success:function (res) {
+                            //console.log(res['uuid']);
+                            $("#_uuid").attr('value',res['uuid']);
+                        },//success
+                        error:function (res) {}//error
+                    });//ajax here
+                    editor.setData();
+                }//exec
+            });//editor.addCommand
         });//editor.on() function
-
-
         //for manager page
         $("li a").click(function () {
             $("h1,hr").hide();

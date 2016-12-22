@@ -13,7 +13,8 @@ lm = LoginManager()
 def create_app(conf):
     from views.scc_view import scc
     from views.main_view import main
-    view_list = [scc, main]
+    from views.api_view import api
+    view_list = [scc, main, api]
 
     app = Flask(__name__)
     # to apply config to app,must before init of SQLAlchemy and LoginManager
