@@ -89,7 +89,7 @@
             <strong>更新成功!</strong> 文章已经被更新到数据库，再次保存继续更新文章。注意文章发布状态！
         </div>
         <div class="alert alert-warning" style="display: none;" id="message_failed">
-            <strong>操作失败!</strong> There was a problem with your operation.
+            <strong>操作失败!</strong> 原因是输入了不被允许的字段值，请检查输入是否有误。
         </div>
         <!--form-->
         <form action="" method="post" id="article_form">
@@ -97,6 +97,7 @@
             <input type="hidden" name="_uuid" id="_uuid" value="{{ uuid() }}"><!--insert uuid here,updated only when the page refreshed-->
             <div class="table">
                 <table class="table table-condensed table-bordered" id="article_table">
+                    <div class="row">
                     <tr>
                         <td>文章标题</td>
                         <td><input type="text" name="title" required="required" id="article_title"></td>
@@ -123,6 +124,7 @@
                             <textarea id="article_content" cols="20" rows="2" class="ckeditor" name="content"></textarea>
                         </td>
                     </tr>
+                    </div>
                 </table>
             </div>
     </form>
