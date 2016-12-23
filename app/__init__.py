@@ -5,6 +5,7 @@ from flask.ext.login import LoginManager
 import os
 from models.database import db
 from uuid import uuid1
+from flask.ext.restful import Api
 
 
 lm = LoginManager()
@@ -13,12 +14,19 @@ lm = LoginManager()
 def create_app(conf):
     from views.scc_view import scc
     from views.main_view import main
-    from views.api_view import api
-    view_list = [scc, main, api]
+    # from views.api_view import api
+    # view_list = [scc, main, api]
+    view_list = [scc, main]
 
     app = Flask(__name__)
     # to apply config to app,must before init of SQLAlchemy and LoginManager
     app.config.from_object(conf)
+    #
+    from app.views.api_view import ToolsApi, ArticleApi
+    api = Api(app)
+    api.add_resource(ToolsApi,'/api/tools/uuid/', endpoint='uuid')
+    api.add_resource(ArticleApi,'/api/article/uuid/<uuid>', endpoint='tasks')
+
     db.init_app(app)
     # http://blog.csdn.net/yannanxiu/article/details/53426359
     # http://www.pythondoc.com/flask-sqlalchemy/api.html#flask.ext.sqlalchemy.SQLAlchemy.init_app

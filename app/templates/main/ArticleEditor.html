@@ -26,6 +26,8 @@
             color: #1d75b3;
         }
         #article_table > tbody > tr > td:first-child {text-align: center;vertical-align: middle!important;}
+        .fa-trash-o:hover {box-shadow: 1px 1px 1px 1px;}
+        .fa-pencil:hover {box-shadow: 1px 1px 1px 1px;}
     </style>
 </head>
 <body>
@@ -62,7 +64,7 @@
             </tr>
                 {% for article in article_for_administration %}
                     <tr>
-                    <td id="{{ article.id }}&{{ article.uuid }}" style="display: none;"></td>
+                    <td id="{{ article.uuid }}" style="display: none;"></td>
                     <td>{{ article.title }}</td>
                     <td>{{ article.tags }}</td>
                     <td>{{ article.content[:40] }}</td>
@@ -150,8 +152,18 @@
                     //CKEDITOR.instances['article_content'].setData() set Data to CKEDITOR
                     //console.log(article_title,article_category,article_status,article_content);
                     $.ajax({
-                        type:'POST',
-                        data:"edit_date="+article_edit_date+"&&uuid="+uuid+"&&_crsf_token="+crsf_token+"&&title="+article_title+"&&category="+article_category+"&&status="+article_status+"&&content="+article_content,
+                        url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
+                        type:'PUT',
+                        data:{
+                            "_method":"PUT",
+                            "edit_date":article_edit_date,
+                            "uuid":uuid,
+                            "_crsf_token":crsf_token,
+                            "title":article_title,
+                            "category":article_category,
+                            "status":article_status,
+                            "content":article_content
+                        },
                         dataType:'json',
                         success:function (res) {
                             if(res['message'] == "update") {
@@ -192,14 +204,27 @@
             $("h1,hr").hide();
         });
 
-        $("i .fa-pencil").click(function () {
-            /*
-            solution 1:click and redirect to the url of article (use uuid)/editor
-             */
+        $("i.fa.fa-pencil").click(function () {
+            //click and redirect to the url of article (use uuid)/editor
         });
 
-        $("i .fa-trash-o").click(function () {
-
+        $("i.fa.fa-trash-o").click(function () {
+            //click to delete the article
+            var uuid = $(this).parents('td').siblings('td:first').attr('id');
+            //console.log(uuid);
+            //ajax to delete the article
+            $.ajax({
+                type:'delete',
+                url:$SCRIPT_ROOT + 'api/article/uuid/' + uuid,
+                beforeSend:function () {
+                    alert('confirm!')
+                },
+                data:{"_method":"DELETE"},
+                dataType:'json',
+                success:function () {
+                    console.log('success')
+                }
+            });
         });
     })
 </script>

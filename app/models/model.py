@@ -4,6 +4,8 @@ from sqlalchemy.orm.exc import NoResultFound
 from database import db
 import uuid
 from datetime import datetime
+
+
 # if you want use db.create_all()
 # import all db models after import db from app
 
@@ -28,33 +30,37 @@ class Article(db.Model):
     # not null != ''
     __table_args__ = (
         # set constraint of status
-        CheckConstraint('status IN ("PUBLISHED","DRAFTED","ARCHIVED","DELETED")',name='article_check_status'),
-        UniqueConstraint('id','title')
+        CheckConstraint('status IN ("PUBLISHED","DRAFTED","ARCHIVED","DELETED")', name='article_check_status'),
+        UniqueConstraint('id', 'title')
     )
-    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True,nullable=False,unique=True)
-    uuid = db.Column(db.String(20),nullable=False,unique=True)
-    title = db.Column(db.String(25),nullable=False)
+    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True, nullable=False, unique=True)
+    uuid = db.Column(db.String(20), nullable=False, unique=True)
+    title = db.Column(db.String(25), nullable=False)
     content = db.Column(db.String(2000), nullable=False)
     tags = db.Column(db.String(25), nullable=True)
     create_date = db.Column(db.DATETIME, nullable=False)
     edit_date = db.Column(db.DATETIME, nullable=False)
     category = db.Column(db.String(20), nullable=False)
-    read_times = db.Column(db.INTEGER,default=1,nullable=False)
-    status = db.Column(db.String(10),nullable=False)
+    read_times = db.Column(db.INTEGER, default=1, nullable=False)
+    status = db.Column(db.String(10), nullable=False)
 
-    def __init__(self,form={}):
-        self.uuid = form.get('uuid',None)
-        self.title = form.get('title',None)
-        self.content = form.get('content',None)
+    def __init__(self, form={}):
+        self.uuid = form.get('uuid', None)
+        self.title = form.get('title', None)
+        self.content = form.get('content', None)
         self.tags = None
         self.create_date = datetime.now()
         self.edit_date = datetime.now()
         self.category = ''
         self.read_times = ''
-        self.status = form.get('status',None)
+        self.status = form.get('status', None)
+
+    def __repr__(self):
+        return "at %s created an article named %s and it's content %s" % \
+               (self.create_date,self.title,self.content)
 
     @classmethod
-    def update_article(cls,form={}):
+    def update_article(cls, form={}):
         # update by request form, be careful with the date time handling
         # "2016-12-22T03:30:24.160Z"
         # %a 星期的简写。如 星期三为Web
@@ -81,22 +87,22 @@ class Article(db.Model):
         # %z:  与utc时间的间隔 （如果是本地时间，返回空字符串）
         # %Z:  时区名称（如果是本地时间，返回空字符串）
         cls.query.filter(cls.uuid == form.get('uuid')).update({
-            'title':form.get('title'),
-            'content':form.get('content'),
+            'title': form.get('title'),
+            'content': form.get('content'),
             # UTC 时间，需要加上8小时才是中国时间GMT+8
-            'edit_date':datetime.strptime(form.get('edit_date'),'%Y-%m-%dT%H:%M:%S.%fZ'),
-            'status':form.get('status')
+            'edit_date': datetime.strptime(form.get('edit_date'), '%Y-%m-%dT%H:%M:%S.%fZ'),
+            'status': form.get('status')
         })
         db.session.commit()
         return True
 
     @classmethod
-    def get_article_by_uuid(cls,uuid,abort=True):
+    def get_article_by_uuid(cls, uuid, abort=True):
         # get article by query of uuid
         # write uuid judgement here,use re module as a practise
         # 0e3a6e0f-c720-11e6-852c-f4066974556c
         if abort:
-            return cls.query.filter(cls.uuid==uuid,cls.status=='PUBLISHED').first_or_404()
+            return cls.query.filter(cls.uuid == uuid, cls.status == 'PUBLISHED').first_or_404()
         else:
             try:
                 cls.query.filter(cls.uuid == uuid).one()
@@ -108,20 +114,39 @@ class Article(db.Model):
     def latest_article(cls, page=1):
         # get articles which are in published status
         n = page * 5
-        return cls.query.\
-            filter(cls.status=='PUBLISHED').\
-            order_by(desc(cls.create_date)).\
-            all()[n-5:n]
+        return cls.query. \
+                   filter(cls.status == 'PUBLISHED'). \
+                   order_by(desc(cls.create_date)). \
+                   all()[n - 5:n]
 
     @classmethod
     def pagination(cls, page):
         # get paginate of query
-        return cls.query.paginate(page,per_page=5,error_out=True)
+        return cls.query.paginate(page, per_page=5, error_out=True)
 
     @classmethod
-    def administration_article(cls,category="all"):
+    def administration_article(cls, category="all"):
         # get the article by category
         return cls.query.all()
+
+    @classmethod
+    def article_by_uuid_api(cls, uuid):
+        try:
+            rv = cls.query.filter(cls.uuid == uuid).one()
+            return {
+                'uuid': uuid,
+                'title': 'query article by uuid',
+                'description': rv.__repr__(),
+                'done': True
+            }
+        except NoResultFound:
+            return {
+                'uuid': uuid,
+                'title': 'query article by uuid',
+                'description': 'query article by uuid, not limited by status of article',
+                'done': False
+            }
+
 
 # class Comment(db.Model):
 #     pass
@@ -137,9 +162,9 @@ class Login(db.Model):
     }
     """
     __tablename__ = 'Login'
-    id = db.Column(db.INTEGER,primary_key=True,autoincrement=True,unique=True)
-    user = db.Column(db.String(100),unique=True,nullable=False)
-    password = db.Column(db.String(100),unique=True,nullable=False)
+    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True, unique=True)
+    user = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), unique=True, nullable=False)
 
     def is_authenticated(self):
         pass
@@ -164,9 +189,9 @@ class Secure(db.Model):
     __tablename__ = "Secure"
     __table_args__ = (
         UniqueConstraint("id"),
-        CheckConstraint('status IN ("LOCKED","UNLOCKED","BLACKLIST")',name='secure_check_status')
+        CheckConstraint('status IN ("LOCKED","UNLOCKED","BLACKLIST")', name='secure_check_status')
     )
-    id = db.Column(db.INTEGER,primary_key=True,autoincrement=True)
+    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
     ip_address = db.Column(db.String(15))
     blacklist = db.Column(db.BOOLEAN)
     visited_times_in_five_minutes = db.Column(db.INTEGER)
@@ -179,6 +204,6 @@ class Visit(db.Model):
     table store website visit times
     """
     __tablename__ = "Visit"
-    id = db.Column(db.INTEGER,primary_key=True,autoincrement=True)
+    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
     times = db.Column(db.INTEGER)
     update_time = db.Column(db.DATETIME)
