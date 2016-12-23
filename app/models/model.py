@@ -35,6 +35,7 @@ class Article(db.Model):
     )
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True, nullable=False, unique=True)
     uuid = db.Column(db.String(20), nullable=False, unique=True)
+    # author = db.Column(db.String(20),nullable=False)
     title = db.Column(db.String(25), nullable=False)
     content = db.Column(db.String(2000), nullable=False)
     tags = db.Column(db.String(25), nullable=True)
@@ -207,3 +208,7 @@ class Visit(db.Model):
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
     times = db.Column(db.INTEGER)
     update_time = db.Column(db.DATETIME)
+
+    @property
+    def visit_times(self):
+        return db.session.query(Visit.times).first()[0]

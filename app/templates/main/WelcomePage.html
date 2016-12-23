@@ -94,7 +94,20 @@
 </div>
 
 <footer class="nav navbar-fixed-bottom">
-    <p>You're the <span style="color: yellow">0000</span> visitor from 0000/00/00</p>
+    <p id="visit_times">You're the <span style="color: yellow"></span> visitor from 0000/00/00</p>
 </footer>
+<script>
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}
+    $(document).ready(function () {
+        $.ajax({
+            type:'PUT',
+            url: $SCRIPT_ROOT + '/api/tools/visit_times/',
+            data:{"_method":"PUT"},
+            success:function (res) {
+                $("#visit_times").children("span").html(res['times'])
+            }
+        })
+    })
+</script>
 </body>
 </html>

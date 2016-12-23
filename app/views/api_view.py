@@ -2,8 +2,9 @@
 from flask import Blueprint, request
 from uuid import uuid1
 from flask.ext.restful import Resource
-from app.models.model import db, Article
+from app.models.model import db, Article, Visit
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import asc
 
 
 # no need to use jsonify to handling return values, restful-api will do it automatically for us
@@ -65,3 +66,15 @@ class ArticleApi(Resource):
                 'description': records.__repr__() + ' has been deleted',
                 'done': True
             }
+
+
+class VisitTimes(Resource):
+    # 记录页面访问次数的API，应该覆盖全部页面
+    # 每访问一次增加一条记录
+    def put(self):
+        origin_visit_times = Visit().visit_times
+        Visit.query.update({'times':origin_visit_times+1})
+        db.session.commit()
+        return {
+            "times":origin_visit_times
+        }

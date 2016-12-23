@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response
-from app.models.model import Article
+from app.models.model import Article, Visit
 
 main = Blueprint('main', __name__)
 
