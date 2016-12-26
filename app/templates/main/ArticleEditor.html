@@ -37,13 +37,38 @@
     <hr style="width: 150px;">
     <div class="container">
         <ul class="nav nav-pills nav-justified" role="tablist">
-            <li><a href="#new-article" data-toggle="tab"><i class="fa fa-plus"></i>&nbsp;Add New</a></li>
-            <li><a href="#manage-article" data-toggle="tab"><i class="fa fa-dashboard"></i>&nbsp;Manage Old</a></li>
+            <li><a href="#new-article" data-toggle="tab" title="新增一篇文章"><i class="fa fa-plus"></i>&nbsp;Add New</a></li>
+            <li><a href="#manage-article" data-toggle="tab" title="管理已经存在的文章"><i class="fa fa-dashboard"></i>&nbsp;Manage Old</a></li>
         </ul>
     </div>
 </div>
 
 <div class="tab-content">
+    <div class="modal fade" id="check_to_delete" tabindex="-1" role="dialog" aria-labelledby="modallabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm"><!--small modal-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            <span style="color:red;"><i class="fa fa-exclamation-triangle"></i>警告</span>
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>您正在尝试删除文章，该操作不可逆，确定吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="return false">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" id="confirm_to_delete">
+                            确认
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
     <!--manage articels in database-->
     <div id="manage-article" class="container tab-pane">
         <select name="" id="">
@@ -74,8 +99,8 @@
                             <option value="">{{ article.status }}</option>
                         </select>
                     </td>
-                    <td><i class="fa fa-pencil" style="color: blue"></i></td>
-                    <td><i class="fa fa-trash-o" style="color: red"></i></td>
+                    <td><a href="#" data-toggle="tooltip" title="修改文章"><i class="fa fa-pencil" style="color: blue"></i></a></td>
+                    <td><a href="#" data-toggle="tooltip" title="删除文章"><i class="fa fa-trash-o" style="color: red"></i></a></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -135,6 +160,8 @@
 <script>
     var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}
     $(document).ready(function () {
+        //data-toggle tooltip
+        $("[data-toggle='tooltip']").tooltip();
         //use ajax not to refresh the page
         var editor = CKEDITOR.instances['article_content'];
         editor.on('instanceReady',function (event) {
@@ -209,22 +236,25 @@
         });
 
         $("i.fa.fa-trash-o").click(function () {
-            //click to delete the article
             var uuid = $(this).parents('td').siblings('td:first').attr('id');
+            $("#check_to_delete").modal("show");
+            $("#check_to_delete .modal-body p").attr("id",uuid);
             //console.log(uuid);
             //ajax to delete the article
+        });
+
+        $("#confirm_to_delete").click(function () {
+            var uuid = $(this).parents().siblings(".modal-body").children("p").attr("id");
             $.ajax({
                 type:'delete',
                 url:$SCRIPT_ROOT + 'api/article/uuid/' + uuid,
-                beforeSend:function () {
-                    alert('confirm!')
-                },
                 data:{"_method":"DELETE"},
-                dataType:'json',
+                dataType:"json",
                 success:function () {
-                    console.log('success')
+                    console.log('success');
+                    $("#check_to_delete").modal("hide");
                 }
-            });
+           });
         });
     })
 </script>
