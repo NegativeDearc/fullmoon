@@ -1,14 +1,9 @@
 # -*- coding:utf-8 -*-
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response, g, flash
-from app.models.model import Article, Visit
-from flask.ext.login import login_required, login_user, current_user
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response, g, flash, session
+from app.models.model import Article, Visit, Login
+from flask.ext.login import login_required, login_user, current_user, logout_user
 
 main = Blueprint('main', __name__)
-
-
-@main.before_request
-def before_request():
-    g.user = current_user
 
 
 @main.route('/')
@@ -19,16 +14,15 @@ def main_root():
 
 @main.route('/login', methods=['GET', 'POST'])
 def main_login():
+    if current_user.is_authenticated:
+        return redirect(url_for("main.main_edit"))
     if request.method == "POST":
-        # verify the login user if authenticated
-        help(login_user)
-        if not g.user.is_authenticated:
+        user = Login.query.filter(Login.user == request.form.get("usr")).first()
+        if user is not None and user.verify_password(request.form.get("pwd")):
+            login_user(user, remember=True)
+            return redirect(request.args.get("next")) or url_for("main.main_root")
+        else:
             flash('Wrong user name or password')
-
-        if g.user is not None and g.user.is_authenticated:
-
-            print 'user is authenticated'
-            return request.args.get("next")
     return render_template('YouMustLogin.html')
 
 
@@ -37,11 +31,12 @@ def main_about():
     return render_template('AboutTheWebsite.html')
 
 
-@main.route('/editor', methods=['GET','POST'])
+@main.route('/editor', methods=['GET', 'POST'])
 @login_required
 def main_edit():
-    article_for_administration = Article.administration_article()
-    return render_template('ArticleEditor.html',article_for_administration=article_for_administration)
+    print session
+    article_for_administration = Article.administration_article(user=current_user.user)
+    return render_template('ArticleEditor.html', article_for_administration=article_for_administration)
 
 
 @main.route('/administrator')

@@ -35,7 +35,7 @@ class Article(db.Model):
     )
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True, nullable=False, unique=True)
     uuid = db.Column(db.String(20), nullable=False, unique=True)
-    # author = db.Column(db.String(20),nullable=False)
+    author = db.Column(db.String(20), nullable=False)
     title = db.Column(db.String(25), nullable=False)
     content = db.Column(db.String(2000), nullable=False)
     tags = db.Column(db.String(25), nullable=True)
@@ -48,6 +48,7 @@ class Article(db.Model):
     def __init__(self, form={}):
         self.uuid = form.get('uuid', None)
         self.title = form.get('title', None)
+        self.author = form.get('author', None)
         self.content = form.get('content', None)
         self.tags = None
         self.create_date = datetime.now()
@@ -126,9 +127,9 @@ class Article(db.Model):
         return cls.query.paginate(page, per_page=5, error_out=True)
 
     @classmethod
-    def administration_article(cls, category="all"):
+    def administration_article(cls, user=None, category="all"):
         # get the article by category
-        return cls.query.all()
+        return cls.query.filter(cls.author == user).all()
 
     @classmethod
     def article_by_uuid_api(cls, uuid):
@@ -188,13 +189,13 @@ class Login(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
     def is_authenticated(self):
-        pass
+        return False
 
     def is_active(self):
-        pass
+        return False
 
     def is_anonymous(self):
-        pass
+        return False
 
     def get_id(self):
         """
