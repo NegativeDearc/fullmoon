@@ -4,9 +4,9 @@ from config import config
 from flask.ext.login import LoginManager
 import os
 from models.database import db
+from models.model import Login
 from uuid import uuid1
 from flask.ext.restful import Api
-
 
 lm = LoginManager()
 
@@ -28,12 +28,19 @@ def create_app(conf):
     api.add_resource(VisitTimes, '/api/tools/visit_times/', endpoint='visit')
     api.add_resource(ArticleApi,'/api/article/uuid/<uuid>', endpoint='tasks')
 
-
     db.init_app(app)
     # http://blog.csdn.net/yannanxiu/article/details/53426359
     # http://www.pythondoc.com/flask-sqlalchemy/api.html#flask.ext.sqlalchemy.SQLAlchemy.init_app
     # http://librelist.com/browser/flask/2010/8/30/sqlalchemy-init-app-problem/
     db.app = app
+    # do not use setup_app()
+    lm.session_protection = 'strong'
+    lm.login_view = 'main.main_login'
+
+    @lm.user_loader
+    def load_user(uid):
+        return Login.get(uid)
+
     lm.init_app(app)
 
     for view in view_list:

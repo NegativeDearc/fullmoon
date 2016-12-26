@@ -4,12 +4,12 @@ from sqlalchemy.orm.exc import NoResultFound
 from database import db
 import uuid
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask.ext.login import UserMixin
 
 
 # if you want use db.create_all()
 # import all db models after import db from app
-
-
 class Article(db.Model):
     """
     A table store all articles for user.
@@ -58,7 +58,7 @@ class Article(db.Model):
 
     def __repr__(self):
         return "at %s created an article named %s and it's content %s" % \
-               (self.create_date,self.title,self.content)
+               (self.create_date, self.title, self.content)
 
     @classmethod
     def update_article(cls, form={}):
@@ -153,7 +153,7 @@ class Article(db.Model):
 #     pass
 
 
-class Login(db.Model):
+class Login(db.Model, UserMixin):
     """
     table store user name and password
     Include {
@@ -165,7 +165,27 @@ class Login(db.Model):
     __tablename__ = 'Login'
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True, unique=True)
     user = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), unique=True, nullable=False)
+    mail = db.Column(db.String(50), unique=True, nullable=True)
+
+    def __init__(self, user=None, password=None, mail=None):
+        self.user = user
+        self.password_hash = generate_password_hash(password, method="pbkdf2:sha1", salt_length=16)
+        self.mail = mail
+
+    @property
+    def password(self):
+        raise AttributeError("You Can't Read the Original Password!")
+
+    # user.password='password'
+    @password.setter
+    def password(self, password=None):
+        self.password_hash = generate_password_hash(password, method="pbkdf2:sha1", salt_length=16)
+
+    def verify_password(self, password=None):
+        if password is None:
+            return False
+        return check_password_hash(self.password_hash, password)
 
     def is_authenticated(self):
         pass
@@ -177,10 +197,28 @@ class Login(db.Model):
         pass
 
     def get_id(self):
-        pass
+        """
+        get user id from profile file, if not exist, it will
+        generate a uuid for the user.
+        :return:unicode
+        """
+        if self.user is not None:
+            return unicode(self.id)
+        return unicode(uuid.uuid4())
 
-    def verify_password(self):
-        pass
+    @staticmethod
+    def get(user_id):
+        """
+        try to return user_id corresponding User object.
+        This method is used by load_user callback function
+        :param user_id:
+        :return:Login class
+        """
+        if not user_id:
+            return None
+        else:
+            login = Login.query.filter(Login.id == user_id).one()
+            return login
 
 
 class Secure(db.Model):
@@ -212,3 +250,7 @@ class Visit(db.Model):
     @property
     def visit_times(self):
         return db.session.query(Visit.times).first()[0]
+
+
+if __name__ == '__main__':
+    db.create_all()

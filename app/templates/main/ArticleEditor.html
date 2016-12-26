@@ -238,7 +238,7 @@
         $("i.fa.fa-trash-o").click(function () {
             var uuid = $(this).parents('td').siblings('td:first').attr('id');
             $("#check_to_delete").modal("show");
-            $("#check_to_delete .modal-body p").attr("id",uuid);
+            $("#check_to_delete").find(".modal-body p").attr("id",uuid);
             //console.log(uuid);
             //ajax to delete the article
         });
