@@ -41,11 +41,7 @@ def main_about():
 @main.route('/editor', methods=['GET', 'POST'])
 @login_required
 def main_edit():
-    print current_user.is_authenticated()
-    print current_user.is_active()
-    print current_user.is_anonymous()
-    print login_fresh()
-    print session
+    article_for_administration = Article.administration_article(user=current_user.user)
     if request.args.get("logout") == "True":
         # Logs a user out. (You do not need to pass the actual user.)
         # This will also clean up the remember me
@@ -53,6 +49,5 @@ def main_edit():
         # By default, when a user is not actually logged in,
         # current_user is set to an AnonymousUserMixin object.
         logout_user()
-        # return redirect(url_for("main.main_login"))
-    article_for_administration = Article.administration_article(user=current_user.user)
+        return redirect(url_for("main.main_login"))
     return render_template('ArticleEditor.html', article_for_administration=article_for_administration)
