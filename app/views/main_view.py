@@ -24,7 +24,9 @@ def main_login():
     if request.method == "POST":
         user = Login.query.filter(Login.user == request.form.get("usr")).first()
         if user is not None and user.verify_password(request.form.get("pwd")):
+            print session
             login_user(user, remember=True, force=True, fresh=True) # it will return True if success
+            print session
             return redirect(request.args.get("next")) or url_for("main.main_root")
         else:
             flash('Wrong user name or password')
@@ -43,9 +45,13 @@ def main_edit():
     print current_user.is_active()
     print current_user.is_anonymous()
     print login_fresh()
+    print session
     if request.args.get("logout") == "True":
         # Logs a user out. (You do not need to pass the actual user.)
         # This will also clean up the remember me
+        # bug:AttributeError: 'AnonymousUserMixin' object has no attribute 'user'
+        # By default, when a user is not actually logged in,
+        # current_user is set to an AnonymousUserMixin object.
         logout_user()
         # return redirect(url_for("main.main_login"))
     article_for_administration = Article.administration_article(user=current_user.user)
