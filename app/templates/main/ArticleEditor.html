@@ -12,22 +12,12 @@
     <script src="{{ url_for('main.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('main.static',filename='bootstrap.min.js') }}"></script>
     <style>
-        #postcard {background-color: #1d75b3}
-        #postcard > h1 {color: #FFFFFF;text-align: center}
-        .container {margin-top: 1px;}
-        .jumbotron > .container {
-            margin-bottom: -30px;
-        }
-        .jumbotron > .container > ul > li > a {
-            font-size: 20px;
-            color: #FFFFFF;
-        }
-        .jumbotron > .container > ul > li > a:hover {
-            color: #1d75b3;
-        }
         #article_table > tbody > tr > td:first-child {text-align: center;vertical-align: middle!important;}
         .fa-trash-o:hover {box-shadow: 1px 1px 1px 1px;}
         .fa-pencil:hover {box-shadow: 1px 1px 1px 1px;}
+        #page {margin-top:70px;}
+        .second-menu > li {padding-left: 5%;}
+        .nav-header > a > .caret {float:right;}
     </style>
 </head>
 <body>
@@ -42,144 +32,172 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="" class="navbar-brand"><i class="fa fa-moon-o"></i>&nbsp;Full Moon</a><!-- logo for navibar -->
+            <a href="" class="navbar-brand">Admin Panel</a><!-- logo for navibar -->
         </div><!--navbar header-->
 
         <!-- navbar links -->
         <div class="collapse navbar-collapse navbar-responsive-collapse" id="fullmoon-navbar">
             <form action="" class="navbar-form navbar-right">
-                <a href="#" class="btn">Welcome!{{ current_user.user }}</a>
-                <a href="#" class="btn" type="submit">logout</a>
+                <a href="#" class="btn dropdown-toggle" id="self" data-toggle="dropdown"><i class="fa fa-user-circle-o"></i>&nbsp;{{ current_user.user }}<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="self">
+                    <li role="presentation" tabindex="-1"><a href="#"><i class="fa fa-file-text"></i>&nbsp;Profile</a></li>
+                    <li role="presentation" tabindex="-1"><a href="?logout=True"><i class="fa fa-power-off"></i>&nbsp;Log out</a></li>
+                </ul>
             </form>
         </div><!-- navbar-collapse -->
     </div><!--container-fluid-->
 </nav>
 
-<div class="jumbotron" id="postcard">
-    <h1>Welcome! <span style="color: red">{{ current_user.user }}</span></h1>
-    <hr style="width: 150px;">
-    <div class="container">
-        <ul class="nav nav-pills nav-justified" role="tablist">
-            <li><a href="#new-article" data-toggle="tab" title="新增一篇文章"><i class="fa fa-plus"></i>&nbsp;Add New</a></li>
-            <li><a href="#manage-article" data-toggle="tab" title="管理已经存在的文章"><i class="fa fa-dashboard"></i>&nbsp;Manage Old</a></li>
-        </ul>
-    </div>
-</div>
-
-<div class="tab-content">
-    <div class="modal fade" id="check_to_delete" tabindex="-1" role="dialog" aria-labelledby="modallabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm"><!--small modal-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            <span style="color:red;"><i class="fa fa-exclamation-triangle"></i>警告</span>
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>您正在尝试删除文章，该操作不可逆，确定吗？</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="return false">关闭
-                        </button>
-                        <button type="button" class="btn btn-primary" id="confirm_to_delete">
-                            确认
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-
-    <!--manage articels in database-->
-    <div id="manage-article" class="container tab-pane">
-        <select name="" id="">
-            <option value="">--Category--</option>
-            <option value="">1</option>
-            <option value="">2</option>
-            <option value="">3</option>
-        </select>
-        <div class="table">
-            <table class="table table-striped table-condensed">
-            <tr>
-                <td>标题</td>
-                <td>标签</td>
-                <td>正文</td>
-                <td>创建日期</td>
-                <td>状态</td>
-                <td colspan="2">操作</td>
-            </tr>
-                {% for article in article_for_administration %}
-                    <tr>
-                    <td id="{{ article.uuid }}" style="display: none;"></td>
-                    <td>{{ article.title }}</td>
-                    <td>{{ article.tags }}</td>
-                    <td>{{ article.content[:40] }}</td>
-                    <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
-                    <td>
-                        <select name="" id="">
-                            <option value="">{{ article.status }}</option>
-                        </select>
-                    </td>
-                    <td><a href="#" data-toggle="tooltip" title="修改文章"><i class="fa fa-pencil" style="color: blue"></i></a></td>
-                    <td><a href="#" data-toggle="tooltip" title="删除文章"><i class="fa fa-trash-o" style="color: red"></i></a></td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </div>
-    <!--ckeditor-->
-    <div class="container tab-pane" id="new-article">
-        <!--flashed messages write here when ajax received status-->
-        <div class="alert alert-info" style="display: none;" id="message_add">
-            <strong>新增成功!</strong> 文章已被添加至数据库，再次提交可以进行修改。注意文章发布状态！
-        </div>
-        <div class="alert alert-success" style="display: none;" id="message_update">
-            <strong>更新成功!</strong> 文章已经被更新到数据库，再次保存继续更新文章。注意文章发布状态！
-        </div>
-        <div class="alert alert-warning" style="display: none;" id="message_failed">
-            <strong>操作失败!</strong> 原因是输入了不被允许的字段值，请检查输入是否有误。
-        </div>
-        <!--form-->
-        <form action="" method="post" id="article_form">
-            <input type="hidden" name="_crsf_token" id="_crsf_token" value="{{ crsf_token() }}">
-            <input type="hidden" name="_uuid" id="_uuid" value="{{ uuid() }}"><!--insert uuid here,updated only when the page refreshed-->
-            <div class="table">
-                <table class="table table-condensed table-bordered" id="article_table">
-                    <div class="row">
-                    <tr>
-                        <td>文章标题</td>
-                        <td><input type="text" name="title" required="required" id="article_title"></td>
-                    </tr>
-                    <tr>
-                        <td>文章分类</td>
-                        <td>
-                            <select name="category" id="article_category">
-                                <option value="">--分类--</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>文章状态</td>
-                        <td>
-                            <select name="status" id="article_status">
-                                <option value="DRAFTED">草稿</option>
-                                <option value="PUBLISHED">发布</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <textarea id="article_content" cols="20" rows="2" class="ckeditor" name="content"></textarea>
-                        </td>
-                    </tr>
-                    </div>
-                </table>
+<div class="container-fluid" id="page">
+    <div class="row">
+        <div class="col-md-2">
+            <div id="sidebar" class="panel panel-default">
+                <div class="panel-heading"><a href="#" data-toggle="collapse"><i class="fa fa-angle-double-left"></i></a></div>
+                <ul class="nav nav-list">
+                    <li><a href="#"><i class="fa fa-dashboard"></i>&nbsp;仪表盘</a></li>
+                    <li class="nav-header"><a href="#manage_article" data-toggle="collapse"><i class="fa fa-book"></i>&nbsp;图书馆<span class="caret"></span></a></li>
+                        <ul id="manage_article" class="nav nav-list collapse second-menu">
+                            <li role="presentation"><a href="#new-article" data-toggle="tab"><i class="fa fa-plus-circle"></i>&nbsp;新增文章</a></li>
+                            <li role="presentation"><a href="#manage-article" data-toggle="tab"><i class="fa fa-gear"></i>&nbsp;管理文章</a></li>
+                            <li role="presentation"><a href="#" data-toggle="tab"><i class="fa fa-comments-o"></i>&nbsp;评论管理</a></li>
+                        </ul>
+                    <li class="nav-header"><a href="#manage_system" data-toggle="collapse"><i class="fa fa-th"></i>&nbsp;其他<span class="caret"></span></a></li>
+                        <ul id="manage_system" class="nav nav-list collapse second-menu">
+                            <li role="presentation"><a href="#">功能1</a></li>
+                            <li role="presentation"><a href="#">功能2</a></li>
+                        </ul>
+                </ul>
             </div>
-    </form>
+        </div>
+        <div class="col-md-10">
+            <div class="tab-content">
+                <div class="modal fade" id="check_to_delete" tabindex="-1" role="dialog" aria-labelledby="modallabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm"><!--small modal-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        <span style="color:red;"><i class="fa fa-exclamation-triangle"></i>警告</span>
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>您正在尝试删除文章，该操作不可逆，确定吗？</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="return false">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary" id="confirm_to_delete">
+                                        确认
+                                    </button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+
+                <!--manage articels in database-->
+                <div class="panel panel-info tab-pane" id="manage-article">
+                    <div class="panel-heading">ManageBoard</div>
+                    <div class="panel-body">
+                        <div>
+                            <select name="" id="">
+                        <option value="">--Category--</option>
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                    </select>
+                            <div class="table">
+                        <table class="table table-striped table-condensed">
+                        <tr>
+                            <td>标题</td>
+                            <td>标签</td>
+                            <td>正文</td>
+                            <td>创建日期</td>
+                            <td>状态</td>
+                            <td colspan="2">操作</td>
+                        </tr>
+                            {% for article in article_for_administration %}
+                                <tr>
+                                <td id="{{ article.uuid }}" style="display: none;"></td>
+                                <td>{{ article.title }}</td>
+                                <td>{{ article.tags }}</td>
+                                <td>{{ article.content[:40] }}</td>
+                                <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
+                                <td>
+                                    <select name="" id="">
+                                        <option value="">{{ article.status }}</option>
+                                    </select>
+                                </td>
+                                <td><a href="#" data-toggle="tooltip" title="修改文章"><i class="fa fa-pencil" style="color: blue"></i></a></td>
+                                <td><a href="#" data-toggle="tooltip" title="删除文章"><i class="fa fa-trash-o" style="color: red"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+                <!--ckeditor-->
+                <div class="tab-pane panel panel-info" id="new-article">
+                    <div class="panel-heading">CKEditor</div>
+                    <div class="panel-body">
+                        <div>
+                            <!--flashed messages write here when ajax received status-->
+                            <div class="alert alert-info" style="display: none;" id="message_add">
+                                <strong>新增成功!</strong> 文章已被添加至数据库，再次提交可以进行修改。注意文章发布状态！
+                            </div>
+                            <div class="alert alert-success" style="display: none;" id="message_update">
+                                <strong>更新成功!</strong> 文章已经被更新到数据库，再次保存继续更新文章。注意文章发布状态！
+                            </div>
+                            <div class="alert alert-warning" style="display: none;" id="message_failed">
+                                <strong>操作失败!</strong> 原因是输入了不被允许的字段值，请检查输入是否有误。
+                            </div>
+                            <!--form-->
+                            <form action="" method="post" id="article_form">
+                                <input type="hidden" name="_crsf_token" id="_crsf_token" value="{{ crsf_token() }}">
+                                <input type="hidden" name="_uuid" id="_uuid" value="{{ uuid() }}"><!--insert uuid here,updated only when the page refreshed-->
+                                <div class="table">
+                                    <table class="table table-condensed table-bordered" id="article_table">
+                                        <div class="row">
+                                        <tr>
+                                            <td>文章标题</td>
+                                            <td><input type="text" name="title" required="required" id="article_title"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>文章分类</td>
+                                            <td>
+                                                <select name="category" id="article_category">
+                                                    <option value="">--分类--</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>文章状态</td>
+                                            <td>
+                                                <select name="status" id="article_status">
+                                                    <option value="DRAFTED">草稿</option>
+                                                    <option value="PUBLISHED">发布</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <textarea id="article_content" cols="20" rows="2" class="ckeditor" name="content"></textarea>
+                                            </td>
+                                        </tr>
+                                        </div>
+                                    </table>
+                                </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div><!--tab content-->
+        </div>
     </div>
 </div>
+
 <script>
     var $SCRIPT_ROOT = {{ request.script_root|tojson }};
     var $AUTHOR = {{ current_user.user|tojson }};

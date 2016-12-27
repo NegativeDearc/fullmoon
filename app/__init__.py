@@ -36,6 +36,9 @@ def create_app(conf):
     # do not use setup_app()
     lm.session_protection = 'strong'
     lm.login_view = 'main.main_login'
+    lm.refresh_view = "main.main_login"
+    lm.needs_refresh_message = u"To protect your account, please re-authenticate to access this page."
+    lm.needs_refresh_message_category = "info"
 
     @lm.user_loader
     def load_user(uid):

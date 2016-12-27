@@ -192,6 +192,9 @@ class Login(db.Model, UserMixin):
         return False
 
     def is_active(self):
+        # flask_login.login_user(user, remember=False, force=False, fresh=True)[source]
+        # Logs a user in. You should pass the actual user object to this.
+        # If the user’s is_active property is False, they will not be logged in unless force is True.
         return False
 
     def is_anonymous(self):
