@@ -72,7 +72,7 @@ def generate_uuid():
     return uuid1().__str__()
 
 
-app = create_app(config['development'])
+app = create_app(config['production'])
 app.jinja_env.globals['crsf_token'] = generate_csrf_token
 app.jinja_env.globals['uuid'] = generate_uuid
 
