@@ -199,8 +199,8 @@
 </div>
 
 <script>
-    var $SCRIPT_ROOT = {{ request.script_root|safe }}
-    var $AUTHOR = {{ current_user.user }};
+    var $SCRIPT_ROOT = "{{ request.script_root|safe }}";
+    var $AUTHOR = "{{ current_user.user }}";
     $(document).ready(function () {
         //data-toggle tooltip
         $("[data-toggle='tooltip']").tooltip();
