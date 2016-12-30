@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="{{ url_for('main.static',filename='bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('main.static',filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('main.static',filename='BigVideo/css/bigvideo.css') }}">
     <script src="{{ url_for('main.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('main.static',filename='bootstrap.min.js') }}"></script>
+    <!-- If you'd like to support IE8 -->
+    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <!--Endif-->
+    <script src="{{ url_for('main.static',filename='BigVideo/lib/video.js') }}"></script>
+    <script src="{{ url_for('main.static',filename='BigVideo/lib/bigvideo.js') }}"></script>
     <title>SCC's Blog</title>
     <style>
         body {background: #212121}
@@ -50,6 +56,9 @@
             background: #449d44;
             color: #ffffff;
             border: #449d44;
+        }
+        #big-video-wrap {
+            z-index: -99;
         }
     </style>
 </head>
@@ -99,15 +108,25 @@
     {% endfor %}
 </div>
 <!-- pagination for articles -->
-    <nav>
-        <ul class="pager">
-    {% if pagination.has_next %}
-            <li><a href="{{ url_for("scc.scc_root",page=pagination.next_num) }}" target="_self">Next</a></li>
-    {% endif %}
-    {% if pagination.has_prev %}
-            <li><a href="{{ url_for("scc.scc_root",page=pagination.prev_num) }}" target="_self">Previous</a></li>
-    {% endif %}
-        </ul>
-    </nav>
+<nav>
+    <ul class="pager">
+{% if pagination.has_next %}
+        <li><a href="{{ url_for("scc.scc_root",page=pagination.next_num) }}" target="_self">Next</a></li>
+{% endif %}
+{% if pagination.has_prev %}
+        <li><a href="{{ url_for("scc.scc_root",page=pagination.prev_num) }}" target="_self">Previous</a></li>
+{% endif %}
+    </ul>
+</nav>
+
+<script>
+    $(function() {
+    var BV = new $.BigVideo({
+        doLoop:true
+    });
+    BV.init();
+    BV.show("{{ url_for('main.static',filename='backgroundvideo.mp4') }}");
+});
+</script>
 </body>
 </html>

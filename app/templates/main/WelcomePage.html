@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>Welcome To Full Moon Blog</title>
     <link rel="stylesheet" href="{{ url_for('main.static',filename='bootstrap.min.css') }}">
@@ -11,7 +11,17 @@
     <script src="{{ url_for('main.static',filename='bootstrap.min.js') }}"></script>
 </head>
 <style>
-    body {background: url({{ url_for('main.static',filename='home-bg.jpg') }})}
+    body {
+        margin: 0;
+        padding: 0;
+        background: url({{ url_for('main.static',filename='home-bg.jpg') }}) no-repeat fixed;
+        background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        /* IE6-9 */
+        filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{{ url_for('main.static',filename='home-bg.jpg') }}', sizingMethod=scale);
+        -ms-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{{ url_for('main.static',filename='home-bg.jpg') }}', sizingMethod=scale);
+    }
     .navbar-default,.navbar-collapse,.navbar-form {
         background-color: transparent;
         color: #e7e7e7;
