@@ -7,6 +7,8 @@ from models.database import db
 from models.model import Login
 from uuid import uuid1
 from flask.ext.restful import Api
+from bs4 import BeautifulSoup
+import re
 
 lm = LoginManager()
 
@@ -72,9 +74,26 @@ def generate_uuid():
     return uuid1().__str__()
 
 
-app = create_app(config['production'])
+# remove all tags of html for use instead of safe filter
+def sanitize_html(value):
+    soup = BeautifulSoup(value)
+    for tag in soup.findAll(True):
+        tag.hidden = True
+    soup = unicode(soup)
+    return soup
+
+
+# use re to remove all blank/tab/white space at html
+def remove_blank(value):
+    pass
+
+
+app = create_app(config['development'])
 app.jinja_env.globals['crsf_token'] = generate_csrf_token
 app.jinja_env.globals['uuid'] = generate_uuid
+app.jinja_env.filters['sanitize_html'] = sanitize_html
+app.jinja_env.filters['remove_blank'] = remove_blank
+
 
 if not app.debug:
     print True

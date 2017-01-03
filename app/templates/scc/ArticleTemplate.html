@@ -2,15 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="{{ url_for('main.static',filename='bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('main.static',filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
-    <script src="{{ url_for('main.static',filename='jquery.min.js') }}"></script>
-    <script src="{{ url_for('main.static',filename='bootstrap.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('scc.static',filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('scc.static',filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <script src="{{ url_for('scc.static',filename='ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ url_for('scc.static',filename='jquery.min.js') }}"></script>
+    <script src="{{ url_for('scc.static',filename='bootstrap.min.js') }}"></script>
     <title>{{ article_by_uuid.title }}</title>
+    <style>
+        body {background:#313131;}
+
+        .article_title {
+            margin-top: 20px;
+            text-align: center;
+            color: white;
+        }
+        .article_title > .title {font-size: 22px;}
+        .article_title > .author {font-size: 8px;}
+
+        .container {
+            padding-top: 20px;
+            margin-top: 20px;
+            z-index: 999;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 1px 1px 1px 1px #3e3e3e;
+        }
+        .share_links {
+            margin-top: 20px;
+            text-align: center;
+            color: white;
+        }
+        .share_links > div {display: inline-block}
+        .share_links > div > i:hover {
+            color: #0088ff;
+        }
+        .navbar-fixed-buttom {
+            margin-top: 20px;
+            text-align: center;
+            color: white;
+        }
+    </style>
+    {% if scripts %}
+        <script>
+            $(document).ready(function () {
+                //editor title of article
+                //move article content to ckeditor
+            });
+        </script>
+    {% endif %}
 </head>
 <body>
-
+<div class="article_title">
+    <div class="title title_for_ckeditor">{{ article_by_uuid.title }}</div>
+    <div class="author">{{ article_by_uuid.author }}</div>
+    <!--<img src="" width="100" height="100">-->
+</div>
+<div class="container">
+    <div class="content_for_ckeditor">{{ article_by_uuid.content|safe }}</div>
+</div>
+<div class="share_links">
+    <div><i class="fa fa-weibo fa-2x" title="分享到微博"></i></div>
+    <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
+    <div><i class="fa fa-wechat fa-2x" title="分享到微信"></i></div>
+    <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
+    <div><i class="fa fa-qq fa-2x" title="分享到QQ"></i></div>
+</div>
+<div class="navbar navbar-fixed-buttom" role="navigation">Copyright&nbsp;&copy;&nbsp;scc</div>
+<script>
+</script>
 </body>
 </html>

@@ -58,8 +58,9 @@ class Article(db.Model):
         self.status = form.get('status', None)
 
     def __repr__(self):
+        # add encode to utf-8 otherwise it will get an error can't decode to ascii
         return "at %s created an article named %s and it's content %s" % \
-               (self.create_date, self.title, self.content)
+               (self.create_date, self.title.encode("utf-8"), self.content.encode("utf-8"))
 
     @classmethod
     def update_article(cls, form={}):
@@ -113,18 +114,18 @@ class Article(db.Model):
                 return False
 
     @classmethod
-    def latest_article(cls, page=1):
+    def latest_article(cls, page=1, author='scc'):
         # get articles which are in published status
         n = page * 5
         return cls.query. \
-                   filter(cls.status == 'PUBLISHED'). \
+                   filter(cls.status == 'PUBLISHED',cls.author == author). \
                    order_by(desc(cls.create_date)). \
                    all()[n - 5:n]
 
     @classmethod
-    def pagination(cls, page):
+    def pagination(cls, page, author='scc'):
         # get paginate of query
-        return cls.query.paginate(page, per_page=5, error_out=True)
+        return cls.query.filter(cls.author==author).paginate(page, per_page=5, error_out=True)
 
     @classmethod
     def administration_article(cls, user=None, category="all"):

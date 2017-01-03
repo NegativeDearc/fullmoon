@@ -122,14 +122,14 @@
                                 <td id="{{ article.uuid }}" style="display: none;"></td>
                                 <td>{{ article.title }}</td>
                                 <td>{{ article.tags }}</td>
-                                <td>{{ article.content[:40] }}</td>
+                                <td>{{ article.content[:40]|sanitize_html }}</td>
                                 <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
                                 <td>
                                     <select name="" id="">
                                         <option value="">{{ article.status }}</option>
                                     </select>
                                 </td>
-                                <td><a href="#" data-toggle="tooltip" title="修改文章"><i class="fa fa-pencil" style="color: blue"></i></a></td>
+                                <td><a href="/{{ article.author }}/blog/article/{{ article.uuid }}?edit=true" data-toggle="tooltip" title="修改文章"><i class="fa fa-pencil" style="color: blue"></i></a></td>
                                 <td><a href="#" data-toggle="tooltip" title="删除文章"><i class="fa fa-trash-o" style="color: red"></i></a></td>
                                 </tr>
                             {% endfor %}

@@ -67,6 +67,9 @@
         }
     </style>
 </head>
+<script>
+    var $SCRIPT_ROOT = "{{ request.script_root|safe }}";
+</script>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
@@ -105,12 +108,13 @@
     {% for item in latest_10 %}
         <div class="media-box">
             <div class="media">
-                <a href="" class="media-left"><img src="" alt="" width="64" height="64"></a>
+                <a href="?article={{ item.uuid }}" class="media-left" target="_blank"><img src="" alt="" width="64" height="64"></a>
                 <div class="media-left"><span class="label label-success">{{ item.tags}}</span></div><!--tags-->
                 <div class="media-body">
                     <h4 class="media-heading">{{ item.title }}</h4><!--title-->
+                    <p style="display:none;">{{ item.uuid }}</p><!--uuid-->
                     <small>{{ item.create_date.strftime("%Y-%m-%d %H:%M") }}</small><!--create date-->
-                    <div>{{ item.content[:70]|safe }}</div><!--first 100 words-->
+                    <div>{{ item.content[:70]|sanitize_html }}</div><!--first 100 words-->
                 </div>
             </div>
         </div>
