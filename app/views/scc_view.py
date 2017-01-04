@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.models.model import Article
+from app.models.model import db, Article
 from flask.ext.login import login_required
+from datetime import datetime
 
 scc = Blueprint('scc', __name__, template_folder='templates', url_prefix='/scc')
 
@@ -23,8 +24,18 @@ def scc_article(uuid):
     return render_template('ArticleTemplate.html', article_by_uuid=article_by_uuid)
 
 
-@scc.route('/blog/article/<string:uuid>/editor')
+@scc.route('/blog/article/<string:uuid>/editor', methods=['GET', 'POST'])
 @login_required
 def article_editor(uuid):
     article_by_uuid = Article.get_article_by_uuid(uuid=uuid)
+    if request.method == 'POST':
+        # update article then redirect to the article url
+        # if need to re-edit, just push the back to history button at browser
+        db.session.query(Article).filter(Article.uuid == uuid).update({
+            "title": request.form.get("title", ""),
+            "content": request.form.get("content", ""),
+            "edit_date": datetime.now()
+        })
+        db.session.commit()
+        return redirect(url_for("scc.scc_article", uuid=uuid))
     return render_template('ArticleTemplate.html', article_by_uuid=article_by_uuid, scripts=True)

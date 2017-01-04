@@ -18,8 +18,8 @@
             text-align: center;
             color: white;
         }
-        .article_title > .title {font-size: 22px;}
-        .article_title > .author {font-size: 8px;}
+        .article_title > .title {font-size: 24px;}
+        .article_title > .author {font-size: 12px;}
 
         .container {
             padding-top: 20px;
@@ -29,6 +29,14 @@
             border-radius: 5px;
             box-shadow: 1px 1px 1px 1px #3e3e3e;
         }
+        .container > .editor > form > .table > table > tbody > tr > td {
+            text-align: left;
+            vertical-align: middle!important;
+        }
+        .container > .editor > form > .table > table > caption {
+            text-align: center;
+        }
+
         .share_links {
             margin-top: 20px;
             text-align: center;
@@ -38,39 +46,90 @@
         .share_links > div > i:hover {
             color: #0088ff;
         }
+
+        .container-fluid {
+            margin-top: 20px;
+            background: #99604c;
+        }
         .navbar-fixed-buttom {
+            font-size: 8px;
             margin-top: 20px;
             text-align: center;
             color: white;
         }
     </style>
-    {% if scripts %}
-        <script>
-            $(document).ready(function () {
-                //editor title of article
-                //move article content to ckeditor
+{% if scripts %}
+    <script>
+        $(window).load(function () {
+            CKEDITOR.replace("ckeditor",{
+                "height":"600px"
             });
-        </script>
-    {% endif %}
+        });
+
+        $(document).ready(function () {
+
+        });
+    </script>
+{% endif %}
 </head>
 <body>
-<div class="article_title">
-    <div class="title title_for_ckeditor">{{ article_by_uuid.title }}</div>
-    <div class="author">{{ article_by_uuid.author }}</div>
-    <!--<img src="" width="100" height="100">-->
-</div>
-<div class="container">
-    <div class="content_for_ckeditor">{{ article_by_uuid.content|safe }}</div>
-</div>
-<div class="share_links">
-    <div><i class="fa fa-weibo fa-2x" title="分享到微博"></i></div>
-    <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
-    <div><i class="fa fa-wechat fa-2x" title="分享到微信"></i></div>
-    <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
-    <div><i class="fa fa-qq fa-2x" title="分享到QQ"></i></div>
-</div>
-<div class="navbar navbar-fixed-buttom" role="navigation">Copyright&nbsp;&copy;&nbsp;scc</div>
-<script>
-</script>
+<!-- if not allowed to edit, show article normal -->
+{% if not scripts %}
+    <!-- title and author -->
+    <div class="article_title">
+        <div class="title title_for_ckeditor">{{ article_by_uuid.title }}</div>
+        <div class="author">{{ article_by_uuid.author }}</div>
+        <!--<img src="" width="100" height="100">-->
+    </div>
+    <!-- article content -->
+    <div class="container">
+        <div class="content_for_ckeditor">{{ article_by_uuid.content|safe }}</div>
+    </div>
+    <!-- love it  button -->
+    <div class="love_it">
+        <!-- how to cancel the love ? need don't like button? -->
+    </div>
+    <!-- share for social sites-->
+    <div class="share_links">
+        <div><i class="fa fa-weibo fa-2x" title="分享到微博"></i></div>
+        <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
+        <div><i class="fa fa-wechat fa-2x" title="分享到微信"></i></div>
+        <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
+        <div><i class="fa fa-qq fa-2x" title="分享到QQ"></i></div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="navbar navbar-fixed-buttom" role="navigation">&copy;&nbsp;版权所有 scc</div>
+    </div>
+
+{% endif %}
+<!-- if allowed to edit, transfer article title and article content to CKeditor -->
+{% if scripts %}
+    <div class="container">
+        <div class="editor">
+            <form action="" method="post">
+            <input type="hidden" name="_crsf_token" value="{{ crsf_token() }}">
+            <div class="table">
+                <table class="table table-responsive table-bordered table-condensed">
+                    <caption>修改文章</caption>
+                    <tr>
+                        <td>
+                        <label for="title">文章标题</label>
+                            <input type="text" value="{{ article_by_uuid.title }}" class="form-control" name="title" id="title">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="ckeditor">文章正文</label>
+                            <textarea id="ckeditor" class="form-control" cols="20" rows="40" name="content">{{ article_by_uuid.content }}</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+        </div>
+    </div>
+{% endif %}
+
 </body>
 </html>
