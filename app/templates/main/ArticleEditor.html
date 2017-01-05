@@ -125,7 +125,7 @@
                                 <td>{{ article.content[:40]|sanitize_html }}</td>
                                 <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
                                 <td>
-                                    <select name="" id="select_of_status">
+                                    <select name="" class="select_of_status">
                                         <option value="{{ article.status }}">{{ article.status }}</option>
                                     </select>
                                 </td>
@@ -202,20 +202,6 @@
     var $SCRIPT_ROOT = "{{ request.script_root|safe }}";
     var $AUTHOR = "{{ current_user.user }}";
     $(document).ready(function () {
-        //generate <select></select> tags
-        var uuid = $("#select_of_status").parents().siblings("td.uuid").html();
-        $.ajax({
-            url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
-            type:"POST",
-            data:{"uuid":uuid,"_method":"POST","demands":"1"},
-            success:function (data) {
-                console.log(data);
-                for (var i=0;i<data['list'].length;i++) {
-                    var d = data['list'][i];
-                    $("#select_of_status").append('<option value="' + d + '">' + d + '</option>');
-                }
-            }
-        });
         //data-toggle tooltip
         $("[data-toggle='tooltip']").tooltip();
         //use ajax not to refresh the page
@@ -293,15 +279,16 @@
         });
         //when click the trash icon
         $("i.fa.fa-trash-o").click(function () {
-            var uuid = $(this).parents('td').siblings('td:first').attr('id');
+            var uuid = $(this).parents().siblings('td:first').html();
+            console.log(uuid);
             $("#check_to_delete").modal("show");
             $("#check_to_delete").find(".modal-body p").attr("id",uuid);
-            //console.log(uuid);
             //ajax to delete the article
         });
         //when confirm to delete the article, show modal
         $("#confirm_to_delete").click(function () {
             var uuid = $(this).parents().siblings(".modal-body").children("p").attr("id");
+            console.log(uuid);
             $.ajax({
                 type:'delete',
                 url:$SCRIPT_ROOT + 'api/article/uuid/' + uuid,
@@ -315,24 +302,45 @@
         });
         //ajax load <option></option> from database
         //when change options in select tags, do the same to database
-        $("#select_of_status").change(function () {
-            var value = $(this).val();
-            var uuid = $(this).parents().siblings("td.uuid").html();
-            console.log(value);
-            console.log(uuid);
-            $.ajax({
-                url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
-                type:"PUT",
-                data:{
-                    "edit_date":new Date().toISOString(),
-                    "uuid":uuid,
-                    "_method":"PUT",
-                    "status":value
-                },
-                success:function (res) {
-                    console.log(res);
-                }
+        $(".select_of_status").on({
+            click: function(){
+                var uuid = $(this).parents().siblings("td.uuid").html();
+                var self = $(this);
+                console.log(uuid);
+                if (self.children("option").length > 1){return false}//prevent add options unlimited
+                $.ajax({
+                     url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
+                     type:"POST",
+                     data:{"uuid":uuid,"_method":"POST","demands":"1"},
+                     success:function (data) {
+                         console.log(data);
+                         for (var i=0;i<data['list'].length;i++) {
+                             var d = data['list'][i];
+                             self.append('<option value="' + d + '">' + d + '</option>');
+                        }
+                    }
+                });
+            },
+            change: function () {
+                var value = $(this).val();
+                var uuid = $(this).parents().siblings("td.uuid").html();
+                console.log(value);
+                console.log(uuid);
+                $.ajax({
+                    url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
+                    type:"PUT",
+                    data:{
+                        "edit_date":new Date().toISOString(),
+                        "uuid":uuid,
+                        "_method":"PUT",
+                        "status":value
+                    },
+                    success:function (res) {
+                        console.log(res);
+                    }
             });
+            }
+
         });
         //ajax refresh the page after do changes with article
     })

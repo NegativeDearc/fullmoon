@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import Blueprint, request, g
+from flask import Blueprint, request, g, make_response
 from uuid import uuid1
 from flask.ext.restful import Resource
 from app.models.model import db, Article, Visit, Login
@@ -14,7 +14,11 @@ class ApiRoute(Resource):
     decorators = [auth.login_required]
 
     def get(self):
-        return g.user.generate_auth_token()
+        token = g.user_.generate_auth_token()
+        return {
+            "token": token.decode("ascii"),
+            "expires_in": 600
+            }
 
     def post(self):
         pass
@@ -23,9 +27,6 @@ class ApiRoute(Resource):
         pass
 
     def delete(self):
-        pass
-
-    def patch(self):
         pass
 
 
@@ -74,17 +75,20 @@ class ArticleApi(Resource):
         :return: {动作信息: http返回代码}
         """
         form = {k: None if v == '' else v for k, v in request.form.items()}
+        print form
 
         if Article.get_article_by_uuid(uuid=form.get('uuid'), abort=False):
             # article update logical here
             # check the form
             if Article.update_article(form):
+                print "trying to update"
                 return {'message': 'update success'}, 200
             else:
                 return {'message': 'update failed'}, 500
         else:
             try:
                 # add new record
+                print "trying to add"
                 db.session.add(Article(form))
                 db.session.commit()
                 return {'message': 'add success'}

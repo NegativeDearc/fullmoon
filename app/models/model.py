@@ -8,7 +8,7 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired, BadSignature
 from flask.ext.login import UserMixin
-from flask import g
+from flask import g, make_response
 from app.config import config
 
 
@@ -94,6 +94,7 @@ class Article(db.Model):
 
     @classmethod
     def update_article(cls, form={}):
+        """
         # update by request form, be careful with the date time handling
         # "2016-12-22T03:30:24.160Z"
         # %a 星期的简写。如 星期三为Web
@@ -119,6 +120,9 @@ class Article(db.Model):
         # %Y:  4个数字表示的年份
         # %z:  与utc时间的间隔 （如果是本地时间，返回空字符串）
         # %Z:  时区名称（如果是本地时间，返回空字符串）
+        :param form:
+        :return:
+        """
         cls.query.filter(cls.uuid == form.get('uuid')).update({
             'title': form.get('title', cls.title),  # if can't get title then will no change
             'content': form.get('content', cls.content),  # if can't get content then will no change
@@ -141,8 +145,9 @@ class Article(db.Model):
         if abort:
             return cls.query.filter(cls.uuid == uuid, cls.status == 'PUBLISHED').first_or_404()
         else:
-            # except NoResultFound:
-            return cls.query.filter(cls.uuid == uuid).first_or_404()
+            # if use .one() method, will through NoResultFound error
+            # use .first() method to return None if not existed
+            return cls.query.filter(cls.uuid == uuid).first()
 
     @classmethod
     def latest_article(cls, page=1, author='scc'):
@@ -219,13 +224,13 @@ class Login(db.Model, UserMixin):
         self.password_hash = generate_password_hash(password, method="pbkdf2:sha1", salt_length=16)
         self.mail = mail
 
-    def generate_auth_token(self, expiration=60):
+    def generate_auth_token(self, expiration=600):
         s = TimedJSONWebSignatureSerializer(config['default'].SECRET_KEY, expires_in=expiration)
         return s.dumps({"id": self.id})
 
     @staticmethod
     def verify_auth_token(token):
-        s = TimedJSONWebSignatureSerializer
+        s = TimedJSONWebSignatureSerializer(config['default'].SECRET_KEY)
         try:
             data = s.load(token)
         except SignatureExpired:

@@ -25,7 +25,7 @@ def main_login():
         user = Login.query.filter(Login.user == request.form.get("usr")).first()
         if user is not None and user.verify_password(request.form.get("pwd")):
             print session
-            login_user(user, remember=True, force=True, fresh=True) # it will return True if success
+            login_user(user, remember=True, force=True, fresh=True)  # it will return True if success
             print session
             return redirect(request.args.get("next")) or url_for("main.main_root")
         else:
