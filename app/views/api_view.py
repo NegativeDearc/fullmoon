@@ -1,14 +1,34 @@
 # -*- coding:utf-8 -*-
-from flask import Blueprint, request
+from flask import Blueprint, request, g
 from uuid import uuid1
 from flask.ext.restful import Resource
-from app.models.model import db, Article, Visit
+from app.models.model import db, Article, Visit, Login
 from sqlalchemy.exc import IntegrityError
 from collections import OrderedDict
 from sqlalchemy import asc
+from app import auth
 
 
 # no need to use jsonify to handling return values, restful-api will do it automatically for us
+class ApiRoute(Resource):
+    decorators = [auth.login_required]
+
+    def get(self):
+        return g.user.generate_auth_token()
+
+    def post(self):
+        pass
+
+    def put(self):
+        pass
+
+    def delete(self):
+        pass
+
+    def patch(self):
+        pass
+
+
 class ToolsApi(Resource):
     """
     generate uuid for "ArticleEditor".html

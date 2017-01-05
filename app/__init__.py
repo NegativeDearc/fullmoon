@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
-from flask import Flask, request, session, abort
+from flask import Flask, request, session, abort, g
 from config import config
 from flask.ext.login import LoginManager
+from flask.ext.httpauth import HTTPBasicAuth
 import os
 from models.database import db
 from models.model import Login
@@ -11,6 +12,7 @@ from bs4 import BeautifulSoup
 import re
 
 lm = LoginManager()
+auth = HTTPBasicAuth()
 
 
 def create_app(conf):
@@ -24,11 +26,12 @@ def create_app(conf):
     # to apply config to app,must before init of SQLAlchemy and LoginManager
     app.config.from_object(conf)
     #
-    from app.views.api_view import ToolsApi, ArticleApi, VisitTimes
+    from app.views.api_view import ToolsApi, ArticleApi, VisitTimes, ApiRoute
     api = Api(app)
     api.add_resource(ToolsApi, '/api/tools/uuid/', endpoint='uuid')
     api.add_resource(VisitTimes, '/api/tools/visit_times/', endpoint='visit')
     api.add_resource(ArticleApi, '/api/article/uuid/<uuid>', endpoint='tasks')
+    api.add_resource(ApiRoute, '/api/', endpoint='route')
 
     db.init_app(app)
     # http://blog.csdn.net/yannanxiu/article/details/53426359
@@ -37,14 +40,24 @@ def create_app(conf):
     db.app = app
     # do not use setup_app()
     lm.session_protection = 'strong'
-    lm.login_view = 'main.main_login'
+    lm.login_view = "main.main_login"
     lm.refresh_view = "main.main_login"
     lm.needs_refresh_message = u"To protect your account, please re-authenticate to access this page."
     lm.needs_refresh_message_category = "info"
 
+    # lm callback
     @lm.user_loader
     def load_user(uid):
         return Login.get(uid)
+
+    # auth callback
+    @auth.verify_password
+    def verify_password(username, password):
+        user = Login.query.filter_by(user=username).first()
+        if not user or not user.verify_password(password):
+            return False
+        g.user = user
+        return True
 
     lm.init_app(app)
 

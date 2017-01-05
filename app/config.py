@@ -40,6 +40,7 @@ class DevelopmentConfig(Config):
 
 
 config = {
+    'default': Config,
     'production': ProductionConfig,
     'development': DevelopmentConfig
 }

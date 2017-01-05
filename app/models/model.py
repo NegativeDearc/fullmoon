@@ -6,7 +6,10 @@ from database import db
 import uuid
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired, BadSignature
 from flask.ext.login import UserMixin
+from flask import g
+from app.config import config
 
 
 # extension for Comment
@@ -215,6 +218,22 @@ class Login(db.Model, UserMixin):
         self.user = user
         self.password_hash = generate_password_hash(password, method="pbkdf2:sha1", salt_length=16)
         self.mail = mail
+
+    def generate_auth_token(self, expiration=60):
+        s = TimedJSONWebSignatureSerializer(config['default'].SECRET_KEY, expires_in=expiration)
+        return s.dumps({"id": self.id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = TimedJSONWebSignatureSerializer
+        try:
+            data = s.load(token)
+        except SignatureExpired:
+            return None
+        except BadSignature:
+            return None
+        user = Login.query.get(data['id'])
+        return user
 
     @property
     def password(self):
