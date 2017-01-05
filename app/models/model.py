@@ -1,11 +1,38 @@
 # -*- coding:utf-8 -*-
 from sqlalchemy import CheckConstraint, UniqueConstraint, desc
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm.interfaces import MapperExtension
 from database import db
 import uuid
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
+
+
+# extension for Comment
+class ExtensionForComment(MapperExtension):
+    pass
+
+
+# extension for Visit DB
+class ExtensionForVisit(MapperExtension):
+    def before_update(self, mapper, connection, instance):
+        print "instance %s before insert !" % instance
+
+
+# extension for Article
+class ExtensionForArticle(MapperExtension):
+    pass
+
+
+# extension for Login
+class ExtensionForLogin(MapperExtension):
+    pass
+
+
+# extension for Security
+class ExtensionForSecurity(MapperExtension):
+    pass
 
 
 # if you want use db.create_all()
@@ -90,42 +117,43 @@ class Article(db.Model):
         # %z:  与utc时间的间隔 （如果是本地时间，返回空字符串）
         # %Z:  时区名称（如果是本地时间，返回空字符串）
         cls.query.filter(cls.uuid == form.get('uuid')).update({
-            'title': form.get('title'),
-            'content': form.get('content'),
-            # UTC 时间，需要加上8小时才是中国时间GMT+8
+            'title': form.get('title', cls.title),  # if can't get title then will no change
+            'content': form.get('content', cls.content),  # if can't get content then will no change
+            # UTC GMT+00时间，需要加上8小时才是中国时间GMT+08
             'edit_date': datetime.strptime(form.get('edit_date'), '%Y-%m-%dT%H:%M:%S.%fZ'),
-            'status': form.get('status')
+            'status': form.get('status', cls.status)  # if can't get content then will no change
         })
-        db.session.commit()
-        return True
+        try:
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
 
     @classmethod
     def get_article_by_uuid(cls, uuid, abort=True):
         # get article by query of uuid
         # write uuid judgement here,use re module as a practise
         # 0e3a6e0f-c720-11e6-852c-f4066974556c
+        print uuid
         if abort:
             return cls.query.filter(cls.uuid == uuid, cls.status == 'PUBLISHED').first_or_404()
         else:
-            try:
-                cls.query.filter(cls.uuid == uuid).one()
-                return True
-            except NoResultFound:
-                return False
+            # except NoResultFound:
+            return cls.query.filter(cls.uuid == uuid).first_or_404()
 
     @classmethod
     def latest_article(cls, page=1, author='scc'):
         # get articles which are in published status
         n = page * 5
         return cls.query. \
-                   filter(cls.status == 'PUBLISHED',cls.author == author). \
+                   filter(cls.status == 'PUBLISHED', cls.author == author). \
                    order_by(desc(cls.create_date)). \
                    all()[n - 5:n]
 
     @classmethod
     def pagination(cls, page, author='scc'):
         # get paginate of query
-        return cls.query.filter(cls.author==author).paginate(page, per_page=5, error_out=True)
+        return cls.query.filter(cls.author == author).paginate(page, per_page=5, error_out=True)
 
     @classmethod
     def administration_article(cls, user=None, category="all"):
@@ -149,6 +177,19 @@ class Article(db.Model):
                 'description': 'query article by uuid, not limited by status of article',
                 'done': False
             }
+
+    @classmethod
+    def status_ordered_list(cls, uuid):
+        """
+        返回一个以文章当前状态为首，并列出其余状态的有序字典。
+        以供ArticleEditor.html页面进行调用
+        :return:OrderedDict
+        """
+        rv = cls.query.filter(cls.uuid == uuid).first()
+        constraint_total = {"PUBLISHED", "DRAFTED", "ARCHIVED",
+                            "DELETED"}  # ==set(['DELETED', 'DRAFTED', 'ARCHIVED', 'PUBLISHED'])
+        rs = constraint_total - {rv.status}
+        return rs
 
 
 # class Comment(db.Model):
@@ -248,14 +289,27 @@ class Visit(db.Model):
     table store website visit times
     """
     __tablename__ = "Visit"
+    __mapper_args__ = {
+        "extension": ExtensionForVisit()
+    }
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
     times = db.Column(db.INTEGER)
     update_time = db.Column(db.DATETIME)
 
     @property
     def visit_times(self):
-        return db.session.query(Visit.times).first()[0]
+        try:
+            rv = db.session.query(Visit.times).first()[0]
+            return rv
+        except TypeError:
+            # 暂时的用法，将来会注册到事件，当数据库实例初始化时自动插入一条数据为0的数据
+            db.session.add(Visit(times=0, update_time=datetime.now()))
+            db.session.commit()
+            return Visit().visit_times
 
-
-if __name__ == '__main__':
-    db.create_all()
+    @staticmethod
+    def back_to_zero():
+        Visit.query.update({
+            "times": 0
+        })
+        db.session.commit()

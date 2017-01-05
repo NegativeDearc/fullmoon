@@ -119,14 +119,14 @@
                         </tr>
                             {% for article in article_for_administration %}
                                 <tr>
-                                <td id="{{ article.uuid }}" style="display: none;"></td>
+                                <td class="uuid" style="display: none;">{{ article.uuid }}</td>
                                 <td>{{ article.title }}</td>
                                 <td>{{ article.tags }}</td>
                                 <td>{{ article.content[:40]|sanitize_html }}</td>
                                 <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
                                 <td>
-                                    <select name="" id="">
-                                        <option value="">{{ article.status }}</option>
+                                    <select name="" id="select_of_status">
+                                        <option value="{{ article.status }}">{{ article.status }}</option>
                                     </select>
                                 </td>
                                 <td><a href="/{{ article.author }}/blog/article/{{ article.uuid }}?edit=true" data-toggle="tooltip" title="修改文章"><i class="fa fa-pencil" style="color: blue"></i></a></td>
@@ -202,6 +202,20 @@
     var $SCRIPT_ROOT = "{{ request.script_root|safe }}";
     var $AUTHOR = "{{ current_user.user }}";
     $(document).ready(function () {
+        //generate <select></select> tags
+        var uuid = $("#select_of_status").parents().siblings("td.uuid").html();
+        $.ajax({
+            url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
+            type:"POST",
+            data:{"uuid":uuid,"_method":"POST","demands":"1"},
+            success:function (data) {
+                console.log(data);
+                for (var i=0;i<data['list'].length;i++) {
+                    var d = data['list'][i];
+                    $("#select_of_status").append('<option value="' + d + '">' + d + '</option>');
+                }
+            }
+        });
         //data-toggle tooltip
         $("[data-toggle='tooltip']").tooltip();
         //use ajax not to refresh the page
@@ -269,15 +283,15 @@
                 }//exec
             });//editor.addCommand
         });//editor.on() function
-        //for manager page
+        //for manage page
         $("li a").click(function () {
             $("h1,hr").hide();
         });
-
+        //when click the pencil icon
         $("i.fa.fa-pencil").click(function () {
             //click and redirect to the url of article (use uuid)/editor
         });
-
+        //when click the trash icon
         $("i.fa.fa-trash-o").click(function () {
             var uuid = $(this).parents('td').siblings('td:first').attr('id');
             $("#check_to_delete").modal("show");
@@ -285,7 +299,7 @@
             //console.log(uuid);
             //ajax to delete the article
         });
-
+        //when confirm to delete the article, show modal
         $("#confirm_to_delete").click(function () {
             var uuid = $(this).parents().siblings(".modal-body").children("p").attr("id");
             $.ajax({
@@ -299,6 +313,28 @@
                 }
            });
         });
+        //ajax load <option></option> from database
+        //when change options in select tags, do the same to database
+        $("#select_of_status").change(function () {
+            var value = $(this).val();
+            var uuid = $(this).parents().siblings("td.uuid").html();
+            console.log(value);
+            console.log(uuid);
+            $.ajax({
+                url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
+                type:"PUT",
+                data:{
+                    "edit_date":new Date().toISOString(),
+                    "uuid":uuid,
+                    "_method":"PUT",
+                    "status":value
+                },
+                success:function (res) {
+                    console.log(res);
+                }
+            });
+        });
+        //ajax refresh the page after do changes with article
     })
 </script>
 </body>

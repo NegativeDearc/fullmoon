@@ -26,9 +26,9 @@ def create_app(conf):
     #
     from app.views.api_view import ToolsApi, ArticleApi, VisitTimes
     api = Api(app)
-    api.add_resource(ToolsApi,'/api/tools/uuid/', endpoint='uuid')
+    api.add_resource(ToolsApi, '/api/tools/uuid/', endpoint='uuid')
     api.add_resource(VisitTimes, '/api/tools/visit_times/', endpoint='visit')
-    api.add_resource(ArticleApi,'/api/article/uuid/<uuid>', endpoint='tasks')
+    api.add_resource(ArticleApi, '/api/article/uuid/<uuid>', endpoint='tasks')
 
     db.init_app(app)
     # http://blog.csdn.net/yannanxiu/article/details/53426359
@@ -93,7 +93,6 @@ app.jinja_env.globals['crsf_token'] = generate_csrf_token
 app.jinja_env.globals['uuid'] = generate_uuid
 app.jinja_env.filters['sanitize_html'] = sanitize_html
 app.jinja_env.filters['remove_blank'] = remove_blank
-
 
 if not app.debug:
     print True
