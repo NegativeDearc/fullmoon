@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response, g, flash, session
-from app.models.model import Article, Visit, Login
+from app.models.model import Article, Login
 from flask.ext.login import login_required, login_user, current_user, logout_user, login_fresh, login_url
 
 main = Blueprint('main', __name__)
@@ -24,6 +24,7 @@ def main_login():
     if request.method == "POST":
         user = Login.query.filter(Login.user == request.form.get("usr")).first()
         if user is not None and user.verify_password(request.form.get("pwd")):
+            # add token to local storage for ajax authorization
             print session
             login_user(user, remember=True, force=True, fresh=True)  # it will return True if success
             print session
@@ -41,6 +42,8 @@ def main_about():
 @main.route('/editor', methods=['GET', 'POST'])
 @login_required
 def main_edit():
+    print g.user.user
+    print g.user.password_hash
     article_for_administration = Article.administration_article(user=current_user.user)
     if request.args.get("logout") == "True":
         # Logs a user out. (You do not need to pass the actual user.)

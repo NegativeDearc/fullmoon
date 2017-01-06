@@ -181,8 +181,8 @@ class Article(db.Model):
         except NoResultFound:
             return {
                 'uuid': uuid,
-                'title': 'query article by uuid',
-                'description': 'query article by uuid, not limited by status of article',
+                'title': 'NoResultFound',
+                'description': 'NoResultFound',
                 'done': False
             }
 
@@ -226,7 +226,7 @@ class Login(db.Model, UserMixin):
 
     def generate_auth_token(self, expiration=600):
         s = TimedJSONWebSignatureSerializer(config['default'].SECRET_KEY, expires_in=expiration)
-        return s.dumps({"id": self.id})
+        return s.dumps({"id_": self.id})
 
     @staticmethod
     def verify_auth_token(token):
@@ -237,7 +237,7 @@ class Login(db.Model, UserMixin):
             return None
         except BadSignature:
             return None
-        user = Login.query.get(data['id'])
+        user = Login.query.get(data['id_'])
         return user
 
     @property
@@ -306,34 +306,3 @@ class Secure(db.Model):
     visited_times_in_five_minutes = db.Column(db.INTEGER)
     unlock_time = db.Column(db.DATETIME)
     status = db.Column(db.String(10))
-
-
-class Visit(db.Model):
-    """
-    table store website visit times
-    """
-    __tablename__ = "Visit"
-    __mapper_args__ = {
-        "extension": ExtensionForVisit()
-    }
-    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
-    times = db.Column(db.INTEGER)
-    update_time = db.Column(db.DATETIME)
-
-    @property
-    def visit_times(self):
-        try:
-            rv = db.session.query(Visit.times).first()[0]
-            return rv
-        except TypeError:
-            # 暂时的用法，将来会注册到事件，当数据库实例初始化时自动插入一条数据为0的数据
-            db.session.add(Visit(times=0, update_time=datetime.now()))
-            db.session.commit()
-            return Visit().visit_times
-
-    @staticmethod
-    def back_to_zero():
-        Visit.query.update({
-            "times": 0
-        })
-        db.session.commit()

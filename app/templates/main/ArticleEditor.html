@@ -11,6 +11,7 @@
     <script src="{{ url_for('main.static',filename='ckeditor/ckeditor.js') }}"></script>
     <script src="{{ url_for('main.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('main.static',filename='bootstrap.min.js') }}"></script>
+
     <style>
         #article_table > tbody > tr > td:first-child {text-align: center;vertical-align: middle!important;}
         .fa-trash-o:hover {box-shadow: 1px 1px 1px 1px;}
@@ -236,10 +237,10 @@
                         },
                         dataType:'json',
                         success:function (res) {
-                            if(res['message'] == "update") {
+                            if(res['message'] == "update success") {
                                 $("#message_update").show().delay(3000).fadeOut();
                             }
-                            if(res['message'] == "add") {
+                            if(res['message'] == "add success") {
                                 $("#message_add").show().delay(3000).fadeOut();
                             }
                         },//success
@@ -340,7 +341,6 @@
                     }
             });
             }
-
         });
         //ajax refresh the page after do changes with article
     })

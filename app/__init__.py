@@ -26,12 +26,11 @@ def create_app(conf):
     # to apply config to app,must before init of SQLAlchemy and LoginManager
     app.config.from_object(conf)
     #
-    from app.views.api_view import ToolsApi, ArticleApi, VisitTimes, ApiRoute
+    from app.views.api_view import ToolsApi, ArticleApi, ApiRoute
     api = Api(app)
     api.add_resource(ToolsApi, '/api/tools/uuid/', endpoint='uuid')
-    api.add_resource(VisitTimes, '/api/tools/visit_times/', endpoint='visit')
     api.add_resource(ArticleApi, '/api/article/uuid/<uuid>', endpoint='tasks')
-    api.add_resource(ApiRoute, '/api/', endpoint='route')
+    api.add_resource(ApiRoute, '/api/token/', endpoint='route')
 
     db.init_app(app)
     # http://blog.csdn.net/yannanxiu/article/details/53426359
@@ -89,7 +88,7 @@ def generate_uuid():
 
 # remove all tags of html for use instead of safe filter
 def sanitize_html(value):
-    soup = BeautifulSoup(value)
+    soup = BeautifulSoup(value, "html.parser")
     for tag in soup.findAll(True):
         tag.hidden = True
     soup = unicode(soup)

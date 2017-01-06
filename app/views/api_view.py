@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
-from flask import Blueprint, request, g, make_response
+from flask import request, g, make_response
 from uuid import uuid1
 from flask.ext.restful import Resource
-from app.models.model import db, Article, Visit, Login
+from app.models.model import db, Article, Login
 from sqlalchemy.exc import IntegrityError
 from collections import OrderedDict
 from sqlalchemy import asc
@@ -21,7 +21,11 @@ class ApiRoute(Resource):
             }
 
     def post(self):
-        pass
+        token = g.user_.generate_auth_token()
+        return {
+            "token": token.decode("ascii"),
+            "expires_in": 600
+        }
 
     def put(self):
         pass
@@ -47,6 +51,7 @@ class ArticleApi(Resource):
     配合ajax方法进行restful设计，ajax的data加入{"_method":对应方式}
     程序会自动处理请求的方式，可以通过print request.form的方式进行验证
     """
+    decorators = [auth.login_required]
 
     def get(self, uuid):
         rv = Article.article_by_uuid_api(uuid=uuid)
@@ -112,15 +117,3 @@ class ArticleApi(Resource):
                 'description': records.__repr__() + ' has been deleted',
                 'done': True
             }
-
-
-class VisitTimes(Resource):
-    # 记录页面访问次数的API，应该覆盖全部页面
-    # 每访问一次增加一条记录
-    def put(self):
-        origin_visit_times = Visit().visit_times
-        Visit.query.update({'times': origin_visit_times + 1})
-        db.session.commit()
-        return {
-            "times": origin_visit_times
-        }
