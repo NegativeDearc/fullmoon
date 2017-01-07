@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response, g, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response, g, flash, session, abort
 from app.models.model import Article, Login
 from flask.ext.login import login_required, login_user, current_user, logout_user, login_fresh, login_url
 
@@ -24,11 +24,12 @@ def main_login():
     if request.method == "POST":
         user = Login.query.filter(Login.user == request.form.get("usr")).first()
         if user is not None and user.verify_password(request.form.get("pwd")):
-            # add token to local storage for ajax authorization
             print session
             login_user(user, remember=True, force=True, fresh=True)  # it will return True if success
             print session
-            return redirect(request.args.get("next")) or url_for("main.main_root")
+            if not request.args.get("next"):  # if get None , redirect to main.main_edit
+                return redirect(url_for("main.main_edit"))
+            return redirect(request.args.get("next"))
         else:
             flash('Wrong user name or password')
     return render_template('YouMustLogin.html')
@@ -54,3 +55,22 @@ def main_edit():
         logout_user()
         return redirect(url_for("main.main_login"))
     return render_template('ArticleEditor.html', article_for_administration=article_for_administration)
+
+
+@main.route('/verify_token', methods=["GET", "POST"])
+@login_required
+def main_get_token():
+    token = request.form.get("token")
+    user = g.user.verify_auth_token(token)
+    if user:
+        return "test"
+    else:
+        abort(401)
+
+
+@main.route('/get_token', methods=["GET", "POST"])
+@login_required
+def main_verify_token(expires=600):
+    token = g.user.generate_auth_token(expiration=expires)
+    print token
+    return jsonify({"token": token})

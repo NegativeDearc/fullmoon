@@ -11,6 +11,7 @@
     <script src="{{ url_for('main.static',filename='ckeditor/ckeditor.js') }}"></script>
     <script src="{{ url_for('main.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('main.static',filename='bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('main.static',filename='get_token.js') }}"></script>
 
     <style>
         #article_table > tbody > tr > td:first-child {text-align: center;vertical-align: middle!important;}
@@ -19,6 +20,7 @@
         #page {margin-top:70px;}
         .second-menu > li {padding-left: 5%;}
         .nav-header > a > .fa-angle-down {float:right;}
+        .fa-angle-down {padding: 5px 5px}
     </style>
 </head>
 <body>
@@ -99,7 +101,7 @@
 
                 <!--manage articels in database-->
                 <div class="panel panel-info tab-pane" id="manage-article">
-                    <div class="panel-heading">ManageBoard</div>
+                    <div class="panel-heading">ManageBoard<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;"></i></a></div>
                     <div class="panel-body">
                         <div>
                             <select name="" id="">
@@ -126,9 +128,11 @@
                                 <td>{{ article.content[:40]|sanitize_html }}</td>
                                 <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
                                 <td>
-                                    <select name="" class="select_of_status">
-                                        <option value="{{ article.status }}">{{ article.status }}</option>
-                                    </select>
+                                    <label for="">
+                                        <select name="" class="select_of_status">
+                                            <option value="{{ article.status }}">{{ article.status }}</option>
+                                        </select>
+                                    </label>
                                 </td>
                                 <td><a href="/{{ article.author }}/blog/article/{{ article.uuid }}?edit=true" data-toggle="tooltip" title="修改文章"><i class="fa fa-pencil" style="color: blue"></i></a></td>
                                 <td><a href="#" data-toggle="tooltip" title="删除文章"><i class="fa fa-trash-o" style="color: red"></i></a></td>
@@ -310,6 +314,10 @@
                 console.log(uuid);
                 if (self.children("option").length > 1){return false}//prevent add options unlimited
                 $.ajax({
+                     beforeSend:function (request) {
+                         request.setRequestHeader("username", get_token());
+                         request.setRequestHeader("password", get_token());
+                     },
                      url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
                      type:"POST",
                      data:{"uuid":uuid,"_method":"POST","demands":"1"},

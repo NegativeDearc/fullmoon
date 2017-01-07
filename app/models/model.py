@@ -232,7 +232,7 @@ class Login(db.Model, UserMixin):
     def verify_auth_token(token):
         s = TimedJSONWebSignatureSerializer(config['default'].SECRET_KEY)
         try:
-            data = s.load(token)
+            data = s.loads(token)
         except SignatureExpired:
             return None
         except BadSignature:

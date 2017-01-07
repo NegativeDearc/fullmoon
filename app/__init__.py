@@ -56,6 +56,7 @@ def create_app(conf):
         if not user or not user.verify_password(password):
             return False
         g.user_ = user  # distinguish with flask-login user
+        print g.user_
         return True
 
     lm.init_app(app)
