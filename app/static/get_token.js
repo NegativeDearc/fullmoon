@@ -25,3 +25,10 @@ var get_token = function () {
     });
     return result
 };
+
+var BasicAuthorizationCode = function(username, password){
+    //http://magic-conch.cool/article/2016/01/26/basic-auth-in-jquery-ajax
+    var safeStr = unescape(encodeURIComponent(username + ':' + password));
+    var btoaCode = btoa(safeStr);
+    return 'Basic ' + btoaCode;
+};

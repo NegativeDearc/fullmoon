@@ -315,8 +315,11 @@
                 if (self.children("option").length > 1){return false}//prevent add options unlimited
                 $.ajax({
                      beforeSend:function (request) {
-                         request.setRequestHeader("username", get_token());
-                         request.setRequestHeader("password", get_token());
+                         //WWW-Authenticate:Basic realm="Authentication Required"
+                         //自己构造HTTP头Authorization: Basic 用BASE64加密"用户:密码"
+                         //HTTP使用BASIC认证的原理及实现方法
+                         //http://blog.itpub.net/23071790/viewspace-709367/
+                         request.setRequestHeader("Authorization", BasicAuthorizationCode(get_token(),"unused"));
                      },
                      url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
                      type:"POST",

@@ -225,6 +225,12 @@ class Login(db.Model, UserMixin):
         self.mail = mail
 
     def generate_auth_token(self, expiration=600):
+        # 自己构造HTTP头Authorization: Basic 用BASE64加密"用户:密码"
+        # 我们一直试着尽可能地坚持 HTTP 标准协议。既然我们需要实现认证我们需要在 HTTP 上下文中去完成，
+        # HTTP 协议提供了两种认证机制: Basic 和 Digest。
+        # HTTP 基本认证方式不特别要求 usernames 和 passwords 用于认证，
+        # 在 HTTP 头中这两个字段可以用于任何类型的认证信息。基于令牌的认证，
+        # 令牌可以作为 username 字段，password 字段可以忽略。
         s = TimedJSONWebSignatureSerializer(config['default'].SECRET_KEY, expires_in=expiration)
         return s.dumps({"id_": self.id})
 

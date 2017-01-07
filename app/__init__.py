@@ -51,12 +51,13 @@ def create_app(conf):
 
     # auth callback
     @auth.verify_password
-    def verify_password(username, password):
-        user = Login.query.filter_by(user=username).first()
-        if not user or not user.verify_password(password):
-            return False
+    def verify_password(username_or_token, password):
+        user = Login.verify_auth_token(username_or_token)
+        if not user:
+            user = Login.query.filter_by(user=username_or_token).first()
+            if not user or not user.verify_password(password):
+                return False
         g.user_ = user  # distinguish with flask-login user
-        print g.user_
         return True
 
     lm.init_app(app)
