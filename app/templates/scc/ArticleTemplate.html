@@ -49,14 +49,30 @@
         }
 
         .container-fluid {
+            display: block;
             margin-top: 20px;
-            background: #99604c;
         }
-        .navbar-fixed-buttom {
-            font-size: 8px;
-            margin-top: 20px;
+        .container-fluid > table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left:0;
+            right: 0;
             text-align: center;
             color: white;
+        }
+        footer > .container-fluid {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        footer > .container-fluid > table > tbody > tr > td > a {
+            color: #FFFFFF;
+        }
+        footer > p {
+            font-size: 8px;
         }
     </style>
 {% if scripts %}
@@ -90,6 +106,8 @@
     <div class="love_it">
         <!-- how to cancel the love ? need don't like button? -->
     </div>
+    <!-- ajax comments -->
+    <div id="comments"></div>
     <!-- share for social sites-->
     <div class="share_links">
         <div><i class="fa fa-weibo fa-2x" title="分享到微博"></i></div>
@@ -99,9 +117,19 @@
         <div><i class="fa fa-qq fa-2x" title="分享到QQ"></i></div>
     </div>
 
-    <div class="container-fluid">
-        <div class="navbar navbar-fixed-buttom" role="navigation">&copy;&nbsp;2016-2017 版权所有 scc</div>
-    </div>
+
+    <footer class=footer">
+        <div class="container-fluid">
+            <table>
+                <tr>
+                    <td><a href="{{ url_for('scc.scc_root') }}">首页</a></td>
+                    <td><div style="height: 10px;border-left: #FFFFFF 1px solid;display: inline-block"></div></td>
+                    <td><a href="{{ url_for('main.main_login') }}">登陆</a></td>
+                </tr>
+            </table>
+        </div>
+        <p>&copy;&nbsp;2016-2017 版权所有 scc</p>
+    </footer>
 
 {% endif %}
 <!-- if allowed to edit, transfer article title and article content to CKeditor -->
@@ -131,6 +159,5 @@
         </div>
     </div>
 {% endif %}
-
 </body>
 </html>

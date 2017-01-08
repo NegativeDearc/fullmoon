@@ -101,45 +101,47 @@
 
                 <!--manage articels in database-->
                 <div class="panel panel-info tab-pane" id="manage-article">
-                    <div class="panel-heading">ManageBoard<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;"></i></a></div>
+                    <div class="panel-heading">ManageBoard<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;" id="manageboard-refresh"></i></a></div>
                     <div class="panel-body">
                         <div>
                             <select name="" id="">
-                        <option value="">--Category--</option>
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                    </select>
-                            <div class="table">
-                        <table class="table table-striped table-condensed">
-                        <tr>
-                            <td>标题</td>
-                            <td>标签</td>
-                            <td>正文</td>
-                            <td>创建日期</td>
-                            <td>状态</td>
-                            <td colspan="2">操作</td>
-                        </tr>
-                            {% for article in article_for_administration %}
-                                <tr>
-                                <td class="uuid" style="display: none;">{{ article.uuid }}</td>
-                                <td>{{ article.title }}</td>
-                                <td>{{ article.tags }}</td>
-                                <td>{{ article.content[:40]|sanitize_html }}</td>
-                                <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
-                                <td>
-                                    <label for="">
-                                        <select name="" class="select_of_status">
-                                            <option value="{{ article.status }}">{{ article.status }}</option>
-                                        </select>
-                                    </label>
-                                </td>
-                                <td><a href="/{{ article.author }}/blog/article/{{ article.uuid }}?edit=true" data-toggle="tooltip" title="修改文章"><i class="fa fa-pencil" style="color: blue"></i></a></td>
-                                <td><a href="#" data-toggle="tooltip" title="删除文章"><i class="fa fa-trash-o" style="color: red"></i></a></td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
+                                <option value="">--Category--</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                            </select>
+                            <div id="manage_table">
+                                <div class="table">
+                            <table class="table table-striped table-condensed">
+                            <tr>
+                                <td>标题</td>
+                                <td>标签</td>
+                                <td>正文</td>
+                                <td>创建日期</td>
+                                <td>状态</td>
+                                <td colspan="2">操作</td>
+                            </tr>
+                                {% for article in article_for_administration %}
+                                    <tr>
+                                    <td class="uuid" style="display: none;">{{ article.uuid }}</td>
+                                    <td>{{ article.title }}</td>
+                                    <td>{{ article.tags }}</td>
+                                    <td>{{ article.content[:40]|sanitize_html }}</td>
+                                    <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
+                                    <td>
+                                        <label for="">
+                                            <select name="" class="select_of_status">
+                                                <option value="{{ article.status }}">{{ article.status }}</option>
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td><a href="/{{ article.author }}/blog/article/{{ article.uuid }}?edit=true" data-toggle="tooltip" title="修改文章" target="_blank"><i class="fa fa-pencil" style="color: blue"></i></a></td>
+                                    <td><a href="#" data-toggle="tooltip" title="删除文章"><i class="fa fa-trash-o" style="color: red"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -226,6 +228,7 @@
                     //CKEDITOR.instances['article_content'].setData() set Data to CKEDITOR
                     //console.log(article_title,article_category,article_status,article_content);
                     $.ajax({
+                        beforeSend:function (request) {request.setRequestHeader("Authorization", BasicAuthorizationCode(get_token(),"unused"));},
                         url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
                         type:'PUT',
                         data:{
@@ -261,6 +264,7 @@
                     $("#article_form")[0].reset();
                     //update uuid
                     $.ajax({
+                        beforeSend:function (request) {request.setRequestHeader("Authorization", BasicAuthorizationCode(get_token(),"unused"));},
                         url:$SCRIPT_ROOT + 'api/tools/uuid/',
                         type:'POST',
                         dataType:'json',
@@ -274,27 +278,14 @@
                 }//exec
             });//editor.addCommand
         });//editor.on() function
-        //for manage page
-        $("li a").click(function () {
-            $("h1,hr").hide();
-        });
-        //when click the pencil icon
-        $("i.fa.fa-pencil").click(function () {
-            //click and redirect to the url of article (use uuid)/editor
-        });
         //when click the trash icon
-        $("i.fa.fa-trash-o").click(function () {
-            var uuid = $(this).parents().siblings('td:first').html();
-            console.log(uuid);
-            $("#check_to_delete").modal("show");
-            $("#check_to_delete").find(".modal-body p").attr("id",uuid);
-            //ajax to delete the article
-        });
+        $("i.fa.fa-trash-o").click(modal_delete);
         //when confirm to delete the article, show modal
         $("#confirm_to_delete").click(function () {
             var uuid = $(this).parents().siblings(".modal-body").children("p").attr("id");
             console.log(uuid);
             $.ajax({
+                beforeSend:function (request) {request.setRequestHeader("Authorization", BasicAuthorizationCode(get_token(),"unused"));},
                 type:'delete',
                 url:$SCRIPT_ROOT + 'api/article/uuid/' + uuid,
                 data:{"_method":"DELETE"},
@@ -308,52 +299,30 @@
         //ajax load <option></option> from database
         //when change options in select tags, do the same to database
         $(".select_of_status").on({
-            click: function(){
-                var uuid = $(this).parents().siblings("td.uuid").html();
-                var self = $(this);
-                console.log(uuid);
-                if (self.children("option").length > 1){return false}//prevent add options unlimited
-                $.ajax({
-                     beforeSend:function (request) {
-                         //WWW-Authenticate:Basic realm="Authentication Required"
-                         //自己构造HTTP头Authorization: Basic 用BASE64加密"用户:密码"
-                         //HTTP使用BASIC认证的原理及实现方法
-                         //http://blog.itpub.net/23071790/viewspace-709367/
-                         request.setRequestHeader("Authorization", BasicAuthorizationCode(get_token(),"unused"));
-                     },
-                     url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
-                     type:"POST",
-                     data:{"uuid":uuid,"_method":"POST","demands":"1"},
-                     success:function (data) {
-                         console.log(data);
-                         for (var i=0;i<data['list'].length;i++) {
-                             var d = data['list'][i];
-                             self.append('<option value="' + d + '">' + d + '</option>');
-                        }
-                    }
-                });
-            },
-            change: function () {
-                var value = $(this).val();
-                var uuid = $(this).parents().siblings("td.uuid").html();
-                console.log(value);
-                console.log(uuid);
-                $.ajax({
-                    url:$SCRIPT_ROOT + '/api/article/uuid/' + uuid,
-                    type:"PUT",
-                    data:{
-                        "edit_date":new Date().toISOString(),
-                        "uuid":uuid,
-                        "_method":"PUT",
-                        "status":value
-                    },
-                    success:function (res) {
-                        console.log(res);
-                    }
-            });
-            }
+            click: select_click,
+            change: select_select
         });
         //ajax refresh the page after do changes with article
+        $("#manageboard-refresh").click(function () {
+            var self = $(this);
+            $.ajax({
+                beforeSend: function(){self.addClass("fa-spin");},// Use the fa-spin class to get any icon to rotate
+                url: "{{ url_for('main.main_temp_1') }}",
+                dataType:"html",
+                type: "GET",
+                success: function (data) {
+                    $("#manage_table").html(data);
+                    //re-register function to event handler
+                    $("[data-toggle='tooltip']").tooltip();
+                    $("i.fa.fa-trash-o").click(modal_delete);
+                    $(".select_of_status").on({
+                        click: select_click,
+                        change: select_select
+                    });
+                },
+                complete:function(){self.removeClass("fa-spin");}// stop rotate
+            })
+        })
     })
 </script>
 </body>

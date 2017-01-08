@@ -43,8 +43,6 @@ def main_about():
 @main.route('/editor', methods=['GET', 'POST'])
 @login_required
 def main_edit():
-    print g.user.user
-    print g.user.password_hash
     article_for_administration = Article.administration_article(user=current_user.user)
     if request.args.get("logout") == "True":
         # Logs a user out. (You do not need to pass the actual user.)
@@ -74,3 +72,10 @@ def main_verify_token(expires=600):
     token = g.user.generate_auth_token(expiration=expires)
     print token
     return jsonify({"token": token})
+
+
+@main.route('/render_temp/temp_1')
+@login_required
+def main_temp_1():
+    article_for_administration = Article.administration_article(user=current_user.user)
+    return render_template("article_info_temp.html", article_for_administration=article_for_administration)
