@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, jsonif
 from app.models.model import Article, Login, Comment
 from flask.ext.login import login_required, login_user, current_user, logout_user, login_fresh, login_url
 import os
+import time
 
 main = Blueprint('main', __name__)
 
@@ -57,18 +58,22 @@ def main_edit():
     return render_template('ArticleEditor.html', article_for_administration=article_for_administration)
 
 
-@main.route('/editor/upload_image', methods=["POST"])
+@main.route('/editor/upload_image', methods=["GET", "POST"])
 @login_required
 def main_upload_img():
     print main.static_url_path
     if request.method == 'POST':
+    	callback = request.GET.get('CKEditorFuncNum')
         file = request.files['file']
         print file
         # to check the file extension
-        filename = ''
+        filename = time.strftime("%Y%m%d%H%M%S",time.localtime())
         save_path = os.path.join(main.static_url_path, "upload", filename)
         file.save(save_path)
-    return save_path
+        response = make_response("""
+        	<script>window.parent.CKEDITOR.tools.callFunction(%s,/%s);</script>
+        	""" % (callback, filename))
+    	return response
 
 
 @main.route('/verify_token', methods=["GET", "POST"])
