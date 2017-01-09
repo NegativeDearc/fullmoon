@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response, g, flash, session, abort
-from app.models.model import Article, Login
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response, g, flash, session, \
+    abort
+from app.models.model import Article, Login, Comment
 from flask.ext.login import login_required, login_user, current_user, logout_user, login_fresh, login_url
 
 main = Blueprint('main', __name__)
@@ -77,5 +78,16 @@ def main_verify_token(expires=600):
 @main.route('/render_temp/temp_1')
 @login_required
 def main_temp_1():
+    # render article information by user
     article_for_administration = Article.administration_article(user=current_user.user)
     return render_template("article_info_temp.html", article_for_administration=article_for_administration)
+
+
+@main.route('/render_temp/temp_2')
+def main_temp_2():
+    uuid = request.args.get("uuid")
+    # render comments by uuid
+    # we don't need to login to see comments
+    # how to get comments data? By api or by url?
+    comments = Comment.show_message(uuid=uuid)
+    return render_template("comment_info_temp.html", comments=comments)

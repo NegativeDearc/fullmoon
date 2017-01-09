@@ -9,6 +9,8 @@ from models.model import Login
 from uuid import uuid1
 from flask.ext.restful import Api
 from bs4 import BeautifulSoup
+import urllib
+import hashlib
 import re
 
 lm = LoginManager()
@@ -102,11 +104,27 @@ def remove_blank(value):
     pass
 
 
+# use gravatar generate avatar by email
+def gravatar_url(email, size=40):
+    # just pass one of the following keywords as the d= parameter to an image request:
+    # 404: do not load any image if none is associated with the email hash,instead return an 404 response
+    # mm: (mystery-man) a simple, cartoon-style silhouetted outline of a person (does not vary by email hash)
+    # identicon: a geometric pattern based on an email hash
+    # monsterid: a generated 'monster' with different colors, faces, etc
+    # wavatar: generated faces with differing features and backgrounds
+    # retro: awesome generated, 8-bit arcade-style pixelated faces
+    # blank: a transparent PNG image (border added to HTML below for demonstration purposes)
+    gravatar = "https://www.gravatar.com/avatar/" + hashlib.md5(email.lower()).hexdigest() + "?"
+    gravatar += urllib.urlencode({'s': str(size), 'd': "monsterid"})
+    return gravatar
+
+
 app = create_app(config['development'])
 app.jinja_env.globals['crsf_token'] = generate_csrf_token
 app.jinja_env.globals['uuid'] = generate_uuid
 app.jinja_env.filters['sanitize_html'] = sanitize_html
 app.jinja_env.filters['remove_blank'] = remove_blank
+app.jinja_env.filters['gravatar_url'] = gravatar_url
 
 if not app.debug:
     print True

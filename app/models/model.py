@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from sqlalchemy import CheckConstraint, UniqueConstraint, desc
+from sqlalchemy import CheckConstraint, UniqueConstraint, desc, asc
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.interfaces import MapperExtension
 from database import db
@@ -8,7 +8,6 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired, BadSignature
 from flask.ext.login import UserMixin
-from flask import g, make_response
 from app.config import config
 
 
@@ -64,10 +63,10 @@ class Article(db.Model):
         UniqueConstraint('id', 'title')
     )
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True, nullable=False, unique=True)
-    uuid = db.Column(db.String(20), nullable=False, unique=True)
+    uuid = db.Column(db.String(50), nullable=False, unique=True)
     author = db.Column(db.String(20), nullable=False)
     title = db.Column(db.String(25), nullable=False)
-    content = db.Column(db.String(2000), nullable=False)
+    content = db.Column(db.String(3000), nullable=False)
     tags = db.Column(db.String(25), nullable=True)
     create_date = db.Column(db.DATETIME, nullable=False)
     edit_date = db.Column(db.DATETIME, nullable=False)
@@ -200,8 +199,36 @@ class Article(db.Model):
         return rs
 
 
-# class Comment(db.Model):
-#     pass
+class Comment(db.Model):
+    """
+    store the comments leaved by reader
+    """
+    __tablename__ = "Comment"
+    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True, unique=True)
+    uid = db.Column(db.String(50), nullable=False)
+    rdr_name = db.Column(db.String(20), nullable=False)
+    rdr_mail = db.Column(db.String(20), nullable=False)
+    rdr_message = db.Column(db.String(200), nullable=False)
+    # reply_id = db.Column(db.INTEGER, nullable=False)
+    # replay_to_id = db.Column(db.INTEGER, nullable=False)  # use id to indicate who reply to who
+    message_date = db.Column(db.DATETIME, nullable=False)
+    approved = db.Column(db.BOOLEAN, default=0, nullable=False)
+
+    @classmethod
+    def show_message(cls, uuid=None):
+        """
+        :return:
+        """
+        rv = cls.query.filter(cls.uid == uuid, cls.approved == True).\
+            order_by(desc(cls.message_date)).\
+            all()
+        return rv
+
+    def approve_message(self):
+        pass
+
+    def del_message(self):
+        pass
 
 
 class Login(db.Model, UserMixin):
