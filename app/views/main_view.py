@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, jsonif
     abort
 from app.models.model import Article, Login, Comment
 from flask.ext.login import login_required, login_user, current_user, logout_user, login_fresh, login_url
+import os
 
 main = Blueprint('main', __name__)
 
@@ -54,6 +55,20 @@ def main_edit():
         logout_user()
         return redirect(url_for("main.main_login"))
     return render_template('ArticleEditor.html', article_for_administration=article_for_administration)
+
+
+@main.route('/editor/upload_image', methods=["POST"])
+@login_required
+def main_upload_img():
+    print main.static_url_path
+    if request.method == 'POST':
+        file = request.files['file']
+        print file
+        # to check the file extension
+        filename = ''
+        save_path = os.path.join(main.static_url_path, "upload", filename)
+        file.save(save_path)
+    return save_path
 
 
 @main.route('/verify_token', methods=["GET", "POST"])
