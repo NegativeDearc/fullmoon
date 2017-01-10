@@ -24,6 +24,8 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_ECHO = True
 
+    PIC_ALLOW_POSTFIX = {".jpeg", '.jpg', '.png', '.bmp'}  # == set([])
+
 
 class ProductionConfig(Config):
     CONFIG_NAME = 'production'

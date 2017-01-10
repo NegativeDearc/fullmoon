@@ -76,14 +76,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="#" class="navbar-brand"><i class="fa fa-moon-o"></i>&nbsp;Full Moon</a><!-- logo for navibar -->
+            <a href="{{ url_for('main.main_root') }}" class="navbar-brand"><i class="fa fa-moon-o"></i>&nbsp;Full Moon</a><!-- logo for navibar -->
         </div><!--navbar header-->
 
         <!-- navbar links -->
         <div class="collapse navbar-collapse navbar-responsive-collapse" id="fullmoon-navbar">
             <form action="" class="navbar-form navbar-right">
                 <a href="{{ url_for('main.main_about') }}" class="btn btn-default" type="submit">About This Site</a>
-                <a href="" class="btn btn-default" type="submit"><i class="fa fa-github" aria-hidden="true"></i>&nbsp;Source Code</a><i class="icon-comment"></i>
+                <a href="#" class="btn btn-default" type="submit"><i class="fa fa-github" aria-hidden="true"></i>&nbsp;Source Code</a><i class="icon-comment"></i>
             </form>
         </div><!-- navbar-collapse -->
     </div><!--container-fluid-->

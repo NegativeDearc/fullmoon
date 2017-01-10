@@ -86,10 +86,13 @@
                 <a href="#" class="navbar-brand dropdown-toggle" data-toggle="dropdown" id="logo_dropdown"><i class="fa fa-moon-o"></i>&nbsp;Full Moon<span class="caret"></span></a><!-- logo for navibar -->
                 <!-- drop list for id #full-moon-drop-list-->
                 <ul class="dropdown-menu" role="menu" aria-labelledby="logo_dropdown">
-                    <li role="presentation" tabindex="-1"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-plus"></i>&nbsp;Add New Article</a></li>
+                    {% if current_user.is_authenticated%}
+                    <li role="presentation" tabindex="-1"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;Go To Admin Panel</a></li>
+                    <li class="divider" role="presentation" tabindex="-1"></li>
+                    {% else %}
                     <li role="presentation" tabindex="-1"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-plus"></i>&nbsp;Add New Article</a></li>
                     <li class="divider" role="presentation" tabindex="-1"></li>
-                    <li role="presentation" tabindex="-1"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-plus"></i>&nbsp;Add New Article</a></li>
+                    {% endif %}
                 </ul>
             </li>
             </ul>
