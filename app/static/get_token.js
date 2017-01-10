@@ -108,7 +108,7 @@ var get_article = function () {
         dataType:"html",
         type: "GET",
         success: function (data) {
-            $("#article .panel-body").html(data);
+            $("#article").find(".panel-body").html(data);
             //re-register function to event handler
             $("[data-toggle='tooltip']").tooltip();
             $("i.fa.fa-trash-o").click(modal_delete);
