@@ -15,20 +15,20 @@
             <td>评论作者</td>
             <td>评论者邮箱</td>
             <td>评论内容</td>
-            <td>操作</td>
+            <td colspan="2">操作</td>
         </tr>
     {% for comment in comments %}
         <tr>
-            <td><a href="/{{ current_user.user }}/blog/article/{{ comment.uid }}" target="_blank" title="{{ comment.uid }}">访问</a></td>
+            <td><a href="/{{ current_user.user }}/blog/article/{{ comment.uid }}" target="_blank" title="{{ comment.id }}">访问</a></td>
             <td>{{ comment.message_date.strftime("%Y-%m-%d %H:%M") }}</td>
             <td>{{ comment.rdr_name }}</td>
             <td>{{ comment.rdr_mail }}</td>
             <td>{{ comment.rdr_message }}</td>
             <td>
-                <select name="comment_approve" id="comment_approve">
-                    <option value="1">允许评论显示</option>
-                    <option value="">删除评论</option>
-                </select>
+                <button data-toggle="tooltip" title="删除评论" class="btn btn-sm btn-default btn-block del_comment"><i class="fa fa-remove" style="color: red"></i></button>
+            </td>
+            <td>
+                <button data-toggle="tooltip" title="允许评论展示" class="btn btn-sm btn-default btn-block approve_comment"><i class="fa fa-check" style="color: green" ></i></button>
             </td>
         </tr>
     {% endfor %}

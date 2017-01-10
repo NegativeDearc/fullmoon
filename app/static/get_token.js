@@ -132,6 +132,36 @@ var get_comments = function () {
         success: function (data) {
             $("#comments").find(".panel-body").html(data);
         },
-        complete:function(){self.removeClass("fa-spin");}// stop rotate
+        complete:function() {
+            self.removeClass("fa-spin");
+            $("[data-toggle='tooltip']").tooltip();
+            $(".del_comment").on("click", del_comment);//use class, not use id
+            $(".approve_comment").on("click", approve_comment);// stop rotate
+        }
     })
+};
+
+var del_comment = function () {
+    var uid = $(this).parent().siblings("td:first").children("a").attr("title");
+    console.log(uid);
+    $.ajax({
+        beforeSend:function (request) {
+             request.setRequestHeader("Authorization", BasicAuthorizationCode(get_token(),"unused"));
+        },
+        url:"/api/comment/id/" + uid,
+        method: "PUT",
+        data:{"_method":"PUT"}
+    });
+};
+
+var approve_comment = function () {
+    var uid = $(this).parent().siblings("td:first").children("a").attr("title");
+    $.ajax({
+        beforeSend:function (request) {
+             request.setRequestHeader("Authorization", BasicAuthorizationCode(get_token(),"unused"));
+        },
+        url:"/api/comment/id/"+ uid,
+        type:"delete",
+        data:{"_method":"delete"}
+    });
 };

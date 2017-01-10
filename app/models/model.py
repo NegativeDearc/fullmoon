@@ -186,7 +186,7 @@ class Article(db.Model):
             }
 
     @classmethod
-    def status_ordered_list(cls, uuid):
+    def status_ordered_list(cls, uuid=None):
         """
         返回一个以文章当前状态为首，并列出其余状态的有序字典。
         以供ArticleEditor.html页面进行调用
@@ -203,6 +203,7 @@ class Comment(db.Model):
     """
     store the comments leaved by reader
     """
+    # Comment.uid = Article.uuid it's not unique, do not use it to delete comments, use id instead
     __tablename__ = "Comment"
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True, unique=True)
     uid = db.Column(db.String(50), nullable=False)
@@ -219,21 +220,33 @@ class Comment(db.Model):
         """
         :return:
         """
-        rv = cls.query.filter(cls.uid == uuid, cls.approved == True).\
-            order_by(desc(cls.message_date)).\
+        rv = cls.query.filter(cls.uid == uuid, cls.approved == True). \
+            order_by(desc(cls.message_date)). \
             all()
         return rv
 
     @staticmethod
-    def approve_message():
-        rv = db.session.query(Comment).\
-            filter(Comment.approved == False).\
-            order_by(desc(Comment.uid), desc(Comment.message_date)).\
+    def approved_message():
+        rv = db.session.query(Comment). \
+            filter(Comment.approved == False). \
+            order_by(desc(Comment.uid), desc(Comment.message_date)). \
             all()
         return rv
 
-    def del_message(self):
-        pass
+    @classmethod
+    def del_message(cls, row_id=None):
+        # use id to delete comments, do not use uid
+        cls.query.filter(cls.id == row_id)
+
+    @classmethod
+    def appr_message(cls, row_id=None):
+        # use id to approve comments, do not use uid
+        try:
+            cls.query.filter(cls.id == row_id).update({"approved": True})
+            return True
+        except Exception as e:
+            print e
+            return False
 
 
 class Login(db.Model, UserMixin):

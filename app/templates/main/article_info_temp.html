@@ -20,25 +20,25 @@
             <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
             <td>
                 <label for="">
-                    <select name="" class="select_of_status">
+                    <select name="" class="select_of_status btn btn-block">
                         <option value="{{ article.status }}">{{ article.status }}</option>
                     </select>
                 </label>
             </td>
             <td>
-                <a href="/{{ article.author }}/blog/article/{{ article.uuid }}" data-toggle="tooltip" title="查看文章" target="_blank">
+                <a href="/{{ article.author }}/blog/article/{{ article.uuid }}" data-toggle="tooltip" title="查看文章" target="_blank" class="btn btn-sm btn-default btn-block">
                     <i class="fa fa-code" style="color: darkmagenta"></i>
                 </a>
             </td>
             <td>
-                <a href="/{{ article.author }}/blog/article/{{ article.uuid }}?edit=true" data-toggle="tooltip" title="修改文章" target="_blank">
+                <a href="/{{ article.author }}/blog/article/{{ article.uuid }}?edit=true" data-toggle="tooltip" title="修改文章" target="_blank" class="btn btn-sm btn-default btn-block">
                     <i class="fa fa-pencil" style="color: blue"></i>
                 </a>
             </td>
             <td>
-                <a href="#" data-toggle="tooltip" title="删除文章">
+                <button data-toggle="tooltip" title="删除文章" class="btn btn-sm btn-default btn-block">
                     <i class="fa fa-trash-o" style="color: red"></i>
-                </a>
+                </button>
             </td>
             </tr>
         {% endfor %}

@@ -15,9 +15,6 @@
 
     <style>
         #article_table > tbody > tr > td:first-child {text-align: center;vertical-align: middle!important;}
-        .fa-trash-o:hover {box-shadow: 1px 1px 1px 1px;}
-        .fa-pencil:hover {box-shadow: 1px 1px 1px 1px;}
-        .fa-code:hover {box-shadow: 1px 1px 1px 1px;}
         #page {margin-top:70px;}
         .second-menu > li {padding-left: 5%;}
         .nav-header > a > .fa-angle-down {float:right;}
@@ -247,9 +244,9 @@
             });//editor.addCommand
         });//editor.on() function
         //when click the trash icon
-        $("i.fa.fa-trash-o").click(modal_delete);
+        $("i.fa.fa-trash-o").on('click', modal_delete);
         //when confirm to delete the article, show modal
-        $("#confirm_to_delete").click(function () {
+        $("#confirm_to_delete").on("click", function () {
             var uuid = $(this).parents().siblings(".modal-body").children("p").attr("id");
             console.log(uuid);
             $.ajax({
@@ -275,7 +272,7 @@
         $("#article-tab").on("shown.bs.tab", get_article);
         //ajax for comments need to be handled
         $("#comments-refresh").on("click", get_comments);
-        $("#comments-tab").on("shown.bs.tab", get_comments)
+        $("#comments-tab").on("shown.bs.tab", get_comments);
     })
 </script>
 </body>

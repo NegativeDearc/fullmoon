@@ -130,5 +130,5 @@ def main_temp_2():
 @main.route('/render_temp/temp_3')
 @login_required
 def main_temp_3():
-    comments = Comment.approve_message()
+    comments = Comment.approved_message()
     return render_template("comments_info_temp.html", comments=comments)

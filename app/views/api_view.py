@@ -2,7 +2,7 @@
 from flask import request, g, make_response
 from uuid import uuid1
 from flask.ext.restful import Resource
-from app.models.model import db, Article, Login
+from app.models.model import db, Article, Login, Comment
 from sqlalchemy.exc import IntegrityError
 from collections import OrderedDict
 from sqlalchemy import asc
@@ -117,3 +117,26 @@ class ArticleApi(Resource):
                 'description': records.__repr__() + ' has been deleted',
                 'done': True
             }
+
+
+class ApiComment(Resource):
+    """
+    apis for comments operation
+    """
+
+    decorators = [auth.login_required]
+
+    def get(self):
+        pass
+
+    def post(self):
+        pass
+
+    def put(self, uid):
+        if Comment.appr_message(uid):
+            return {"message": "success"}, 200
+        else:
+            return {"message": "failed"}, 500
+
+    def delete(self):
+        pass
