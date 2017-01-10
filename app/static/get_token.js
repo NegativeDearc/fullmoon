@@ -96,5 +96,42 @@ var select_select = function(){
         success:function (res) {
             console.log(res);
         }
-});
+})
+};
+
+var get_article = function () {
+    var self = $(this);
+    var tag = self.prop("tagName");
+    $.ajax({
+        beforeSend: function(){if (tag == "A"){} else {self.addClass("fa-spin");}},// Use the fa-spin class to get any icon to rotate
+        url: temp_1_url,
+        dataType:"html",
+        type: "GET",
+        success: function (data) {
+            $("#article .panel-body").html(data);
+            //re-register function to event handler
+            $("[data-toggle='tooltip']").tooltip();
+            $("i.fa.fa-trash-o").click(modal_delete);
+            $(".select_of_status").on({
+                click: select_click,
+                change: select_select
+            });
+        },
+        complete:function(){self.removeClass("fa-spin");}// stop rotate
+    })
+};
+
+var get_comments = function () {
+    var self = $(this);
+    var tag = self.prop("tagName");
+    $.ajax({
+        beforeSend: function(){if (tag == "A"){} else {self.addClass("fa-spin");}},// Use the fa-spin class to get any icon to rotate
+        url: temp_3_url,
+        dataType:"html",
+        type: "GET",
+        success: function (data) {
+            $("#comments").find(".panel-body").html(data);
+        },
+        complete:function(){self.removeClass("fa-spin");}// stop rotate
+    })
 };

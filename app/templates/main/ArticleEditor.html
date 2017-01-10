@@ -17,6 +17,7 @@
         #article_table > tbody > tr > td:first-child {text-align: center;vertical-align: middle!important;}
         .fa-trash-o:hover {box-shadow: 1px 1px 1px 1px;}
         .fa-pencil:hover {box-shadow: 1px 1px 1px 1px;}
+        .fa-code:hover {box-shadow: 1px 1px 1px 1px;}
         #page {margin-top:70px;}
         .second-menu > li {padding-left: 5%;}
         .nav-header > a > .fa-angle-down {float:right;}
@@ -61,8 +62,8 @@
                     <li class="nav-header"><a href="#manage_article" data-toggle="collapse"><i class="fa fa-book"></i>&nbsp;图书馆<i class="fa fa-angle-down"></i></a></li>
                         <ul id="manage_article" class="nav nav-list collapse second-menu">
                             <li role="presentation"><a href="#new-article" data-toggle="tab"><i class="fa fa-plus-circle"></i>&nbsp;新增文章</a></li>
-                            <li role="presentation"><a href="#manage-article" data-toggle="tab"><i class="fa fa-gear"></i>&nbsp;管理文章</a></li>
-                            <li role="presentation"><a href="#comments" data-toggle="tab"><i class="fa fa-comments-o"></i>&nbsp;评论管理</a></li>
+                            <li role="presentation"><a href="#article" data-toggle="tab" id="article-tab"><i class="fa fa-gear"></i>&nbsp;管理文章</a></li>
+                            <li role="presentation"><a href="#comments" data-toggle="tab" id="comments-tab"><i class="fa fa-comments-o"></i>&nbsp;评论管理</a></li>
                         </ul>
                     <li class="nav-header"><a href="#manage_system" data-toggle="collapse"><i class="fa fa-th"></i>&nbsp;其他<i class="fa fa-angle-down"></i></a></li>
                         <ul id="manage_system" class="nav nav-list collapse second-menu">
@@ -74,6 +75,7 @@
         </div>
         <div class="col-md-10">
             <div class="tab-content">
+                <!--modal-->
                 <div class="modal fade" id="check_to_delete" tabindex="-1" role="dialog" aria-labelledby="modallabel" aria-hidden="true">
                         <div class="modal-dialog modal-sm"><!--small modal-->
                             <div class="modal-content">
@@ -98,53 +100,6 @@
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal -->
                     </div>
-
-                <!--manage articels in database-->
-                <div class="panel panel-info tab-pane" id="manage-article">
-                    <div class="panel-heading">Manage Article<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;" id="manageboard-refresh"></i></a></div>
-                    <div class="panel-body">
-                        <div>
-                            <select name="" id="">
-                                <option value="">--Category--</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
-                                <option value="">3</option>
-                            </select>
-                            <div id="manage_table">
-                                <div class="table">
-                            <table class="table table-striped table-condensed">
-                            <tr>
-                                <td>标题</td>
-                                <td>标签</td>
-                                <td>正文</td>
-                                <td>创建日期</td>
-                                <td>状态</td>
-                                <td colspan="2">操作</td>
-                            </tr>
-                                {% for article in article_for_administration %}
-                                    <tr>
-                                    <td class="uuid" style="display: none;">{{ article.uuid }}</td>
-                                    <td>{{ article.title }}</td>
-                                    <td>{{ article.tags }}</td>
-                                    <td>{{ article.content[:40]|sanitize_html }}</td>
-                                    <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
-                                    <td>
-                                        <label for="">
-                                            <select name="" class="select_of_status">
-                                                <option value="{{ article.status }}">{{ article.status }}</option>
-                                            </select>
-                                        </label>
-                                    </td>
-                                    <td><a href="/{{ article.author }}/blog/article/{{ article.uuid }}?edit=true" data-toggle="tooltip" title="修改文章" target="_blank"><i class="fa fa-pencil" style="color: blue"></i></a></td>
-                                    <td><a href="#" data-toggle="tooltip" title="删除文章"><i class="fa fa-trash-o" style="color: red"></i></a></td>
-                                    </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!--ckeditor-->
                 <div class="tab-pane panel panel-info" id="new-article">
                     <div class="panel-heading">CKEditor</div>
@@ -200,9 +155,14 @@
                         </div>
                     </div>
                 </div>
+                <!--manage article-->
+                <div class="tab-pane panel panel-info" id="article">
+                    <div class="panel-heading">Manage Articles<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;" id="article-refresh"></i></a></div>
+                    <div class="panel-body"></div>
+                </div>
                 <!--manage comments-->
                 <div class="tab-pane panel panel-warning" id="comments">
-                    <div class="panel-heading">Manage Comments</div>
+                    <div class="panel-heading">Manage Comments<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;" id="comments-refresh"></i></a></div>
                     <div class="panel-body"></div>
                 </div>
             </div><!--tab content-->
@@ -213,6 +173,9 @@
 <script>
     var $SCRIPT_ROOT = "{{ request.script_root|safe }}";
     var $AUTHOR = "{{ current_user.user }}";
+    var temp_1_url = "{{ url_for('main.main_temp_1') }}";
+    var temp_3_url = "{{ url_for('main.main_temp_3') }}";
+
     $(document).ready(function () {
         //data-toggle tooltip
         $("[data-toggle='tooltip']").tooltip();
@@ -308,27 +271,11 @@
             change: select_select
         });
         //ajax refresh the page after do changes with article
-        $("#manageboard-refresh").click(function () {
-            var self = $(this);
-            $.ajax({
-                beforeSend: function(){self.addClass("fa-spin");},// Use the fa-spin class to get any icon to rotate
-                url: "{{ url_for('main.main_temp_1') }}",
-                dataType:"html",
-                type: "GET",
-                success: function (data) {
-                    $("#manage_table").html(data);
-                    //re-register function to event handler
-                    $("[data-toggle='tooltip']").tooltip();
-                    $("i.fa.fa-trash-o").click(modal_delete);
-                    $(".select_of_status").on({
-                        click: select_click,
-                        change: select_select
-                    });
-                },
-                complete:function(){self.removeClass("fa-spin");}// stop rotate
-            })
-        });
+        $("#article-refresh").on('click', get_article);
+        $("#article-tab").on("shown.bs.tab", get_article);
         //ajax for comments need to be handled
+        $("#comments-refresh").on("click", get_comments);
+        $("#comments-tab").on("shown.bs.tab", get_comments)
     })
 </script>
 </body>

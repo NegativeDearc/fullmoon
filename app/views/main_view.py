@@ -131,6 +131,4 @@ def main_temp_2():
 @login_required
 def main_temp_3():
     comments = Comment.approve_message()
-    for e in comments:
-        print e
     return render_template("comments_info_temp.html", comments=comments)

@@ -2,14 +2,14 @@
 <html>
 <body>
     <div class="table" id="manage_table">
-    <table class="table table-striped table-condensed">
+    <table class="table table table-bordered">
     <tr>
         <td>标题</td>
         <td>标签</td>
         <td>正文</td>
         <td>创建日期</td>
         <td>状态</td>
-        <td colspan="2">操作</td>
+        <td colspan="3">操作</td>
     </tr>
         {% for article in article_for_administration %}
             <tr>
@@ -24,6 +24,11 @@
                         <option value="{{ article.status }}">{{ article.status }}</option>
                     </select>
                 </label>
+            </td>
+            <td>
+                <a href="/{{ article.author }}/blog/article/{{ article.uuid }}" data-toggle="tooltip" title="查看文章" target="_blank">
+                    <i class="fa fa-code" style="color: darkmagenta"></i>
+                </a>
             </td>
             <td>
                 <a href="/{{ article.author }}/blog/article/{{ article.uuid }}?edit=true" data-toggle="tooltip" title="修改文章" target="_blank">

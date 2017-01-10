@@ -4,6 +4,36 @@
     <meta charset="UTF-8">
 </head>
 <body>
-
+{% if not comments %}
+    <div>There's nothing to show here!</div>
+{% else %}
+    <div class="table">
+    <table class="table table-bordered">
+        <tr>
+            <td>文章编号</td>
+            <td>评论日期</td>
+            <td>评论作者</td>
+            <td>评论者邮箱</td>
+            <td>评论内容</td>
+            <td>操作</td>
+        </tr>
+    {% for comment in comments %}
+        <tr>
+            <td><a href="/{{ current_user.user }}/blog/article/{{ comment.uid }}" target="_blank" title="{{ comment.uid }}">访问</a></td>
+            <td>{{ comment.message_date.strftime("%Y-%m-%d %H:%M") }}</td>
+            <td>{{ comment.rdr_name }}</td>
+            <td>{{ comment.rdr_mail }}</td>
+            <td>{{ comment.rdr_message }}</td>
+            <td>
+                <select name="comment_approve" id="">
+                    <option value="1">允许评论显示</option>
+                    <option value="">删除评论</option>
+                </select>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+{% endif %}
 </body>
 </html>
