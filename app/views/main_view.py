@@ -125,3 +125,12 @@ def main_temp_2():
     # how to get comments data? By api or by url?
     comments = Comment.show_message(uuid=uuid)
     return render_template("comment_info_temp.html", comments=comments)
+
+
+@main.route('/render_temp/temp_3')
+@login_required
+def main_temp_3():
+    comments = Comment.approve_message()
+    for e in comments:
+        print e
+    return render_template("comments_info_temp.html", comments=comments)

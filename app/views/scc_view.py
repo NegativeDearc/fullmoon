@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.models.model import db, Article
+from app.models.model import db, Article, Comment
 from flask.ext.login import login_required
 from datetime import datetime
 
@@ -20,6 +20,15 @@ def scc_root(page=1):
 def scc_article(uuid):
     if request.args.get('edit') == 'true':
         return redirect(url_for("scc.article_editor", uuid=uuid))
+
+    if request.method == "POST":
+        db.session.add(Comment(
+            uid=uuid,
+            rdr_name=request.form.get("nickname"),
+            rdr_mail=request.form.get("mail-address"),
+            rdr_message=request.form.get("comment-content"),
+        ))
+        db.session.commit()
     article_by_uuid = Article.get_article_by_uuid(uuid=uuid)
     return render_template('ArticleTemplate.html', article_by_uuid=article_by_uuid)
 

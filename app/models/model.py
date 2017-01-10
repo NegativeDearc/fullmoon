@@ -211,7 +211,7 @@ class Comment(db.Model):
     rdr_message = db.Column(db.String(200), nullable=False)
     # reply_id = db.Column(db.INTEGER, nullable=False)
     # replay_to_id = db.Column(db.INTEGER, nullable=False)  # use id to indicate who reply to who
-    message_date = db.Column(db.DATETIME, nullable=False)
+    message_date = db.Column(db.DATETIME, nullable=False, default=datetime.now())
     approved = db.Column(db.BOOLEAN, default=0, nullable=False)
 
     @classmethod
@@ -224,8 +224,13 @@ class Comment(db.Model):
             all()
         return rv
 
-    def approve_message(self):
-        pass
+    @staticmethod
+    def approve_message():
+        rv = db.session.query(Comment).\
+            filter(Comment.approved == False).\
+            order_by(desc(Comment.uid), desc(Comment.message_date)).\
+            all()
+        return rv
 
     def del_message(self):
         pass

@@ -62,7 +62,7 @@
                         <ul id="manage_article" class="nav nav-list collapse second-menu">
                             <li role="presentation"><a href="#new-article" data-toggle="tab"><i class="fa fa-plus-circle"></i>&nbsp;新增文章</a></li>
                             <li role="presentation"><a href="#manage-article" data-toggle="tab"><i class="fa fa-gear"></i>&nbsp;管理文章</a></li>
-                            <li role="presentation"><a href="#" data-toggle="tab"><i class="fa fa-comments-o"></i>&nbsp;评论管理</a></li>
+                            <li role="presentation"><a href="#comments" data-toggle="tab"><i class="fa fa-comments-o"></i>&nbsp;评论管理</a></li>
                         </ul>
                     <li class="nav-header"><a href="#manage_system" data-toggle="collapse"><i class="fa fa-th"></i>&nbsp;其他<i class="fa fa-angle-down"></i></a></li>
                         <ul id="manage_system" class="nav nav-list collapse second-menu">
@@ -101,7 +101,7 @@
 
                 <!--manage articels in database-->
                 <div class="panel panel-info tab-pane" id="manage-article">
-                    <div class="panel-heading">ManageBoard<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;" id="manageboard-refresh"></i></a></div>
+                    <div class="panel-heading">Manage Article<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;" id="manageboard-refresh"></i></a></div>
                     <div class="panel-body">
                         <div>
                             <select name="" id="">
@@ -199,6 +199,11 @@
                         </form>
                         </div>
                     </div>
+                </div>
+                <!--manage comments-->
+                <div class="tab-pane panel panel-warning" id="comments">
+                    <div class="panel-heading">Manage Comments</div>
+                    <div class="panel-body"></div>
                 </div>
             </div><!--tab content-->
         </div>
@@ -322,7 +327,8 @@
                 },
                 complete:function(){self.removeClass("fa-spin");}// stop rotate
             })
-        })
+        });
+        //ajax for comments need to be handled
     })
 </script>
 </body>
