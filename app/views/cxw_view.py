@@ -2,7 +2,7 @@
 from flask import Blueprint, url_for, redirect
 
 
-cxw = Blueprint(app, __name__, url_prefix="/dearc")
+cxw = Blueprint('cxw', __name__, url_prefix="/dearc")
 
 
 @cxw.route('/about')

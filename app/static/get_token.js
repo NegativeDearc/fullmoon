@@ -147,6 +147,7 @@ var get_comments = function () {
 var del_comment = function () {
     var uid = $(this).parent().siblings("td:first").children("a").attr("title");
     console.log(uid);
+    //add a confirm info here
     $.ajax({
         beforeSend:function (request) {
              request.setRequestHeader("Authorization", BasicAuthorizationCode(get_token(),"unused"));
