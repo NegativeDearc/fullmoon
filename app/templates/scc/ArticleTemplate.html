@@ -105,11 +105,11 @@
     <div id="comments"></div>
     <!-- share for social sites-->
     <div class="share_links">
-        <div><i class="fa fa-weibo fa-2x" title="分享到微博"></i></div>
+        <div><i class="fa fa-weibo fa-2x" title="分享到微博" data-toggle="tooltip"></i></div>
         <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
-        <div><i class="fa fa-wechat fa-2x" title="分享到微信"></i></div>
+        <div><i class="fa fa-wechat fa-2x" title="分享到微信" data-toggle="tooltip"></i></div>
         <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
-        <div><i class="fa fa-qq fa-2x" title="分享到QQ"></i></div>
+        <div><i class="fa fa-qq fa-2x" title="分享到QQ" data-toggle="tooltip"></i></div>
     </div>
 
 
@@ -157,6 +157,7 @@
 
 <script>
     $(document).ready(function () {
+        $("[data-toggle=tooltip]").tooltip();
         //if null in <input> tags don't show submit button
         //ajax comments by uuid
         var uuid = $("#uuid").html();
