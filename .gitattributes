@@ -1,1 +1,10 @@
-app/static/* linguist-vendored
+app/static/BigVideo/* linguist-vendored
+app/static/ckeditor/* linguist-vendored
+app/static/element-ui/* linguist-vendored
+app/static/font-awesome-4.7.0/* linguist-vendored
+app/static/baidu-analysis.js linguist-vendored
+app/static/bootstrap.min.js linguist-vendored
+app/static/bootstrap.min.css linguist-vendored
+app/static/jquery.min.js linguist-vendored
+app/static/vue.js linguist-vendored
+app/static/trianglify.min.js linguist-vendored
