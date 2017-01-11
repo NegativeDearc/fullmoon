@@ -18,7 +18,7 @@ class ApiRoute(Resource):
         return {
             "token": token.decode("ascii"),
             "expires_in": 600
-            }
+        }
 
     def post(self):
         token = g.user_.generate_auth_token()
@@ -126,17 +126,26 @@ class ApiComment(Resource):
 
     decorators = [auth.login_required]
 
-    def get(self):
+    def get(self, id):
         pass
 
-    def post(self):
+    def post(self, id):
         pass
 
-    def put(self, uid):
-        if Comment.appr_message(uid):
+    def put(self, id):
+        print request.form
+        try:
+            Comment.appr_message(row_id=request.form.get("_id_"))
             return {"message": "success"}, 200
-        else:
+        except Exception as e:
+            print e
             return {"message": "failed"}, 500
 
-    def delete(self):
-        pass
+    def delete(self, id):
+        print request.form
+        try:
+            Comment.del_message(row_id=request.form.get("_id_"))
+            return {"message": "success"}, 200
+        except Exception as e:
+            print e
+            return {"message": "failed"}, 500

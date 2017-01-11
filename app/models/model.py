@@ -236,13 +236,20 @@ class Comment(db.Model):
     @classmethod
     def del_message(cls, row_id=None):
         # use id to delete comments, do not use uid
-        cls.query.filter(cls.id == row_id)
+        try:
+            cls.query.filter(cls.id == row_id).delete()
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            return False
 
     @classmethod
     def appr_message(cls, row_id=None):
         # use id to approve comments, do not use uid
         try:
             cls.query.filter(cls.id == row_id).update({"approved": True})
+            db.session.commit()
             return True
         except Exception as e:
             print e

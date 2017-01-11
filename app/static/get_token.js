@@ -95,6 +95,9 @@ var select_select = function(){
         },
         success:function (res) {
             console.log(res);
+        },
+        complete:function () {
+            $("#article-refresh").trigger("click");
         }
 })
 };
@@ -149,8 +152,9 @@ var del_comment = function () {
              request.setRequestHeader("Authorization", BasicAuthorizationCode(get_token(),"unused"));
         },
         url:"/api/comment/id/" + uid,
-        method: "PUT",
-        data:{"_method":"PUT"}
+        method: "DELETE",
+        data:{"_method":"DELETE", "_id_":uid},
+        complete:function () {$("#comments-refresh").trigger("click");}
     });
 };
 
@@ -161,7 +165,8 @@ var approve_comment = function () {
              request.setRequestHeader("Authorization", BasicAuthorizationCode(get_token(),"unused"));
         },
         url:"/api/comment/id/"+ uid,
-        type:"delete",
-        data:{"_method":"delete"}
+        type:"PUT",
+        data:{"_method":"PUT", "_id_":uid},
+        complete:function () {$("#comments-refresh").trigger("click");}
     });
 };
