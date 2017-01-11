@@ -20,9 +20,10 @@ auth = HTTPBasicAuth()
 def create_app(conf):
     from views.scc_view import scc
     from views.main_view import main
+    from views.cxw_view import cxw
     # from views.api_view import api
     # view_list = [scc, main, api]
-    view_list = [scc, main]
+    view_list = [scc, main, cxw]
 
     app = Flask(__name__)
     # to apply config to app,must before init of SQLAlchemy and LoginManager
