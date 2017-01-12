@@ -64,13 +64,13 @@
 
 <!--iframe tab show-->
 <div class="tab-content container" id="#languageConet">
-    <div class="tab-pane" id="chinese">
-        <iframe src="{{ url_for('main.main_pdf_render') }}?file={{ url_for('cxw.cxw_resume_file', filename="Convex Optimization.pdf") }}" frameborder="1"
-        width="1200" height="1400"></iframe>
+    <div class="tab-pane embed-responsive embed-responsive-16by9" id="chinese">
+        <iframe src="{{ url_for('main.main_pdf_render') }}?file={{ url_for('cxw.cxw_resume_file', filename="Convex Optimization.pdf") }}"
+                width="1200" height="1400" class="embed-responsive-item"></iframe>
     </div>
-    <div class="tab-pane active" id="english">
-        <iframe src="{{ url_for('main.main_pdf_render') }}?file={{ url_for('cxw.cxw_resume_file', filename="Convex Optimization.pdf") }}" frameborder="1"
-        width="1200" height="1400"></iframe>
+    <div class="tab-pane active embed-responsive embed-responsive-4by3" id="english">
+        <iframe src="{{ url_for('main.main_pdf_render') }}?file={{ url_for('cxw.cxw_resume_file', filename="Convex Optimization.pdf") }}"
+                class="embed-responsive-item"></iframe>
     </div>
     <div class="tab-pane" id="q_and_a">
         write here

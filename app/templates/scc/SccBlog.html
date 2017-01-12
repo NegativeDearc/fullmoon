@@ -16,13 +16,14 @@
             font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
         }
         .navbar-default,.navbar-collapse {
+            z-index: 2;
             background: none;
             border: #313131;
         }
         .navbar-default .navbar-nav > li > a {color: #ffffff!important;}
         .navbar-default .navbar-nav> .open> a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
             color:  #e7e7e7;
-            background-color:#555;
+            background-color:#FF4949;
         }
         .navbar-form > a {
             background-color: transparent;
@@ -30,7 +31,7 @@
             border: transparent;
         }
         .dropdown-menu {
-            background: #313131;
+            background: #FF4949;
         }
         .dropdown-menu > li > a {
             color: #ffffff!important;
@@ -38,18 +39,52 @@
         .dropdown-menu > li > a:hover {
             color: #313131!important;
         }
+        #fullmoon-navbar > form > .btn-default:hover{
+            background: #FF4949;
+            color: #FFFFFF;
+        }
+        .navbar-default .navbar-toggle {
+            border-color: #FF4949;
+            background:  #FF4949;
+        }
 
-        #ct2 {margin-top: 80px;}
+        .navbar-default:hover .navbar-toggle:hover {
+            border-color: #1D8CE0;
+            background-color: #FF4949;
+        }
+
+        .navbar-default .navbar-toggle .icon-bar {
+            background-color: #FFFFFF;
+        }
+
+        .navbar-brand {
+            color: #FFFFFF!important;
+        }
+
+        .navbar-brand:hover {
+            color: #FFFFFF!important;
+        }
+
+        #ct2 {
+            z-index: 3!important;
+        }
 
         .media-box {
+            z-index: inherit;
             padding:10px;
             margin-top: 15px;
             border-radius: 5px;
             color: #ffffff;
-            background: #292929;
-            border-top: 1px solid #363636;
-            border-bottom: 1px solid #161616;
-            box-shadow: 0 2px 2px 2px rgba(0,0,0,0.1);
+            background: inherit;
+            box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.4);
+        }
+        .media-box > .media > .media-body > .media-heading > a {
+            color: inherit;
+        }
+
+        .media-box > .media > .media-body > .media-heading > a:hover {
+            color: #FF4949;
+            text-decoration: none;
         }
         .pager > li > a {
             color: #449d44;
@@ -59,51 +94,59 @@
             color: #ffffff;
             border: #449d44;
         }
-        #big-video-wrap {
-            z-index: -99;
-        }
     </style>
 </head>
 <script>
     var $SCRIPT_ROOT = "{{ request.script_root|safe }}";
 </script>
 <body>
-<div id="particles-js" style="width: 100%; height: 100%; position: fixed; top: 0; z-index:1;"></div>
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="z-index: 1">
-    <div class="container">
-        <div class="navbar-header">
-            <!-- toggle for responsive screen -->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" aria-controls="navbar" aria-expanded="false" data-target="#fullmoon-navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <ul class="nav navbar-nav">
-            <li class="dropdown">
-                <a href="#" class="navbar-brand dropdown-toggle" data-toggle="dropdown" id="logo_dropdown"><i class="fa fa-moon-o"></i>&nbsp;Full Moon<span class="caret"></span></a><!-- logo for navibar -->
-                <!-- drop list for id #full-moon-drop-list-->
-                <ul class="dropdown-menu" role="menu" aria-labelledby="logo_dropdown">
-                    {% if current_user.is_authenticated%}
-                    <li role="presentation" tabindex="-1"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;Go To Admin Panel</a></li>
-                    <li class="divider" role="presentation" tabindex="-1"></li>
-                    {% else %}
-                    <li role="presentation" tabindex="-1"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-plus"></i>&nbsp;Add New Article</a></li>
-                    <li class="divider" role="presentation" tabindex="-1"></li>
-                    {% endif %}
-                </ul>
-            </li>
-            </ul>
-        </div><!--navbar header-->
+<!--particles-js-->
+<div id="particles-js" style="width: 100%; height: 100%; position: fixed; top: 0; z-index:-1;"></div>
+<!--navbar-->
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><i class="fa fa-moon-o"></i>&nbsp;Full Moon</a>
+    </div>
 
-        <!-- navbar links -->
-        <div class="collapse navbar-collapse navbar-responsive-collapse" id="fullmoon-navbar">
-            <form action="" class="navbar-form navbar-right">
-                <a href="#" class="btn btn-default" type="submit">&nbsp;About Me</a>
-            </form>
-        </div><!-- navbar-collapse -->
-    </div><!--container-fluid-->
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Controller<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+          {% if current_user.is_authenticated%}
+                <li role="presentation"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;Go To Admin Panel</a></li>
+          {% else %}
+            <li><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;Add New Article</a></li>
+          {% endif %}
+            <li><a href="#"><i class="fa fa-smile-o"></i>&nbsp;Go see My husband</a></li>
+            <li><a href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class=""><a href="#">All Articles</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Me<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#"><i class="fa fa-question"></i>&nbsp;Who Am I</a></li>
+            <li class="divider"></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>
+
 <!-- article:show the latest 10 articles from database -->
 <div class="container" id="ct2">
     {% for item in latest_10 %}
@@ -112,7 +155,7 @@
                 <a href="?article={{ item.uuid }}" class="media-left" target="_blank"><img src="" alt="" width="64" height="64"></a>
                 <div class="media-left"><span class="label label-success">{{ item.tags}}</span></div><!--tags-->
                 <div class="media-body">
-                    <h4 class="media-heading">{{ item.title }}</h4><!--title-->
+                    <h4 class="media-heading"><a href="?article={{ item.uuid }}">{{ item.title }}</a></h4><!--title-->
                     <p style="display:none;">{{ item.uuid }}</p><!--uuid-->
                     <small>{{ item.create_date.strftime("%Y-%m-%d %H:%M") }}</small><!--create date-->
                     <div>{{ item.content[:70]|sanitize_html }}</div><!--first 100 words-->
@@ -120,18 +163,20 @@
             </div>
         </div>
     {% endfor %}
+
+    <!-- pagination for articles -->
+    <nav>
+        <ul class="pager">
+    {% if pagination.has_next %}
+            <li><a href="{{ url_for("scc.scc_root",page=pagination.next_num) }}" target="_self">Next</a></li>
+    {% endif %}
+    {% if pagination.has_prev %}
+            <li><a href="{{ url_for("scc.scc_root",page=pagination.prev_num) }}" target="_self">Previous</a></li>
+    {% endif %}
+        </ul>
+    </nav>
 </div>
-<!-- pagination for articles -->
-<nav>
-    <ul class="pager">
-{% if pagination.has_next %}
-        <li><a href="{{ url_for("scc.scc_root",page=pagination.next_num) }}" target="_self">Next</a></li>
-{% endif %}
-{% if pagination.has_prev %}
-        <li><a href="{{ url_for("scc.scc_root",page=pagination.prev_num) }}" target="_self">Previous</a></li>
-{% endif %}
-    </ul>
-</nav>
+<!--all article-->
 
 <script>
 particlesJS.load('particles-js', 'static/particlesjs-config.json', function() {
