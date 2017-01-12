@@ -6,20 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="{{ url_for('main.static',filename='bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('main.static',filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('main.static',filename='BigVideo/css/bigvideo.css') }}">
-    <link rel="stylesheet" href="{{ url_for('main.static',filename='BigVideo/css/video-js.min.css') }}">
     <script src="{{ url_for('main.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('main.static',filename='bootstrap.min.js') }}"></script>
-    <!-- If you'd like to support IE8 -->
-    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-    <!--Endif-->
-    <script src="{{ url_for('main.static',filename='BigVideo/lib/video.js') }}"></script>
-    <script src="{{ url_for('main.static',filename='BigVideo/lib/bigvideo.js') }}"></script>
+    <script src="{{ url_for('main.static',filename='particles.min.js') }}"></script>
     <title>SCC's Blog</title>
     <style>
-        body {background: #212121}
+        body {
+            background: #1D8CE0;
+            font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+        }
         .navbar-default,.navbar-collapse {
-            background: #313131;
+            background: none;
             border: #313131;
         }
         .navbar-default .navbar-nav > li > a {color: #ffffff!important;}
@@ -71,7 +68,8 @@
     var $SCRIPT_ROOT = "{{ request.script_root|safe }}";
 </script>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div id="particles-js" style="width: 100%; height: 100%; position: fixed; top: 0; z-index:1;"></div>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="z-index: 1">
     <div class="container">
         <div class="navbar-header">
             <!-- toggle for responsive screen -->
@@ -136,17 +134,8 @@
 </nav>
 
 <script>
-    $(function() {
-    var BV = new $.BigVideo({
-        doLoop:true
-    });
-    /*
-    Video shows strings while loading on BVshow() breakpoint
-    https://github.com/dfcb/BigVideo.js/issues/180
-    MUST add video-js.css
-     */
-    BV.init();
-    BV.show("{{ url_for('main.static',filename='backgroundvideo.mp4') }}");
+particlesJS.load('particles-js', 'static/particlesjs-config.json', function() {
+  console.log('callback - particles.js config loaded');
 });
 </script>
 </body>

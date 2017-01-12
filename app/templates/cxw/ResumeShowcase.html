@@ -5,10 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="{{ url_for('cxw.static',filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('cxw.static',filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
     <script src="{{ url_for('cxw.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('cxw.static',filename='bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('cxw.static',filename='pdfjs-1.5.188/build/pdf.js') }}"></script>
     <title>陈晓伟的简历</title>
     <style>
+        body {
+            font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+        }
     </style>
 </head>
 <body>
@@ -42,12 +47,13 @@
         </li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" id="language">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">语言<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#chinese">中</a></li>
-            <li><a href="#english">En</a></li>
+            <li><a href="#english" data-toggle="tab">&nbsp;Eng</a></li>
+            <li><a href="#chinese" data-toggle="tab">&nbsp;中文</a></li>
+            <li><a href="#q_and_a" data-toggle="tab">&nbsp;其他你可能感兴趣的问题</a></li>
           </ul>
         </li>
       </ul>
@@ -55,8 +61,24 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="" id="about_me">
 
+<!--iframe tab show-->
+<div class="tab-content container" id="#languageConet">
+    <div class="tab-pane" id="chinese">
+        <iframe src="{{ url_for('main.main_pdf_render') }}?file={{ url_for('cxw.cxw_resume_file', filename="Convex Optimization.pdf") }}" frameborder="1"
+        width="1200" height="1400"></iframe>
+    </div>
+    <div class="tab-pane active" id="english">
+        <iframe src="{{ url_for('main.main_pdf_render') }}?file={{ url_for('cxw.cxw_resume_file', filename="Convex Optimization.pdf") }}" frameborder="1"
+        width="1200" height="1400"></iframe>
+    </div>
+    <div class="tab-pane" id="q_and_a">
+        write here
+    </div>
 </div>
+
+<script>
+//set a different background when choose different tab of english/chinese
+</script>
 </body>
 </html>

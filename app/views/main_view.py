@@ -44,6 +44,14 @@ def main_about():
     return render_template('AboutTheWebsite.html')
 
 
+@main.route('/pdfRender')
+def main_pdf_render():
+    url = ''
+    if request.args.get('file'):
+        url = request.args.get('file')
+    return render_template("PDFviewer.html", url=url)
+
+
 @main.route('/editor', methods=['GET', 'POST'])
 @login_required
 def main_edit():

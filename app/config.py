@@ -6,6 +6,7 @@ class Config(object):
     CONFIG_NAME = 'config'
     # register static fold path for all blueprint
     static_path = os.path.join(os.path.dirname(__file__), 'static')
+    pdf_path = os.path.join(os.path.dirname(__file__), 'static', 'pdf')
 
     # register template fold path for all blueprint
     @classmethod
