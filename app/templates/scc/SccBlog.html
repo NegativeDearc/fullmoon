@@ -69,22 +69,28 @@
             z-index: 3!important;
         }
 
-        .media-box {
-            z-index: inherit;
-            padding:10px;
-            margin-top: 15px;
-            border-radius: 5px;
-            color: #ffffff;
-            background: inherit;
-            box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.4);
-        }
-        .media-box > .media > .media-body > .media-heading > a {
-            color: inherit;
+        .time {
+            display: inline-block;
+            color: #6B6B6B;
         }
 
-        .media-box > .media > .media-body > .media-heading > a:hover {
+        .post > .post-inner-content {
+            padding: 45px 50px;
+            background-color: #fff;
+            border: 1px solid #dadada;
+            border-top: none;
+            margin-bottom: 20px;
+        }
+         .post > .post-inner-content > header > .title > a {
+            color: #444;
+            text-decoration: none;
+        }
+        .post > .post-inner-content > header > .title > a:hover {
             color: #FF4949;
             text-decoration: none;
+        }
+        .content {
+            margin-top: 10px;
         }
         .pager > li > a {
             color: #449d44;
@@ -93,6 +99,49 @@
             background: #449d44;
             color: #ffffff;
             border: #449d44;
+        }
+        @media (max-width: 767px) {
+            #sidebar {
+                clear: both;
+                display: none;
+            }
+        }
+        .well {
+            padding: 30px;
+            overflow: hidden;
+            clear: both;
+            z-index: inherit;
+            color: #6B6B6B;
+            background-color: #FFFFFF;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+        }
+        .widget-title {
+            color: #636467;
+            font-size: 14px;
+            margin-bottom: 25px;
+            margin-top: 0;
+            display: block;
+            list-style-type: disc;
+        }
+        .widget-list {
+            padding: 0;
+            line-height: 16px;
+            font-size: 12px;
+        }
+        .widget-list-item {
+            list-style: none;
+            border-bottom: 1px solid #F2F2F2;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+        }
+
+        .widget-list-item > a {
+            color: #C1C0C0;
+        }
+        .widget-list-item > a:hover{
+            transition: all 0.3s;
+            text-decoration: none;
+            cursor: auto;
         }
     </style>
 </head>
@@ -149,21 +198,64 @@
 
 <!-- article:show the latest 10 articles from database -->
 <div class="container" id="ct2">
+    <div class="row">
+        <div class="col-md-8 col-sm-12" id="content">
     {% for item in latest_10 %}
-        <div class="media-box">
-            <div class="media">
-                <a href="?article={{ item.uuid }}" class="media-left" target="_blank"><img src="" alt="" width="64" height="64"></a>
-                <div class="media-left"><span class="label label-success">{{ item.tags}}</span></div><!--tags-->
-                <div class="media-body">
-                    <h4 class="media-heading"><a href="?article={{ item.uuid }}">{{ item.title }}</a></h4><!--title-->
-                    <p style="display:none;">{{ item.uuid }}</p><!--uuid-->
-                    <small>{{ item.create_date.strftime("%Y-%m-%d %H:%M") }}</small><!--create date-->
-                    <div>{{ item.content[:70]|sanitize_html }}</div><!--first 100 words-->
+        <article class="post">
+            <div class="post-inner-content">
+                <header>
+                    <h2 class="title"><a href="?article={{ item.uuid }}" target="_blank">{{ item.title }}</a></h2>
+                    <div class="meta">
+                        <i class="fa fa-calendar"></i>
+                        <div class="time" title="最后编辑:{{ item.edit_date.strftime("%Y-%m-%d %H:%M") }}"><time class="created" datetime="{{ item.create_date }}">{{ item.create_date.strftime("%Y-%m-%d %H:%M") }}</time></div>
+                    </div>
+                </header>
+                <hr>
+                <div class="content">
+                    <div>{{ item.content|safe}}</div>
                 </div>
             </div>
-        </div>
+        </article>
     {% endfor %}
-
+        </div><!--col-md-8-->
+        <!--aside-->
+        <div class="col-md-4 col-sm-12" id="sidebar">
+            <div class="well">
+                <aside id="recent-posts">
+                    <h3 class="widget-title">近期文章</h3>
+                    <ul class="widget-list">
+                        <li class="widget-list-item"><a href="">1111</a></li>
+                        <li class="widget-list-item"><a href="">1111</a></li>
+                        <li class="widget-list-item"><a href="">1111</a></li>
+                    </ul>
+                </aside>
+                <aside id="recent-comments">
+                    <h3 class="widget-title">近期评论</h3>
+                    <ul class="widget-list">
+                        <li class="widget-list-item"><i class="fa fa-comments-o"></i><a href="">&nbsp;1111</a></li>
+                        <li class="widget-list-item"><i class="fa fa-comments-o"></i><a href="">&nbsp;1111</a></li>
+                        <li class="widget-list-item"><i class="fa fa-comments-o"></i><a href="">&nbsp;1111</a></li>
+                    </ul>
+                </aside>
+                <aside id="achieves">
+                    <h3 class="widget-title">存档</h3>
+                    <ul class="widget-list">
+                        <li class="widget-list-item"><a href="">1111</a></li>
+                        <li class="widget-list-item"><a href="">1111</a></li>
+                        <li class="widget-list-item"><a href="">1111</a></li>
+                    </ul>
+                </aside>
+                <aside id="categories">
+                    <h3 class="widget-title">分类</h3>
+                    <ul class="widget-list">
+                        <li class="widget-list-item"><a href="">1111</a></li>
+                        <li class="widget-list-item"><a href="">1111</a></li>
+                        <li class="widget-list-item"><a href="">1111</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div><!--col-md-4-->
+    </div><!--row-->
     <!-- pagination for articles -->
     <nav>
         <ul class="pager">
