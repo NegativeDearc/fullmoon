@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d1d9cd0e-1026-4c02-8b47-c6150710084a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/scc/AllArticle.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/test.db" afterPath="$PROJECT_DIR$/app/models/test.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/main/comment_info_temp.html" afterPath="$PROJECT_DIR$/app/templates/main/comment_info_temp.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html" afterPath="$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/scc/SccBlog.html" afterPath="$PROJECT_DIR$/app/templates/scc/SccBlog.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/scc_view.py" afterPath="$PROJECT_DIR$/app/views/scc_view.py" />
     </list>
     <ignored path="fullmoon.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,15 +39,45 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SccBlog.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SccBlog.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/scc/SccBlog.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-263">
-              <caret line="154" column="33" lean-forward="false" selection-start-line="154" selection-start-column="33" selection-end-line="154" selection-end-column="33" />
+            <state relative-caret-position="403">
+              <caret line="173" column="45" lean-forward="false" selection-start-line="173" selection-start-column="29" selection-end-line="173" selection-end-column="45" />
               <folding>
-                <element signature="e#8468#8474#0#HTML" expanded="true" />
-                <element signature="e#8584#8590#0#HTML" expanded="true" />
-                <element signature="e#8700#8706#0#HTML" expanded="true" />
+                <element signature="n#article#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="e#8395#8401#0#HTML" expanded="true" />
+                <element signature="e#8511#8517#0#HTML" expanded="true" />
+                <element signature="e#8627#8633#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArticleTemplate.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="89">
+              <caret line="172" column="50" lean-forward="true" selection-start-line="172" selection-start-column="50" selection-end-line="172" selection-end-column="50" />
+              <folding>
+                <element signature="e#3052#3058#0#HTML" expanded="true" />
+                <element signature="e#3537#3543#0#HTML" expanded="true" />
+                <element signature="e#3631#3637#0#HTML" expanded="true" />
+                <element signature="e#3987#3993#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#3;n#article#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#3;n#article#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="scc_view.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/scc_view.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="350">
+              <caret line="23" column="21" lean-forward="false" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+              <folding>
+                <element signature="e#23#95#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -68,6 +100,7 @@
       <find>select</find>
       <find>tooltip</find>
       <find>.navbar-form</find>
+      <find>&gt;</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -87,8 +120,6 @@
         <option value="$PROJECT_DIR$/app/templates/main/dash_info_temp.html" />
         <option value="$PROJECT_DIR$/app/static/ckeditor/config.js" />
         <option value="$PROJECT_DIR$/app/static/upload/__init__.py" />
-        <option value="$PROJECT_DIR$/app/templates/main/comment_info_temp.html" />
-        <option value="$PROJECT_DIR$/app/views/scc_view.py" />
         <option value="$PROJECT_DIR$/app/static/upload/.gitignore" />
         <option value="$PROJECT_DIR$/app/templates/main/article_info_temp.html" />
         <option value="$PROJECT_DIR$/app/templates/main/comments_info_temp.html" />
@@ -109,10 +140,12 @@
         <option value="$PROJECT_DIR$/app/templates/main/YouMustLogin.html" />
         <option value="$PROJECT_DIR$/app/templates/main/AboutTheWebsite.html" />
         <option value="$PROJECT_DIR$/app/templates/main/WelcomePage.html" />
-        <option value="$PROJECT_DIR$/app/templates/main/ArticleEditor.html" />
         <option value="$PROJECT_DIR$/app/templates/scc/AllArticle.html" />
-        <option value="$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html" />
+        <option value="$PROJECT_DIR$/app/templates/main/comment_info_temp.html" />
         <option value="$PROJECT_DIR$/app/templates/scc/SccBlog.html" />
+        <option value="$PROJECT_DIR$/app/views/scc_view.py" />
+        <option value="$PROJECT_DIR$/app/templates/main/ArticleEditor.html" />
+        <option value="$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html" />
       </list>
     </option>
   </component>
@@ -789,13 +822,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/scc_view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="44" lean-forward="false" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2336">
@@ -912,13 +938,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/main/comment_info_temp.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="750">
-          <caret line="30" column="96" lean-forward="false" selection-start-line="30" selection-start-column="96" selection-end-line="30" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/main/PDFviewer.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4707">
@@ -968,13 +987,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/main/ArticleEditor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="22" column="7" lean-forward="false" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/scc/AllArticle.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
@@ -983,22 +995,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html">
+    <entry file="file://$PROJECT_DIR$/app/views/scc_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1675">
-          <caret line="38" column="9" lean-forward="false" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
+        <state relative-caret-position="350">
+          <caret line="23" column="21" lean-forward="false" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+          <folding>
+            <element signature="e#23#95#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/main/ArticleEditor.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="52" column="13" lean-forward="true" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/main/comment_info_temp.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/scc/SccBlog.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-263">
-          <caret line="154" column="33" lean-forward="false" selection-start-line="154" selection-start-column="33" selection-end-line="154" selection-end-column="33" />
+        <state relative-caret-position="403">
+          <caret line="173" column="45" lean-forward="false" selection-start-line="173" selection-start-column="29" selection-end-line="173" selection-end-column="45" />
           <folding>
-            <element signature="e#8468#8474#0#HTML" expanded="true" />
-            <element signature="e#8584#8590#0#HTML" expanded="true" />
-            <element signature="e#8700#8706#0#HTML" expanded="true" />
+            <element signature="n#article#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="e#8395#8401#0#HTML" expanded="true" />
+            <element signature="e#8511#8517#0#HTML" expanded="true" />
+            <element signature="e#8627#8633#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="89">
+          <caret line="172" column="50" lean-forward="true" selection-start-line="172" selection-start-column="50" selection-end-line="172" selection-end-column="50" />
+          <folding>
+            <element signature="e#3052#3058#0#HTML" expanded="true" />
+            <element signature="e#3537#3543#0#HTML" expanded="true" />
+            <element signature="e#3631#3637#0#HTML" expanded="true" />
+            <element signature="e#3987#3993#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#3;n#article#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#3;n#article#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

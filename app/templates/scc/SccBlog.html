@@ -169,25 +169,24 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Controller<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">操作面板<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
           {% if current_user.is_authenticated%}
-                <li role="presentation"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;Go To Admin Panel</a></li>
+                <li role="presentation"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-user-o"></i>&nbsp;登陆管理后台</a></li>
           {% else %}
-            <li><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;Add New Article</a></li>
+            <li><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;添加新文章</a></li>
           {% endif %}
-            <li><a href="#"><i class="fa fa-smile-o"></i>&nbsp;Go see My husband</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><a href="#"><i class="fa fa-smile-o"></i>&nbsp;造访我另一半</a></li>
           </ul>
         </li>
-        <li class=""><a href="#">All Articles</a></li>
+        <li class=""><a href="#">全部文章</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Me<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">关于我<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#"><i class="fa fa-question"></i>&nbsp;Who Am I</a></li>
+            <li><a href="#"><i class="fa fa-question"></i>&nbsp;我是谁</a></li>
             <li class="divider"></li>
           </ul>
         </li>
@@ -197,6 +196,7 @@
 </nav>
 
 <!-- article:show the latest 10 articles from database -->
+<!--inspired by https://wp-themes.com/sparkling/-->
 <div class="container" id="ct2">
     <div class="row">
         <div class="col-md-8 col-sm-12" id="content">

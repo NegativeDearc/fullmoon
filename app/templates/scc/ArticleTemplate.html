@@ -12,65 +12,58 @@
     <script src="{{ url_for('scc.static',filename='baidu-analysis.js') }}"></script>
     <title>{{ article_by_uuid.title }}</title>
     <style>
-        body {background:#313131;}
+        body {
+            font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+        }
 
-        .article_title {
-            margin-top: 20px;
-            text-align: center;
-            color: white;
+        .time {
+            display: inline-block;
+            color: #6B6B6B;
         }
-        .article_title > .title {font-size: 24px;}
-        .article_title > .author {font-size: 12px;}
 
-        .container {
-            padding-top: 20px;
-            margin-top: 20px;
-            z-index: 999;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 1px 1px 1px 1px #3e3e3e;
+        .post > .post-inner-content {
+            padding: 45px 50px;
+            background-color: #fff;
+            border: 1px solid #dadada;
+            margin-bottom: 20px;
         }
-        .container > .editor > form > .table > table > tbody > tr > td {
-            text-align: left;
-            vertical-align: middle!important;
+         .post > .post-inner-content > header > .title > a {
+            color: #444;
+            text-decoration: none;
         }
-        .container > .editor > form > .table > table > caption {
-            text-align: center;
+        .post > .post-inner-content > header > .title > a:hover {
+            color: #FF4949;
+            text-decoration: none;
+        }
+        .content {
+            margin-top: 10px;
+        }
+        .well {
+            padding: 30px;
+            overflow: hidden;
+            clear: both;
+            z-index: inherit;
+            color: #6B6B6B;
+            background-color: #FFFFFF;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
         }
         .share_links {
-            margin-top: 20px;
             text-align: center;
-            color: white;
         }
-        .share_links > div {display: inline-block}
+        .share_links > div {
+            display: inline-block;
+        }
         .share_links > div > i:hover {
             color: #0088ff;
         }
-
-        .container-fluid {
-            display: block;
-            margin-top: 20px;
-        }
-        .container-fluid > table {
-            margin-left: auto;
-            margin-right: auto;
-        }
         footer {
-            left:0;
-            right: 0;
             text-align: center;
-            color: white;
         }
-        footer > .container-fluid {
-            margin-bottom: 10px;
-            font-size: 12px;
+        footer > .container > .row > .col-md-2 >  ul > li {
+            display: block;
+            list-style: none;
         }
-        footer > .container-fluid > table > tbody > tr > td > a {
-            color: #FFFFFF;
-        }
-        footer > p {
-            font-size: 8px;
-        }
+
     </style>
 {% if scripts %}
     <script>
@@ -83,44 +76,104 @@
 {% endif %}
 </head>
 <body>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><i class="fa fa-moon-o"></i>&nbsp;Full Moon</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">控制面板<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+              <li role="presentation"><a href="/editor"><i class="fa fa-user-o"></i>&nbsp;登陆</a></li>
+              <li><a href="?edit=true"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑本文</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Me<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#"><i class="fa fa-question"></i>&nbsp;Who Am I</a></li>
+            <li class="divider"></li>
+            {% if current_user.is_authenticated %}
+                <li role="presentation"><a href="?logout=true"><i class="fa fa-power-off"></i>&nbsp;Log out</a></li>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 <!-- if not allowed to edit, show article normal -->
 {% if not scripts %}
     <!-- title and author -->
-    <div class="article_title">
-        <div class="title title_for_ckeditor">{{ article_by_uuid.title }}</div>
-        <div id="uuid" style="display: none;">{{ article_by_uuid.uuid }}</div>
-        <div class="author">{{ article_by_uuid.author }}</div>
-        <!--<img src="" width="100" height="100">-->
-    </div>
-    <!-- article content -->
     <div class="container">
-        <div class="content_for_ckeditor">{{ article_by_uuid.content|safe }}</div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <article class="post">
+                    <div class="post-inner-content">
+                        <header>
+                            <h2 class="title">{{ article_by_uuid.title }}</h2>
+                            <div id="uuid" style="display: none;">{{ article_by_uuid.uuid }}</div>
+                            <div class="meta">
+                                <i class="fa fa-calendar"></i>
+                                <div class="time" title="最后编辑:{{ article_by_uuid.edit_date.strftime("%Y-%m-%d %H:%M") }}"><time class="created" datetime="{{ article_by_uuid.create_date }}">{{ article_by_uuid.create_date.strftime("%Y-%m-%d %H:%M") }}</time></div>
+                            </div>
+                        </header>
+                        <hr>
+                        <div class="content">
+                            <div>{{ article_by_uuid.content|safe }}</div>
+                        </div>
+                    </div>
+                    <!-- love it  button -->
+                    <div class="love_it"></div>
+                        <!-- how to cancel the love ? need don't like button? -->
+                    <!-- ajax comments -->
+                    <div id="comments"></div>
+                    <!-- share for social sites-->
+                    <div class="share_links">
+                        <div><i class="fa fa-weibo fa-2x" title="分享到微博" data-toggle="tooltip"></i></div>
+                        <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
+                        <div><i class="fa fa-wechat fa-2x" title="分享到微信" data-toggle="tooltip"></i></div>
+                        <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
+                        <div><i class="fa fa-qq fa-2x" title="分享到QQ" data-toggle="tooltip"></i></div>
+                    </div>
+                </article>
+            </div>
+        </div>
     </div>
-    <!-- love it  button -->
-    <div class="love_it">
-        <!-- how to cancel the love ? need don't like button? -->
-    </div>
-    <!-- ajax comments -->
-    <div id="comments"></div>
-    <!-- share for social sites-->
-    <div class="share_links">
-        <div><i class="fa fa-weibo fa-2x" title="分享到微博" data-toggle="tooltip"></i></div>
-        <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
-        <div><i class="fa fa-wechat fa-2x" title="分享到微信" data-toggle="tooltip"></i></div>
-        <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
-        <div><i class="fa fa-qq fa-2x" title="分享到QQ" data-toggle="tooltip"></i></div>
-    </div>
-
 
     <footer class=footer">
-        <div class="container-fluid">
-            <table>
-                <tr>
-                    <td><a href="{{ url_for('scc.scc_root') }}">首页</a></td>
-                    <td><div style="height: 10px;border-left: #FFFFFF 1px solid;display: inline-block"></div></td>
-                    <td><a href="{{ url_for('main.main_login') }}">登陆</a></td>
-                </tr>
-            </table>
+        <div class="container">
+            <hr>
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>网站相关</h4>
+                    <ul>
+                        <li><a href="{{ url_for('scc.scc_root') }}">首页</a></li>
+                        <li><a href="{{ url_for('main.main_login') }}">登陆</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h4>友情链接</h4>
+                    <ul>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <p>&copy;&nbsp;2016-2017 版权所有 scc</p>
     </footer>
