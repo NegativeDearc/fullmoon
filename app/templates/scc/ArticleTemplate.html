@@ -10,6 +10,8 @@
     <script src="{{ url_for('scc.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('scc.static',filename='bootstrap.min.js') }}"></script>
     <script src="{{ url_for('scc.static',filename='baidu-analysis.js') }}"></script>
+    <script src="{{ url_for('scc.static',filename='scc-js.js') }}"></script>
+
     <title>{{ article_by_uuid.title }}</title>
     <style>
         body {
@@ -213,12 +215,15 @@
         //if null in <input> tags don't show submit button
         //ajax comments by uuid
         var uuid = $("#uuid").html();
+        //ajax load comments
         $.ajax({
             url: "{{ url_for('main.main_temp_2') }}" + "?uuid=" + uuid,
             dataType:"html",
             type: "GET",
+            sync:false,
             success: function (data) {
                 $("#comments").html(data);
+                $("[data-toggle=tooltip]").tooltip();
             }
         });
     });
