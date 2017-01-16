@@ -10,12 +10,18 @@
         {% for comment in comments %}
             <a name="comment-{{ comment.id }}" id="comment-{{ comment.id }}" style="display: none;"></a>
             <div class="media">
-            <a href="#" class="pull-left"><img src="{{ comment.rdr_mail|gravatar_url }}" alt="" class="media-object" width="25" height="25"></a>
-            <div class="media-body">
-                <div class="media-heading">{{ comment.rdr_name }} at {{ comment.message_date.strftime("%Y/%m/%d %H:%M") }}</div>
-                {{ comment.rdr_message }}
+                <a href="#" class="pull-left"><img src="{{ comment.rdr_mail|gravatar_url }}" alt="" class="media-object" width="25" height="25"></a>
+                <div class="media-body">
+                    <div class="media-heading">{{ comment.rdr_name }} at {{ comment.message_date.strftime("%Y/%m/%d %H:%M") }}</div>
+                    <div>
+                        {{ comment.rdr_message }}
+                    </div>
+                </div>
+                <div style="display: none;" id="reply">{{ comment.reply_id }}</div>
+                <div style="display: none;" id="reply_to">{{ comment.reply_to_id }}</div>
+                <!--when pushed to reply, jQuery must get the reply_to_id otherwise it will reply to author directly-->
+                <a href="javascript:void(0) " style="display: inline-block;float: right;" class="btn btn-sm btn-info">回复</a>
             </div>
-        </div>
         {% endfor %}
         </div>
     {% else %}

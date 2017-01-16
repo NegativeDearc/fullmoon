@@ -11,8 +11,7 @@ scc = Blueprint('scc', __name__, template_folder='templates', url_prefix='/scc')
 def scc_root(page=1):
     recent_articles = Article.recent_articles(author='scc')
     recent_comments = Comment.recent_comments(author='scc')
-    for a in recent_comments:
-        print a[0]
+
     if request.args.get("article", ""):
         # redirect to article URL if get the ?article=uuid
         return redirect(url_for("scc.scc_article", uuid=request.args.get("article")))

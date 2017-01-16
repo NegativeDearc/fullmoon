@@ -200,9 +200,9 @@ class Article(db.Model):
 
     @classmethod
     def recent_articles(cls, author=None):
-        rv = cls.query.filter(cls.author == author, cls.status == 'PUBLISHED').\
+        rv = cls.query.filter(cls.author == author, cls.status == 'PUBLISHED'). \
             order_by(desc(cls.create_date)). \
-            limit(5).\
+            limit(5). \
             all()
 
         return rv
@@ -223,8 +223,9 @@ class Comment(db.Model):
     rdr_name = db.Column(db.String(20), nullable=False)
     rdr_mail = db.Column(db.String(20), nullable=False)
     rdr_message = db.Column(db.String(200), nullable=False)
-    # reply_id = db.Column(db.INTEGER, nullable=False)
-    # replay_to_id = db.Column(db.INTEGER, nullable=False)  # use id to indicate who reply to who
+    reply_id = db.Column(db.String(50), nullable=False, unique=True,
+                         default=str(uuid.uuid1()))  # generate an random id for comment
+    reply_to_id = db.Column(db.String(50), default=None, nullable=True)  # use id to indicate who reply to who
     message_date = db.Column(db.DATETIME, nullable=False, default=datetime.now())
     approved = db.Column(db.BOOLEAN, default=0, nullable=False)
 
@@ -271,11 +272,11 @@ class Comment(db.Model):
     @classmethod
     def recent_comments(cls, author=None):
         # union query will get two model objects at a list [(model object 1, model object 2), ...]
-        rv = db.session.query(cls, Article).\
-            outerjoin(Article, Article.uuid == cls.uid).\
-            filter(cls.approved == True).\
-            order_by(desc(cls.message_date)).\
-            limit(5).\
+        rv = db.session.query(cls, Article). \
+            outerjoin(Article, Article.uuid == cls.uid). \
+            filter(cls.approved == True). \
+            order_by(desc(cls.message_date)). \
+            limit(5). \
             all()
         return rv
 
@@ -371,20 +372,3 @@ class Login(db.Model, UserMixin):
         else:
             login = Login.query.filter(Login.id == user_id).one()
             return login
-
-
-class Secure(db.Model):
-    """
-    table store visitor ip address and lock the unauthorised visitor
-    """
-    __tablename__ = "Secure"
-    __table_args__ = (
-        UniqueConstraint("id"),
-        CheckConstraint('status IN ("LOCKED","UNLOCKED","BLACKLIST")', name='secure_check_status')
-    )
-    id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
-    ip_address = db.Column(db.String(15))
-    blacklist = db.Column(db.BOOLEAN)
-    visited_times_in_five_minutes = db.Column(db.INTEGER)
-    unlock_time = db.Column(db.DATETIME)
-    status = db.Column(db.String(10))

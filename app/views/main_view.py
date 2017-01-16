@@ -28,9 +28,7 @@ def main_login():
     if request.method == "POST":
         user = Login.query.filter(Login.user == request.form.get("usr")).first()
         if user is not None and user.verify_password(request.form.get("pwd")):
-            print session
             login_user(user, remember=True, force=True, fresh=True)  # it will return True if success
-            print session
             if not request.args.get("next"):  # if get None , redirect to main.main_edit
                 return redirect(url_for("main.main_edit"))
             return redirect(request.args.get("next"))
