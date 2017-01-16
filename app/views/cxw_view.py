@@ -1,8 +1,15 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint, url_for, redirect, render_template, request, send_file, send_from_directory
 from app.config import Config
+from app.models.model import Article
 
 cxw = Blueprint('cxw', __name__, url_prefix="/cxw")
+
+
+@cxw.route('/blog')
+@cxw.route('/blog/')
+def cxw_blog():
+    return render_template("CxwBlog.html")
 
 
 @cxw.route('/about')
@@ -12,8 +19,6 @@ def cxw_about():
 
 @cxw.route('/resume')
 def cxw_resume():
-    if request.args.get("file"):
-        print request.args.get("file")
     return render_template("ResumeShowcase.html")
 
 
