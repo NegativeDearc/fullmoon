@@ -9,11 +9,20 @@ scc = Blueprint('scc', __name__, template_folder='templates', url_prefix='/scc')
 
 @scc.route('/blog', methods=['GET', 'POST'])
 def scc_root(page=1):
+    recent_articles = Article.recent_articles(author='scc')
+    recent_comments = Comment.recent_comments(author='scc')
+    for a in recent_comments:
+        print a[0]
     if request.args.get("article", ""):
+        # redirect to article URL if get the ?article=uuid
         return redirect(url_for("scc.scc_article", uuid=request.args.get("article")))
     pagination = Article.pagination(page=int(request.args.get('page', page)), author='scc')
     latest_10 = Article.latest_article(page=int(request.args.get('page', page)), author='scc')
-    return render_template('SccBlog.html', latest_10=latest_10, pagination=pagination)
+    return render_template('SccBlog.html',
+                           latest_10=latest_10,
+                           pagination=pagination,
+                           recent_articles=recent_articles,
+                           recent_comments=recent_comments)
 
 
 @scc.route('/blog/article/<string:uuid>', methods=['GET', 'POST'])

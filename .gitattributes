@@ -9,3 +9,4 @@ app/static/jquery.min.js linguist-vendored
 app/static/vue.js linguist-vendored
 app/static/trianglify.min.js linguist-vendored
 app/static/pdfjs-1.5.188/* linguist-vendored
+app/anime.js linguist-vendored

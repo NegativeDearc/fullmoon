@@ -8,6 +8,7 @@
     {% if comments %}
         <div class="well" id="well-content">
         {% for comment in comments %}
+            <a name="comment-{{ comment.id }}" id="comment-{{ comment.id }}" style="display: none;"></a>
             <div class="media">
             <a href="#" class="pull-left"><img src="{{ comment.rdr_mail|gravatar_url }}" alt="" class="media-object" width="25" height="25"></a>
             <div class="media-body">

@@ -219,23 +219,27 @@
             <div class="well">
                 <aside id="recent-posts">
                     <h3 class="widget-title">近期文章</h3>
-                    <ul class="widget-list">
-                        <li class="widget-list-item"><a href="">1111</a></li>
-                        <li class="widget-list-item"><a href="">1111</a></li>
-                        <li class="widget-list-item"><a href="">1111</a></li>
+                    <ul class="widget-list" id="sidebar-recent-articles">
+                        {% for article in recent_articles %}
+                        <li class="widget-list-item"><i class="fa fa-bookmark"></i>&nbsp;<a href="?article={{ article.uuid }}" target="_blank"><< {{ article.title }} >></a></li>
+                        {% endfor %}
                     </ul>
                 </aside>
                 <aside id="recent-comments">
                     <h3 class="widget-title">近期评论</h3>
-                    <ul class="widget-list">
-                        <li class="widget-list-item"><i class="fa fa-comments-o"></i><a href="">&nbsp;1111</a></li>
-                        <li class="widget-list-item"><i class="fa fa-comments-o"></i><a href="">&nbsp;1111</a></li>
-                        <li class="widget-list-item"><i class="fa fa-comments-o"></i><a href="">&nbsp;1111</a></li>
+                    <ul class="widget-list" id="sidebar-recent-comments">
+                    {% if recent_comments %}
+                        {% for comment, article in recent_comments %}
+                        <li class="widget-list-item"><i class="fa fa-comments-o"></i><a href="?article={{ article.uuid }}#comment-{{ comment.id }}" target="_blank">&nbsp;{{ comment.rdr_message }} by {{ comment.rdr_name }}</a></li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="widget-list-item"><i class="fa fa-comments-o"></i><a href="#">&nbsp;Nothing to show.</a></li>
+                    {% endif %}
                     </ul>
                 </aside>
                 <aside id="achieves">
                     <h3 class="widget-title">存档</h3>
-                    <ul class="widget-list">
+                    <ul class="widget-list" id="sidebar-achieves">
                         <li class="widget-list-item"><a href="">1111</a></li>
                         <li class="widget-list-item"><a href="">1111</a></li>
                         <li class="widget-list-item"><a href="">1111</a></li>
@@ -243,7 +247,7 @@
                 </aside>
                 <aside id="categories">
                     <h3 class="widget-title">分类</h3>
-                    <ul class="widget-list">
+                    <ul class="widget-list" id="sidebar-categories">
                         <li class="widget-list-item"><a href="">1111</a></li>
                         <li class="widget-list-item"><a href="">1111</a></li>
                         <li class="widget-list-item"><a href="">1111</a></li>

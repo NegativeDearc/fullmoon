@@ -198,6 +198,19 @@ class Article(db.Model):
         rs = constraint_total - {rv.status}
         return rs
 
+    @classmethod
+    def recent_articles(cls, author=None):
+        rv = cls.query.filter(cls.author == author, cls.status == 'PUBLISHED').\
+            order_by(desc(cls.create_date)). \
+            limit(5).\
+            all()
+
+        return rv
+
+    @classmethod
+    def categories(cls):
+        pass
+
 
 class Comment(db.Model):
     """
@@ -254,6 +267,17 @@ class Comment(db.Model):
         except Exception as e:
             print e
             return False
+
+    @classmethod
+    def recent_comments(cls, author=None):
+        # union query will get two model objects at a list [(model object 1, model object 2), ...]
+        rv = db.session.query(cls, Article).\
+            outerjoin(Article, Article.uuid == cls.uid).\
+            filter(cls.approved == True).\
+            order_by(desc(cls.message_date)).\
+            limit(5).\
+            all()
+        return rv
 
 
 class Login(db.Model, UserMixin):
