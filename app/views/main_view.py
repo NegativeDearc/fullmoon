@@ -39,11 +39,6 @@ def main_login():
     return render_template('YouMustLogin.html')
 
 
-@main.route('/about')
-def main_about():
-    return render_template('AboutTheWebsite.html')
-
-
 @main.route('/pdfRender')
 def main_pdf_render():
     url = ''
