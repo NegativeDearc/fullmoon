@@ -15,7 +15,7 @@
             <td>评论作者</td>
             <td>评论者邮箱</td>
             <td>评论内容</td>
-            <td colspan="2">操作</td>
+            <td colspan="3">操作</td>
         </tr>
     {% for comment in comments %}
         <tr>
@@ -29,6 +29,9 @@
             </td>
             <td>
                 <button data-toggle="tooltip" title="允许评论展示" class="btn btn-sm btn-default btn-block approve_comment"><i class="fa fa-check" style="color: green" ></i></button>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-default btn-block">回复</button>
             </td>
         </tr>
     {% endfor %}

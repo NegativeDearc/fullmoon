@@ -26,18 +26,21 @@ def scc_root(page=1):
 
 @scc.route('/blog/article/<string:uuid>', methods=['GET', 'POST'])
 def scc_article(uuid):
+    print Comment.show_message_test(uuid)
+
     if request.args.get('edit') == 'true':
         return redirect(url_for("scc.article_editor", uuid=uuid))
     if request.args.get("logout") == "true":
         logout_user()
 
     if request.method == "POST":
-        print request.form
+        # print request.form
         db.session.add(Comment(
             uid=uuid,
             rdr_name=request.form.get("nickname"),
             rdr_mail=request.form.get("mail-address"),
             rdr_message=request.form.get("comment-content"),
+            reply_to_id=request.form.get("reply_to_id")
         ))
         db.session.commit()
         return redirect(url_for("scc.scc_article", uuid=uuid))

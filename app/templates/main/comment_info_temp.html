@@ -18,11 +18,11 @@
                         {{ comment.rdr_message }}
                     </div>
                 </div>
-                <div style="display: none;" name="reply">{{ comment.reply_id }}</div>
-                <div style="display: none;" name="reply_to">{{ comment.reply_to_id }}</div>
                 <!--when pushed to reply, jQuery must get the reply_to_id otherwise it will reply to author directly-->
                 <!--在父元素上设置overflow属性父元素设置overflow：auto；或overflow：hidden；来消除子元素float脱离文档流的问题注意：overflow属性并不是专门用来清除float的-->
                 <div style="overflow: hidden;">
+                    <div style="display: none;" name="reply">{{ comment.reply_id }}</div>
+                    <div style="display: none;" name="reply_to">{{ comment.reply_to_id }}</div>
                     <a style="float: right;" href="javascript:void(0);" class="btn btn-sm btn-info" name="reply_btn" onclick="insert_submit_form(this)">回复</a>
                 </div>
                 <!--for loop again -->

@@ -224,8 +224,8 @@ class Comment(db.Model):
     rdr_mail = db.Column(db.String(20), nullable=False)
     rdr_message = db.Column(db.String(200), nullable=False)
     reply_id = db.Column(db.String(50), nullable=False, unique=True,
-                         default=str(uuid.uuid1()))  # generate an random id for comment
-    reply_to_id = db.Column(db.String(50), default=None, nullable=True)  # use id to indicate who reply to who
+                         default=str(uuid.uuid4()))  # generate an random id for comment
+    reply_to_id = db.Column(db.String(50), default='0000', nullable=True)  # use id to indicate who reply to who
     message_date = db.Column(db.DATETIME, nullable=False, default=datetime.now())
     approved = db.Column(db.BOOLEAN, default=0, nullable=False)
 
@@ -238,6 +238,11 @@ class Comment(db.Model):
             order_by(desc(cls.message_date)). \
             all()
         return rv
+
+    @classmethod
+    def show_message_test(cls, uuid=None):
+        parent_id_set = {cls.reply_to_id}
+        print parent_id_set
 
     @staticmethod
     def approved_message():
