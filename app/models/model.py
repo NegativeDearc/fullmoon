@@ -11,6 +11,15 @@ from flask.ext.login import UserMixin
 from app.config import config
 
 
+# global method
+def gen_uid():
+    return uuid.uuid1().__str__()
+
+
+def gen_dat():
+    return datetime.now()
+
+
 # extension for Comment
 class ExtensionForComment(MapperExtension):
     pass
@@ -224,9 +233,9 @@ class Comment(db.Model):
     rdr_mail = db.Column(db.String(20), nullable=False)
     rdr_message = db.Column(db.String(200), nullable=False)
     reply_id = db.Column(db.String(50), nullable=False, unique=True,
-                         default=str(uuid.uuid4()))  # generate an random id for comment
+                         default=gen_uid)  # generate an random id for comment
     reply_to_id = db.Column(db.String(50), default='0000', nullable=True)  # use id to indicate who reply to who
-    message_date = db.Column(db.DATETIME, nullable=False, default=datetime.now())
+    message_date = db.Column(db.DATETIME, nullable=False, default=gen_dat)
     approved = db.Column(db.BOOLEAN, default=0, nullable=False)
 
     @classmethod
@@ -241,6 +250,18 @@ class Comment(db.Model):
 
     @classmethod
     def show_message_test(cls, uuid=None):
+        """
+        use WITH RECURSIVE expression to query the comments
+        required version sqlite > 3.8.3
+        find more at http://www.sqlite.org/lang_with.html.
+
+        parent id : reply_to_id(root = 0000)
+        child id : reply_id
+
+        from root search every parent and his children, sort by parent time. two levels
+        :param uuid:
+        :return:queried object
+        """
         parent_id_set = {cls.reply_to_id}
         print parent_id_set
 

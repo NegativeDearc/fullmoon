@@ -34,13 +34,13 @@ def scc_article(uuid):
         logout_user()
 
     if request.method == "POST":
-        # print request.form
+        print request.form
         db.session.add(Comment(
             uid=uuid,
             rdr_name=request.form.get("nickname"),
             rdr_mail=request.form.get("mail-address"),
             rdr_message=request.form.get("comment-content"),
-            reply_to_id=request.form.get("reply_to_id")
+            reply_to_id=request.form.get("reply_to_id", "0000")
         ))
         db.session.commit()
         return redirect(url_for("scc.scc_article", uuid=uuid))
