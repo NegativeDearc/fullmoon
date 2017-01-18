@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+{% macro media(element) %}
+    <div class="media">
+        <!--anchor-->
+        <a name="comment-{{ element[0] }}" id="comment-{{ element[0] }}" style="display: none;"></a>
+        <a href="#" class="pull-left"><img src="{{ element[3]|gravatar_url }}" alt="" class="media-object" width="25" height="25"></a>
+        <div class="media-body">
+            <div class="media-heading">{{ element[4] }} at {{ element[-1] }}</div>
+            {{ media(element) }}
+            <div class="media-content">{{ element[5] }}</div>
+        </div>
+        <!--when pushed to reply, jQuery must get the reply_to_id otherwise it will reply to author directly-->
+        <!--在父元素上设置overflow属性父元素设置overflow：auto；或overflow：hidden；来消除子元素float脱离文档流的问题注意：overflow属性并不是专门用来清除float的-->
+        <div style="overflow: hidden;">
+            <div style="display: none;" name="reply">{{ element[1] }}</div>
+            <div style="display: none;" name="reply_to">{{ element[2] }}</div>
+            <a style="float: right;" href="javascript:void(0);" class="btn btn-sm btn-info" name="reply_btn" onclick="insert_submit_form(this)">回复</a>
+        </div>
+    </div>
+{% endmacro %}
+
+<div>
+    <!-- add pagination to show more comments -->
+    <label for="well-content">评论<span class="caret"></span></label>
+    <!-- only if have comments -->
+    {% if comments %}
+        <div class="well" id="well-content">
+        {% for comment in comments %}
+
+        {% endfor %}
+        </div>
+    {% else %}
+        <div class="well">
+            <div>暂无评论，快来抢沙发吧</div>
+        </div>
+    {% endif %}
+
+    <!-- submit form -->
+    <label for="leave-a-message" data-toggle="tooltip" title="点击箭头输入评论">留言<span class="caret" data-toggle="collapse" data-target="#leave-a-message"></span></label>
+    <div class="well collapse" id="leave-a-message">
+        <div class="form-group">
+        <form action="" class="form" method="post">
+            <input type="hidden" name="_crsf_token" id="_crsf_token" value="{{ crsf_token() }}">
+            <div class="form-group">
+                <label for="nickname">显示名称</label>
+                <input type="text" placeholder="输入昵称，将会在评论席显示" required="required" name="nickname" id="nickname" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="mail-address">邮箱</label>
+                <input type="email" placeholder="输入邮箱，系统会保护你的个人隐私" required="required" name="mail-address" id="mail-address" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="comment-content">内容</label>
+                <textarea type="text" placeholder="输入评论，将在作者审核通过后显示" name="comment-content" id="comment-content" class="form-control" required="required" style="resize: none;"></textarea>
+            </div>
+            <input type="submit" class="btn btn-info btn-block">
+        </form>
+    </div>
+    </div>
+</div>
+</body>
+</html>

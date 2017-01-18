@@ -128,6 +128,16 @@ def main_temp_2():
     return render_template("comment_info_temp.html", comments=comments)
 
 
+@main.route('/render_temp/temp_2_test')
+def main_temp_2_test():
+    uuid = request.args.get("uuid")
+    # render comments by uuid
+    # we don't need to login to see comments
+    # how to get comments data? By api or by url?
+    comments = Comment.show_message_test(uuid=uuid)
+    return render_template("comment_info_temp_test.html", comments=comments)
+
+
 @main.route('/render_temp/temp_3')
 @login_required
 def main_temp_3():

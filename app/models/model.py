@@ -2,9 +2,11 @@
 from sqlalchemy import CheckConstraint, UniqueConstraint, desc, asc
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.interfaces import MapperExtension
+from sqlalchemy.sql.expression import text, HasCTE
 from database import db
 import uuid
 from datetime import datetime
+from collections import OrderedDict
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired, BadSignature
 from flask.ext.login import UserMixin
@@ -234,7 +236,7 @@ class Comment(db.Model):
     rdr_message = db.Column(db.String(200), nullable=False)
     reply_id = db.Column(db.String(50), nullable=False, unique=True,
                          default=gen_uid)  # generate an random id for comment
-    reply_to_id = db.Column(db.String(50), default='0000', nullable=True)  # use id to indicate who reply to who
+    reply_to_id = db.Column(db.String(50), default=None, nullable=True)  # use id to indicate who reply to who
     message_date = db.Column(db.DATETIME, nullable=False, default=gen_dat)
     approved = db.Column(db.BOOLEAN, default=0, nullable=False)
 
@@ -255,15 +257,33 @@ class Comment(db.Model):
         required version sqlite > 3.8.3
         find more at http://www.sqlite.org/lang_with.html.
 
-        parent id : reply_to_id(root = 0000)
+        parent id : reply_to_id(root = NULL)
         child id : reply_id
 
         from root search every parent and his children, sort by parent time. two levels
-        :param uuid:
-        :return:queried object
+        :param uuid:indicator of the unique article
+        :return:nested object with query class
         """
-        parent_id_set = {cls.reply_to_id}
-        print parent_id_set
+        # @1:query all the unique reply_id of Comment order by time
+        children_id_list = cls.query.filter(cls.uid == uuid, cls.approved == True). \
+            order_by(desc(cls.message_date))
+        # @2:use WITH RECURSIVE expression to query all the parent comments
+        recursive_sql = text("""
+          with recursive
+            cte(id, reply_id, reply_to_id, rdr_mail, rdr_message, rdr_name, message_date) as (
+              select id, reply_id, reply_to_id, rdr_mail, rdr_message, rdr_name ,message_date from Comment where reply_id = :a and approved = 1 and uid = :b
+              union all
+              select Comment.id, Comment.reply_id, Comment.reply_to_id, Comment.rdr_mail, Comment.rdr_message, Comment.rdr_name, Comment.message_date from Comment join cte on Comment.reply_id = cte.reply_to_id
+              )
+          select * from cte""")
+
+        result = list()
+        for _, child in enumerate(children_id_list):
+            raw_sql = recursive_sql.bindparams(a=child.reply_id, b=uuid)
+            rv = db.session.execute(raw_sql).fetchall()
+            result.append(rv)
+        # @3:construct a list or generator for JinJa
+        return result
 
     @staticmethod
     def approved_message():

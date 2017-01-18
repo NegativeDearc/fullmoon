@@ -26,7 +26,8 @@ def scc_root(page=1):
 
 @scc.route('/blog/article/<string:uuid>', methods=['GET', 'POST'])
 def scc_article(uuid):
-    print Comment.show_message_test(uuid)
+    for e in Comment.show_message_test(uuid):
+        print e
 
     if request.args.get('edit') == 'true':
         return redirect(url_for("scc.article_editor", uuid=uuid))
@@ -40,7 +41,7 @@ def scc_article(uuid):
             rdr_name=request.form.get("nickname"),
             rdr_mail=request.form.get("mail-address"),
             rdr_message=request.form.get("comment-content"),
-            reply_to_id=request.form.get("reply_to_id", "0000")
+            reply_to_id=request.form.get("reply_to_id")
         ))
         db.session.commit()
         return redirect(url_for("scc.scc_article", uuid=uuid))

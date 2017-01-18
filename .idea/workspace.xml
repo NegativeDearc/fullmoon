@@ -13,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/fullmoon$fullmoon.coverage" NAME="fullmoon Coverage Results" MODIFIED="1484633146503" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/fullmoon$fullmoon.coverage" NAME="fullmoon Coverage Results" MODIFIED="1484722567623" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -35,8 +35,8 @@
       <file leaf-file-name="scc_view.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/scc_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-143">
-              <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
+            <state relative-caret-position="74">
+              <caret line="28" column="45" selection-start-line="28" selection-start-column="45" selection-end-line="28" selection-end-column="45" />
               <folding>
                 <element signature="e#23#95#0" expanded="true" />
               </folding>
@@ -44,13 +44,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scc-js.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/static/scc-js.js">
+      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+            <state relative-caret-position="696">
+              <caret line="265" column="11" selection-start-line="265" selection-start-column="11" selection-end-line="265" selection-end-column="11" />
               <folding>
-                <element signature="e#0#45#0" expanded="false" />
+                <element signature="e#23#90#0" expanded="true" />
+                <element signature="e#2883#3268#0" expanded="false" />
+                <element signature="e#3302#3543#0" expanded="false" />
+                <element signature="e#3608#5180#0" expanded="false" />
+                <element signature="e#5259#5742#0" expanded="false" />
+                <element signature="e#5820#6079#0" expanded="false" />
+                <element signature="e#6151#6271#0" expanded="false" />
+                <element signature="e#6362#6449#0" expanded="false" />
+                <element signature="e#6516#6983#0" expanded="false" />
+                <element signature="e#7055#7448#0" expanded="false" />
+                <element signature="e#7518#7699#0" expanded="false" />
+                <element signature="e#7751#7755#0" expanded="false" />
+                <element signature="e#8735#8923#0" expanded="false" />
+                <element signature="e#10664#10853#0" expanded="false" />
+                <element signature="e#10919#11163#0" expanded="false" />
+                <element signature="e#11230#11493#0" expanded="false" />
+                <element signature="e#11563#11911#0" expanded="false" />
+                <element signature="e#11952#15085#0" expanded="false" />
+                <marker date="1484728197474" expanded="true" signature="10275:10292" ph="select * fro... cte" />
               </folding>
             </state>
           </provider>
@@ -59,51 +77,40 @@
       <file leaf-file-name="ArticleTemplate.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-817">
-              <caret line="53" column="37" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
+            <state relative-caret-position="114">
+              <caret line="223" column="51" selection-start-line="223" selection-start-column="51" selection-end-line="223" selection-end-column="51" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/model.py">
+      <file leaf-file-name="main_view.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/main_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding>
-                <element signature="e#23#90#0" expanded="true" />
-                <element signature="e#1207#7668#0" expanded="false" />
-                <element signature="e#3521#5093#0" expanded="false" />
-                <element signature="e#5172#5655#0" expanded="false" />
-                <element signature="e#5733#5992#0" expanded="false" />
-                <element signature="e#6064#6184#0" expanded="false" />
-                <element signature="e#6275#6362#0" expanded="false" />
-                <element signature="e#6429#6896#0" expanded="false" />
-                <element signature="e#8650#8838#0" expanded="false" />
-                <element signature="e#10711#13844#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="comments_info_temp.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/templates/main/comments_info_temp.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="33" column="63" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
+            <state relative-caret-position="236">
+              <caret line="136" column="41" selection-start-line="136" selection-start-column="41" selection-end-line="136" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="comment_info_temp.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/main/comment_info_temp.html">
+      <file leaf-file-name="comment_info_temp_test.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/templates/main/comment_info_temp_test.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="24" column="62" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="62" />
+            <state relative-caret-position="418">
+              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="349">
+              <caret line="127" column="0" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
               <folding>
-                <element signature="n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="e#23#74#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -149,7 +156,6 @@
         <option value="$PROJECT_DIR$/app/templates/main/article_info_temp.html" />
         <option value="$PROJECT_DIR$/app/views/api_view.py" />
         <option value="$PROJECT_DIR$/app/static/get_token.js" />
-        <option value="$PROJECT_DIR$/app/__init__.py" />
         <option value="$PROJECT_DIR$/app/static/element-ui/index.css" />
         <option value="$PROJECT_DIR$/.gitattribute" />
         <option value="$PROJECT_DIR$/app/config.py" />
@@ -169,15 +175,17 @@
         <option value="$PROJECT_DIR$/app/templates/cxw/ArticleTemplateTheme_1.html" />
         <option value="$PROJECT_DIR$/app/templates/cxw/ResumeShowcase.html" />
         <option value="$PROJECT_DIR$/app/views/cxw_view.py" />
-        <option value="$PROJECT_DIR$/app/views/main_view.py" />
         <option value="$PROJECT_DIR$/app/templates/cxw/CxwBlog.html" />
         <option value="$PROJECT_DIR$/app/templates/scc/SccBlog.html" />
         <option value="$PROJECT_DIR$/app/templates/main/comment_info_temp.html" />
         <option value="$PROJECT_DIR$/app/static/scc-js.js" />
-        <option value="$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html" />
         <option value="$PROJECT_DIR$/app/templates/main/comments_info_temp.html" />
+        <option value="$PROJECT_DIR$/app/views/main_view.py" />
         <option value="$PROJECT_DIR$/app/views/scc_view.py" />
+        <option value="$PROJECT_DIR$/app/__init__.py" />
+        <option value="$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html" />
         <option value="$PROJECT_DIR$/app/models/model.py" />
+        <option value="$PROJECT_DIR$/app/templates/main/comment_info_temp_test.html" />
       </list>
     </option>
   </component>
@@ -411,16 +419,16 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\datin_000\Desktop\GIT REPO\fullmoon\app\templates\main" />
+      <recent name="C:\Users\datin_000\Desktop\GIT REPO\fullmoon\app\static\upload" />
+      <recent name="C:\Users\Dearc\PycharmProjects\fullmoon\app\templates" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\datin_000\Desktop\GIT REPO\fullmoon\app\static" />
       <recent name="C:\Users\Dearc\PycharmProjects\fullmoon\app\static" />
       <recent name="C:\Users\Dearc\PycharmProjects\fullmoon\app\templates\main" />
       <recent name="C:\Users\Dearc\PycharmProjects\fullmoon\app\templates\main\temp" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\datin_000\Desktop\GIT REPO\fullmoon\app\templates\main" />
-      <recent name="C:\Users\datin_000\Desktop\GIT REPO\fullmoon\app\static\upload" />
-      <recent name="C:\Users\Dearc\PycharmProjects\fullmoon\app\templates" />
     </key>
   </component>
   <component name="RunManager" selected="Python.fullmoon">
@@ -683,13 +691,13 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21860817" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22163388" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32786885" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2672131" sideWeight="0.5121029" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.49394855" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2672131" sideWeight="0.48789713" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30491802" sideWeight="0.4969743" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34918034" sideWeight="0.48487142" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24158126" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43934426" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -766,13 +774,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/werkzeug/wrappers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="1364" column="33" selection-start-line="1364" selection-start-column="33" selection-end-line="1364" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm2016.3/system/python_stubs/2107856164/__builtin__.py" />
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/flask_httpauth.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -822,13 +823,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="586" column="0" selection-start-line="586" selection-start-column="0" selection-end-line="586" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -986,14 +980,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/main_view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1609">
-          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/cxw/CxwBlog.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
@@ -1005,7 +991,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1013,7 +998,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="536">
           <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1021,7 +1005,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1706">
           <caret line="52" column="13" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1029,54 +1012,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
           <caret line="543" column="33" selection-start-line="543" selection-start-column="33" selection-end-line="543" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="91" column="4" selection-start-line="91" selection-start-column="4" selection-end-line="91" selection-end-column="4" />
-          <folding>
-            <element signature="e#23#74#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-817">
-          <caret line="53" column="37" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/scc_view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-143">
-          <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
-          <folding>
-            <element signature="e#23#95#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding>
-            <element signature="e#23#90#0" expanded="true" />
-            <element signature="e#1207#7668#0" expanded="false" />
-            <element signature="e#3521#5093#0" expanded="false" />
-            <element signature="e#5172#5655#0" expanded="false" />
-            <element signature="e#5733#5992#0" expanded="false" />
-            <element signature="e#6064#6184#0" expanded="false" />
-            <element signature="e#6275#6362#0" expanded="false" />
-            <element signature="e#6429#6896#0" expanded="false" />
-            <element signature="e#8650#8838#0" expanded="false" />
-            <element signature="e#10711#13844#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1090,20 +1025,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/main/comment_info_temp.html">
+    <entry file="file://$PROJECT_DIR$/app/templates/main/comments_info_temp.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="24" column="62" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="62" />
+        <state relative-caret-position="444">
+          <caret line="33" column="63" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="127" column="0" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
           <folding>
-            <element signature="n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="e#23#74#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/main/comments_info_temp.html">
+    <entry file="file://$PROJECT_DIR$/app/views/main_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="33" column="63" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
+        <state relative-caret-position="236">
+          <caret line="136" column="41" selection-start-line="136" selection-start-column="41" selection-end-line="136" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/scc_view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="28" column="45" selection-start-line="28" selection-start-column="45" selection-end-line="28" selection-end-column="45" />
+          <folding>
+            <element signature="e#23#95#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="223" column="51" selection-start-line="223" selection-start-column="51" selection-end-line="223" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/main/comment_info_temp.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-19">
+          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="696">
+          <caret line="265" column="11" selection-start-line="265" selection-start-column="11" selection-end-line="265" selection-end-column="11" />
+          <folding>
+            <element signature="e#23#90#0" expanded="true" />
+            <element signature="e#2883#3268#0" expanded="false" />
+            <element signature="e#3302#3543#0" expanded="false" />
+            <element signature="e#3608#5180#0" expanded="false" />
+            <element signature="e#5259#5742#0" expanded="false" />
+            <element signature="e#5820#6079#0" expanded="false" />
+            <element signature="e#6151#6271#0" expanded="false" />
+            <element signature="e#6362#6449#0" expanded="false" />
+            <element signature="e#6516#6983#0" expanded="false" />
+            <element signature="e#7055#7448#0" expanded="false" />
+            <element signature="e#7518#7699#0" expanded="false" />
+            <element signature="e#7751#7755#0" expanded="false" />
+            <element signature="e#8735#8923#0" expanded="false" />
+            <element signature="e#10664#10853#0" expanded="false" />
+            <element signature="e#10919#11163#0" expanded="false" />
+            <element signature="e#11230#11493#0" expanded="false" />
+            <element signature="e#11563#11911#0" expanded="false" />
+            <element signature="e#11952#15085#0" expanded="false" />
+            <marker date="1484728197474" expanded="true" signature="10275:10292" ph="select * fro... cte" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/main/comment_info_temp_test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding />
         </state>
       </provider>

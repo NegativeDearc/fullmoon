@@ -221,7 +221,7 @@
         var uuid = $("#uuid").html();
         //ajax load comments
         $.ajax({
-            url: "{{ url_for('main.main_temp_2') }}" + "?uuid=" + uuid,
+            url: "{{ url_for('main.main_temp_2_test') }}" + "?uuid=" + uuid,
             dataType:"html",
             type: "GET",
             sync:false,
