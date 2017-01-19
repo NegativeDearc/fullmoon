@@ -49,9 +49,22 @@
             background-color: #FFFFFF;
             box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
         }
+
+        .comment {
+            list-style: none;
+            border: 1px solid #dadada;
+            margin-top: 5px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .comment-ul > {list-style: none;}
+        .comment-ul > li {list-style: none;margin-top: 5px;}
+
         .media {
             padding: 10px;
-            border: 1px solid #dadada;
+{#            border-bottom: 1px solid #dadada;#}
+            margin: 10px;
         }
         .share_links {
             text-align: center;
@@ -221,7 +234,7 @@
         var uuid = $("#uuid").html();
         //ajax load comments
         $.ajax({
-            url: "{{ url_for('main.main_temp_2_test') }}" + "?uuid=" + uuid,
+            url: "{{ url_for('main.main_temp_2') }}" + "?uuid=" + uuid,
             dataType:"html",
             type: "GET",
             sync:false,

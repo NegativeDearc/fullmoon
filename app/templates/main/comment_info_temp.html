@@ -1,33 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
+
+{% macro media(element, btn=True) %}
+    <div class="media">
+        <!--anchor-->
+        <a name="comment-{{ element[0] }}" id="comment-{{ element[0] }}" style="display: none;"></a>
+        <a href="#" class="pull-left"><img src="{{ element[3]|gravatar_url }}" alt="" class="media-object" width="25" height="25"></a>
+        <div class="media-body">
+            <div class="media-heading">{{ element[4] }} at {{ element[-1][:16] }}</div>
+            <div class="media-content">{{ element[5] }}</div>
+        </div>
+        <!--when pushed to reply, jQuery must get the reply_to_id otherwise it will reply to author directly-->
+        <!--在父元素上设置overflow属性父元素设置overflow：auto；或overflow：hidden；来消除子元素float脱离文档流的问题注意：overflow属性并不是专门用来清除float的-->
+        {% if btn%}
+        <div style="overflow: hidden;">
+            <div style="display: none;" name="reply">{{ element[1] }}</div>
+            <div style="display: none;" name="reply_to">{{ element[2] }}</div>
+            <a style="float: right;" href="javascript:void(0);" class="btn btn-sm btn-info" name="reply_btn" onclick="insert_submit_form(this)">回复</a>
+        </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro render_comment(comment, show_btn=True) %}
+    <li class="comment">
+        {{ media(comment["pid"], btn=show_btn) }}
+        {% if comment["id"] %}
+            <ul class="comment-ul">{{ render_comment(comment["id"], False) }}</ul>
+        {% endif %}
+    </li>
+{% endmacro %}
+
 <div>
     <!-- add pagination to show more comments -->
     <label for="well-content">评论<span class="caret"></span></label>
     <!-- only if have comments -->
     {% if comments %}
         <div class="well" id="well-content">
-        {% for comment in comments %}
-            <div class="media">
-                <!--anchor-->
-                <a name="comment-{{ comment.id }}" id="comment-{{ comment.id }}" style="display: none;"></a>
-                <a href="#" class="pull-left"><img src="{{ comment.rdr_mail|gravatar_url }}" alt="" class="media-object" width="25" height="25"></a>
-                <div class="media-body">
-                    <div class="media-heading">{{ comment.rdr_name }} at {{ comment.message_date.strftime("%Y/%m/%d %H:%M") }}</div>
-                    <div>
-                        {{ comment.rdr_message }}
-                    </div>
-                </div>
-                <!--when pushed to reply, jQuery must get the reply_to_id otherwise it will reply to author directly-->
-                <!--在父元素上设置overflow属性父元素设置overflow：auto；或overflow：hidden；来消除子元素float脱离文档流的问题注意：overflow属性并不是专门用来清除float的-->
-                <div style="overflow: hidden;">
-                    <div style="display: none;" name="reply">{{ comment.reply_id }}</div>
-                    <div style="display: none;" name="reply_to">{{ comment.reply_to_id }}</div>
-                    <a style="float: right;" href="javascript:void(0);" class="btn btn-sm btn-info" name="reply_btn" onclick="insert_submit_form(this)">回复</a>
-                </div>
-                <!--for loop again -->
-            </div>
-        {% endfor %}
+            {% for comment in comments %}
+            {{ render_comment(comment) }}
+            {% endfor %}
         </div>
     {% else %}
         <div class="well">

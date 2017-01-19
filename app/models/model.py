@@ -243,16 +243,6 @@ class Comment(db.Model):
     @classmethod
     def show_message(cls, uuid=None):
         """
-        :return:
-        """
-        rv = cls.query.filter(cls.uid == uuid, cls.approved == True). \
-            order_by(desc(cls.message_date)). \
-            all()
-        return rv
-
-    @classmethod
-    def show_message_test(cls, uuid=None):
-        """
         use WITH RECURSIVE expression to query the comments
         required version sqlite > 3.8.3
         find more at http://www.sqlite.org/lang_with.html.
@@ -264,6 +254,17 @@ class Comment(db.Model):
         :param uuid:indicator of the unique article
         :return:nested object with query class
         """
+        def nest(lst):
+            """
+            aim to turn flatten list (which fetched from sql) to nested structure
+            :param lst: list
+            :return: nested list
+            """
+            if not lst:
+                return None
+            first = lst[0]
+            del lst[0]
+            return {"pid": first, "id": nest(lst)}
         # @1:query all the unique reply_id of Comment order by time
         children_id_list = cls.query.filter(cls.uid == uuid, cls.approved == True). \
             order_by(desc(cls.message_date))
@@ -281,8 +282,8 @@ class Comment(db.Model):
         for _, child in enumerate(children_id_list):
             raw_sql = recursive_sql.bindparams(a=child.reply_id, b=uuid)
             rv = db.session.execute(raw_sql).fetchall()
-            result.append(rv)
-        # @3:construct a list or generator for JinJa
+            result.append(nest(rv))
+        # @3:construct a nested list or generator for JinJa for loop recursive
         return result
 
     @staticmethod

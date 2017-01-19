@@ -26,9 +26,6 @@ def scc_root(page=1):
 
 @scc.route('/blog/article/<string:uuid>', methods=['GET', 'POST'])
 def scc_article(uuid):
-    for e in Comment.show_message_test(uuid):
-        print e
-
     if request.args.get('edit') == 'true':
         return redirect(url_for("scc.article_editor", uuid=uuid))
     if request.args.get("logout") == "true":
