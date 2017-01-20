@@ -11,7 +11,7 @@ cxw = Blueprint('cxw', __name__, url_prefix="/cxw")
 @cxw.route('/blog/')
 def cxw_blog():
     if request.args.get("article", ""):
-        return url_for("cxw.cxw_article", uuid=request.args.get("article"))
+        return redirect(url_for("cxw.cxw_article", uuid=request.args.get("article")))
 
     published_article = Article.get_published_article(usr='cxw')
     return render_template("CxwBlog.html", published_article=published_article)
