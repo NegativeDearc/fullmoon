@@ -57,5 +57,24 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+{% if published_article %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">1</div>
+            <div class="col-md-8 col-sm-12">
+                {% for article in published_article %}
+                    <div style="overflow: hidden">
+                    <div style="float: left;">{{ loop.index }}-<a href="">{{ article.title }}</a></div>
+                    <div style="float: right;">{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="container" style="text-align: center;">
+        <div style="color: #F92672;">尚无文章！或者数据获取失败！</div>
+    </div>
+{% endif %}
 </body>
 </html>

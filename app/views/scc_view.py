@@ -15,6 +15,7 @@ def scc_root(page=1):
     if request.args.get("article", ""):
         # redirect to article URL if get the ?article=uuid
         return redirect(url_for("scc.scc_article", uuid=request.args.get("article")))
+
     pagination = Article.pagination(page=int(request.args.get('page', page)), author='scc')
     latest_10 = Article.latest_article(page=int(request.args.get('page', page)), author='scc')
     return render_template('SccBlog.html',
@@ -32,7 +33,6 @@ def scc_article(uuid):
         logout_user()
 
     if request.method == "POST":
-        print request.form
         db.session.add(Comment(
             uid=uuid,
             rdr_name=request.form.get("nickname"),

@@ -151,7 +151,6 @@ class Article(db.Model):
         # get article by query of uuid
         # write uuid judgement here,use re module as a practise
         # 0e3a6e0f-c720-11e6-852c-f4066974556c
-        print uuid
         if abort:
             return cls.query.filter(cls.uuid == uuid, cls.status == 'PUBLISHED').first_or_404()
         else:
@@ -221,6 +220,13 @@ class Article(db.Model):
     @classmethod
     def categories(cls):
         pass
+
+    @classmethod
+    def get_published_article(cls, usr=None):
+        rv = cls.query.filter(cls.status == "PUBLISHED", cls.author == usr).\
+            order_by(desc(cls.create_date)).\
+            all()
+        return rv
 
 
 class Comment(db.Model):
