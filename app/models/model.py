@@ -228,6 +228,14 @@ class Article(db.Model):
             all()
         return rv
 
+    @classmethod
+    def archive(cls, date_filter="all", author=None):
+        if date_filter == "all":
+            rv = cls.query.filter(cls.author == author, cls.status == "PUBLISHED").\
+                order_by(desc(cls.create_date)).all()
+            return rv
+        # add date parse here to search the archive
+
 
 class Comment(db.Model):
     """

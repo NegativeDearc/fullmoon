@@ -61,3 +61,9 @@ def article_editor(uuid):
         db.session.commit()
         return redirect(url_for("scc.scc_article", uuid=uuid))
     return render_template('ArticleTemplate.html', article_by_uuid=article_by_uuid, scripts=True)
+
+
+@scc.route('/blog/archive/<string:date_filter>')
+def archive_all(date_filter):
+    archive = Article.archive(date_filter="all", author="scc")
+    return render_template("AllArticle.html", archive=archive)
