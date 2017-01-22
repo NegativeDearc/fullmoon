@@ -54,8 +54,8 @@ def article_editor(uuid):
         # update article then redirect to the article url
         # if need to re-edit, just push the back to history button at browser
         db.session.query(Article).filter(Article.uuid == uuid).update({
-            "title": request.form.get("title", ""),
-            "content": request.form.get("content", ""),
+            "title": request.form.get("title"),
+            "content": request.form.get("content"),
             "edit_date": datetime.now()
         })
         db.session.commit()

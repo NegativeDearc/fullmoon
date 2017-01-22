@@ -55,15 +55,15 @@
         <form action="" class="form" method="post">
             <input type="hidden" name="_crsf_token" id="_crsf_token" value="{{ crsf_token() }}">
             <div class="form-group">
-                <label for="nickname">显示名称</label>
+                <label for="nickname">显示名称<span style="color: red;">*</span></label>
                 <input type="text" placeholder="输入昵称，将会在评论席显示" required="required" name="nickname" id="nickname" class="form-control">
             </div>
             <div class="form-group">
-                <label for="mail-address">邮箱</label>
+                <label for="mail-address">邮箱<span style="color: red;">*</span></label>
                 <input type="email" placeholder="输入邮箱，系统会保护你的个人隐私" required="required" name="mail-address" id="mail-address" class="form-control">
             </div>
             <div class="form-group">
-                <label for="comment-content">内容</label>
+                <label for="comment-content">内容<span style="color: red;">*</span></label>
                 <textarea type="text" placeholder="输入评论，将在作者审核通过后显示" name="comment-content" id="comment-content" class="form-control" required="required" style="resize: none;"></textarea>
             </div>
             <input type="submit" class="btn btn-info btn-block">

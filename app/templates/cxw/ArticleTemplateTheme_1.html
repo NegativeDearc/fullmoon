@@ -10,7 +10,12 @@
     <script src="{{ url_for('cxw.static',filename='ckeditor/ckeditor.js') }}"></script>
     <script src="{{ url_for('cxw.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('cxw.static',filename='bootstrap.min.js') }}"></script>
-    <title>test</title>
+    <script src="{{ url_for('scc.static',filename='scc-js.js') }}"></script>
+    {%- if article %}
+    <title>{{ article.title }}</title>
+    {% else %}
+    <title>出错啦</title>
+    {% endif -%}
     <style>
         body {
             font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
@@ -27,6 +32,20 @@
             border-radius: 5px;
             border: 1px solid #dadada;
         }
+        .comment {
+            list-style: none;
+            border: 1px solid #dadada;
+            margin-top: 5px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .media {
+            padding: 10px;
+            margin: 10px;
+        }
+        .comment-ul > {list-style: none;}
+        .comment-ul > li {list-style: none;margin-top: 5px;}
+
     </style>
 {% if edit %}
     <script>
@@ -59,9 +78,10 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">操作面板<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
           {% if current_user.is_authenticated %}
-                <li role="presentation"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-user-o"></i>&nbsp;登陆管理后台</a></li>
+              <li role="presentation"><a href="{{ url_for('main.main_edit') }}" target="_blank"><i class="fa fa-user-o"></i>&nbsp;登陆管理后台</a></li>
+              <li><a href="?edit=true"><i class="fa fa-pencil"></i>&nbsp;修改文章</a></li>
           {% else %}
-            <li><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;添加新文章</a></li>
+              <li><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;添加新文章</a></li>
           {% endif %}
           </ul>
         </li>
@@ -72,6 +92,9 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">关于我<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#"><i class="fa fa-question"></i>&nbsp;我是谁</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="?logout=true"><i class="fa fa-power-off"></i>&nbsp;登出</a></li>
+            {% endif %}
             <li class="divider"></li>
           </ul>
         </li>
@@ -88,7 +111,7 @@
             <h3 style="text-align: center;">{{ article.title }}</h3>
             <div style="text-align: center">
                 <div id="uuid" style="display: none;">{{ article.uuid }}</div>
-                <div style="display: inline-block">日期：</div>&nbsp;{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}
+                <div style="display: inline-block">日期：</div>&nbsp;{{ article.create_date.strftime("%Y/%m/%d") }}
                 <div style="display: inline-block">作者：</div>&nbsp;{{ article.author }}
             </div>
             <hr>

@@ -19,6 +19,9 @@
                 display: none;
             }
         }
+        .col-md-4 {border: 1px solid #ff0000}
+        .col-md-8 {border: 1px solid #ff0000}
+
     </style>
 </head>
 <body>
@@ -42,9 +45,9 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">操作面板<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
           {% if current_user.is_authenticated %}
-                <li role="presentation"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-user-o"></i>&nbsp;登陆管理后台</a></li>
+              <li role="presentation"><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-user-o"></i>&nbsp;登陆管理后台</a></li>
           {% else %}
-            <li><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;添加新文章</a></li>
+              <li><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;添加新文章</a></li>
           {% endif %}
           </ul>
         </li>
@@ -66,7 +69,9 @@
 {% if published_article %}
     <div class="container">
         <div class="row">
-            <div class="col-md-4">1</div>
+            <div class="col-md-4">
+                1
+            </div>
             <div class="col-md-8 col-xs-12">
                 <h3>目录(??篇)</h3>
                 {% for article in published_article %}

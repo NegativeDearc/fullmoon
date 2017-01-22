@@ -223,8 +223,8 @@ class Article(db.Model):
 
     @classmethod
     def get_published_article(cls, usr=None):
-        rv = cls.query.filter(cls.status == "PUBLISHED", cls.author == usr).\
-            order_by(desc(cls.create_date)).\
+        rv = cls.query.filter(cls.status == "PUBLISHED", cls.author == usr). \
+            order_by(desc(cls.create_date)). \
             all()
         return rv
 
@@ -260,6 +260,7 @@ class Comment(db.Model):
         :param uuid:indicator of the unique article
         :return:nested object with query class
         """
+
         def nest(lst):
             """
             aim to turn flatten list (which fetched from sql) to nested structure
@@ -271,6 +272,7 @@ class Comment(db.Model):
             first = lst[0]
             del lst[0]
             return {"pid": first, "id": nest(lst)}
+
         # @1:query all the unique reply_id of Comment order by time
         children_id_list = cls.query.filter(cls.uid == uuid, cls.approved == True). \
             order_by(desc(cls.message_date))

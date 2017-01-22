@@ -1,8 +1,10 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint, url_for, redirect, render_template, request, send_file, send_from_directory
+from datetime import datetime
 from app.config import Config
-from app.models.model import Article
-from flask.ext.login import login_required
+from app.models.model import Article, Comment
+from flask.ext.login import login_required, logout_user
+from app import db
 
 cxw = Blueprint('cxw', __name__, url_prefix="/cxw")
 
@@ -23,9 +25,20 @@ def cxw_article(uuid):
 
     if request.args.get("edit") == "true":
         return redirect(url_for("cxw.cxw_article_editor", uuid=uuid))
-    if request.method == "POST":
-        pass
+    if request.args.get("logout") == "true":
+        logout_user()
+        return redirect(url_for("cxw.cxw_article", uuid=uuid))
 
+    if request.method == "POST":
+        db.session.add(Comment(
+            uid=uuid,
+            rdr_name=request.form.get("nickname"),
+            rdr_mail=request.form.get("mail-address"),
+            rdr_message=request.form.get("comment-content"),
+            reply_to_id=request.form.get("reply_to_id")
+        ))
+        db.session.commit()
+        return redirect(url_for("cxw.cxw_article", uuid=uuid))
     return render_template("ArticleTemplateTheme_1.html", article=article)
 
 
@@ -35,9 +48,13 @@ def cxw_article_editor(uuid):
     article = Article.get_article_by_uuid(uuid=uuid)
 
     if request.method == "POST":
-        print request.form
+        db.session.query(Article).filter(Article.uuid == uuid).update({
+            "title": request.form.get("title"),
+            "content": request.form.get("ckeditor"),
+            "edit_date": datetime.now()
+        })
+        db.session.commit()
         return redirect(url_for("cxw.cxw_article", uuid=uuid))
-
     return render_template("ArticleTemplateTheme_1.html", article=article, edit=True)
 
 
