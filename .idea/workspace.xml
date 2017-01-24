@@ -35,12 +35,12 @@
       <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="236" column="21" selection-start-line="236" selection-start-column="21" selection-end-line="236" selection-end-column="21" />
+            <state relative-caret-position="-1206">
+              <caret line="239" column="19" selection-start-line="239" selection-start-column="19" selection-end-line="239" selection-end-column="19" />
               <folding>
                 <element signature="e#23#90#0" expanded="true" />
-                <marker date="1485236844801" expanded="true" signature="8808:9084" ph="SELECT STRFT... " />
-                <marker date="1485236844801" expanded="true" signature="11803:11820" ph="select * fro... cte" />
+                <marker date="1485238515142" expanded="true" signature="8947:9223" ph="SELECT STRFT... " />
+                <marker date="1485238515142" expanded="true" signature="11942:11959" ph="select * fro... cte" />
               </folding>
             </state>
           </provider>
@@ -50,7 +50,7 @@
         <entry file="file://$PROJECT_DIR$/app/views/scc_view.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="241">
-              <caret line="69" column="50" selection-start-line="69" selection-start-column="50" selection-end-line="69" selection-end-column="50" />
+              <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
               <folding>
                 <element signature="e#23#95#0" expanded="true" />
               </folding>
@@ -61,8 +61,8 @@
       <file leaf-file-name="SccBlog.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/scc/SccBlog.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-238">
-              <caret line="181" column="22" selection-start-line="181" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
+            <state relative-caret-position="57">
+              <caret line="241" column="66" selection-start-line="241" selection-start-column="66" selection-end-line="241" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -83,8 +83,8 @@
       <file leaf-file-name="AllArticle.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/scc/AllArticle.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="126" column="28" selection-start-line="126" selection-start-column="28" selection-end-line="126" selection-end-column="28" />
+            <state relative-caret-position="-25">
+              <caret line="127" column="20" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -93,8 +93,8 @@
       <file leaf-file-name="cxw_view.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/cxw_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="68" column="14" selection-start-line="68" selection-start-column="4" selection-end-line="68" selection-end-column="14" />
+            <state relative-caret-position="659">
+              <caret line="69" column="49" selection-start-line="69" selection-start-column="49" selection-end-line="69" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -164,9 +164,9 @@
         <option value="$PROJECT_DIR$/app/templates/main/article_info_temp.html" />
         <option value="$PROJECT_DIR$/app/templates/main/comments_info_temp.html" />
         <option value="$PROJECT_DIR$/app/templates/main/ArticleEditor.html" />
-        <option value="$PROJECT_DIR$/app/templates/scc/SccBlog.html" />
         <option value="$PROJECT_DIR$/app/views/cxw_view.py" />
         <option value="$PROJECT_DIR$/app/templates/cxw/CxwBlog.html" />
+        <option value="$PROJECT_DIR$/app/templates/scc/SccBlog.html" />
         <option value="$PROJECT_DIR$/app/templates/scc/AllArticle.html" />
         <option value="$PROJECT_DIR$/app/views/scc_view.py" />
         <option value="$PROJECT_DIR$/app/models/model.py" />
@@ -180,7 +180,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-3" />
+    <option name="x" value="-2" />
     <option name="y" value="-2" />
     <option name="width" value="1370" />
     <option name="height" value="744" />
@@ -650,7 +650,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-3" y="-2" width="1370" height="744" extended-state="0" />
+    <frame x="-2" y="-2" width="1370" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23816794" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1015,6 +1015,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/scc/AllArticle.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-25">
+          <caret line="127" column="20" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/cxw_view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="659">
+          <caret line="69" column="49" selection-start-line="69" selection-start-column="49" selection-end-line="69" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/cxw/CxwBlog.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -1027,24 +1043,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/scc/SccBlog.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
-          <caret line="181" column="22" selection-start-line="181" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/scc/AllArticle.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="126" column="28" selection-start-line="126" selection-start-column="28" selection-end-line="126" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/cxw_view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="68" column="14" selection-start-line="68" selection-start-column="4" selection-end-line="68" selection-end-column="14" />
+        <state relative-caret-position="57">
+          <caret line="241" column="66" selection-start-line="241" selection-start-column="66" selection-end-line="241" selection-end-column="66" />
           <folding />
         </state>
       </provider>
@@ -1052,7 +1052,7 @@
     <entry file="file://$PROJECT_DIR$/app/views/scc_view.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="241">
-          <caret line="69" column="50" selection-start-line="69" selection-start-column="50" selection-end-line="69" selection-end-column="50" />
+          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
           <folding>
             <element signature="e#23#95#0" expanded="true" />
           </folding>
@@ -1061,12 +1061,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="236" column="21" selection-start-line="236" selection-start-column="21" selection-end-line="236" selection-end-column="21" />
+        <state relative-caret-position="-1206">
+          <caret line="239" column="19" selection-start-line="239" selection-start-column="19" selection-end-line="239" selection-end-column="19" />
           <folding>
             <element signature="e#23#90#0" expanded="true" />
-            <marker date="1485236844801" expanded="true" signature="8808:9084" ph="SELECT STRFT... " />
-            <marker date="1485236844801" expanded="true" signature="11803:11820" ph="select * fro... cte" />
+            <marker date="1485238515142" expanded="true" signature="8947:9223" ph="SELECT STRFT... " />
+            <marker date="1485238515142" expanded="true" signature="11942:11959" ph="select * fro... cte" />
           </folding>
         </state>
       </provider>

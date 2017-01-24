@@ -67,5 +67,5 @@ def article_editor(uuid):
 
 @scc.route('/blog/archive/<string:date_filter>')
 def archive_all(date_filter):
-    archive = Article.archive(date_filter="all", author="scc")
+    archive = Article.archive(date_filter=date_filter, author="scc")
     return render_template("AllArticle.html", archive=archive)

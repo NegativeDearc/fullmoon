@@ -231,12 +231,14 @@ class Article(db.Model):
     @classmethod
     def archive(cls, date_filter="all", author=None):
         # add date parse here to search the archive
+        # if the date_filter is not pass the check, return a 404 page
         if date_filter == "all":
             rv = cls.query.filter(cls.author == author, cls.status == "PUBLISHED").\
                 order_by(desc(cls.create_date)).all()
             return rv
         else:
-            # http://jiasule.v2ex.com/t/285727
+            # REF: http://jiasule.v2ex.com/t/285727
+            # use db.func instead of cls.create_date.strftime()
             rv = cls.query.filter(cls.author == author,
                                   cls.status == "PUBLISHED",
                                   db.func.strftime("%Y%m", cls.create_date) == date_filter).\

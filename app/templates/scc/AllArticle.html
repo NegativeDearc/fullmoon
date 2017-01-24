@@ -125,6 +125,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1 archive col-xs-12">
             {% if archive %}
+                <h3>文章列表<span class="caret"></span></h3>
                 {% for ar in archive %}
                     <div style="border-bottom: 1px dashed #dadada;overflow: hidden">
                         <div style="float: left"><a href="{{ url_for("scc.scc_article", uuid=ar.uuid) }}" target="_blank">{{ ar.title }}</a></div>
