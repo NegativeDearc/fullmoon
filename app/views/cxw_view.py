@@ -15,8 +15,9 @@ def cxw_blog():
     if request.args.get("article", ""):
         return redirect(url_for("cxw.cxw_article", uuid=request.args.get("article")))
 
+    archive = Article.archive_statistic(author="cxw")
     published_article = Article.get_published_article(usr='cxw')
-    return render_template("CxwBlog.html", published_article=published_article)
+    return render_template("CxwBlog.html", published_article=published_article, archive=archive)
 
 
 @cxw.route("/blog/article/<string:uuid>", methods=["GET", "POST"])

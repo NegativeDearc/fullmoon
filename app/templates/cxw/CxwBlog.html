@@ -19,9 +19,6 @@
                 display: none;
             }
         }
-        .col-md-4 {border: 1px solid #ff0000}
-        .col-md-8 {border: 1px solid #ff0000}
-
     </style>
 </head>
 <body>
@@ -49,6 +46,7 @@
           {% else %}
               <li><a href="{{ url_for('main.main_edit') }}"><i class="fa fa-angle-double-right"></i>&nbsp;添加新文章</a></li>
           {% endif %}
+          <li><a href="{{ url_for("scc.scc_root") }}"><i class="fa fa-smile-o"></i>&nbsp;查看我老婆的博客</a></li>
           </ul>
         </li>
       </ul>
@@ -57,7 +55,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">关于我<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#"><i class="fa fa-question"></i>&nbsp;我是谁</a></li>
+            <li><a href="{{ url_for("cxw.cxw_resume") }}" target="_blank"><i class="fa fa-question"></i>&nbsp;我是谁</a></li>
             <li class="divider"></li>
           </ul>
         </li>
@@ -70,10 +68,19 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                1
+                <h3>全部列表</h3>
+                <ul>
+                    {% for e in archive %}
+                        <li><a href="">{{ e[0] }}</a></li>
+                    {% endfor %}
+                </ul>
+                <!-- a heat map for article here-->
+                <hr>
+                <h3>分类</h3>
+                <!-- a word cloud here -->
             </div>
             <div class="col-md-8 col-xs-12">
-                <h3>目录(??篇)</h3>
+                <h3>目录(共{{ archive|length }}篇)</h3>
                 {% for article in published_article %}
                     <div style="overflow: hidden;border-bottom: 1px #dadada dashed">
                     <div style="float: left;"><a href="?article={{ article.uuid }}" target="_blank">{{ article.title }}</a></div>

@@ -11,6 +11,7 @@ scc = Blueprint('scc', __name__, template_folder='templates', url_prefix='/scc')
 def scc_root(page=1):
     recent_articles = Article.recent_articles(author='scc')
     recent_comments = Comment.recent_comments(author='scc')
+    archive = Article.archive_statistic(author="scc")
 
     if request.args.get("article", ""):
         # redirect to article URL if get the ?article=uuid
@@ -22,7 +23,8 @@ def scc_root(page=1):
                            latest_10=latest_10,
                            pagination=pagination,
                            recent_articles=recent_articles,
-                           recent_comments=recent_comments)
+                           recent_comments=recent_comments,
+                           archive=archive)
 
 
 @scc.route('/blog/article/<string:uuid>', methods=['GET', 'POST'])

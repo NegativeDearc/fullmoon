@@ -230,11 +230,32 @@ class Article(db.Model):
 
     @classmethod
     def archive(cls, date_filter="all", author=None):
+        # add date parse here to search the archive
         if date_filter == "all":
             rv = cls.query.filter(cls.author == author, cls.status == "PUBLISHED").\
                 order_by(desc(cls.create_date)).all()
             return rv
-        # add date parse here to search the archive
+        else:
+            # http://jiasule.v2ex.com/t/285727
+            rv = cls.query.filter(cls.author == author,
+                                  cls.status == "PUBLISHED",
+                                  db.func.strftime("%Y%m", cls.create_date) == date_filter).\
+                order_by(desc(cls.create_date)).all()
+            return rv
+
+    @classmethod
+    def archive_statistic(cls, author=None):
+        # statistic archive for years, return the value like 201601(1) 201602(2)
+        sql = text("""
+            SELECT STRFTIME ("%Y%m", [Article].[create_date]) || "(" ||
+                   COUNT (STRFTIME ("%Y%m", [Article].[create_date])) || ")" AS [archive]
+            FROM   [Article]
+            WHERE  [Article].[author] =:a
+                   AND [Article].[status] = "PUBLISHED";
+        """)
+
+        rv = db.session.execute(sql, params={"a": author}).fetchall()
+        return rv
 
 
 class Comment(db.Model):

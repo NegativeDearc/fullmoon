@@ -241,6 +241,9 @@
                     <h3 class="widget-title">存档</h3>
                     <ul class="widget-list" id="sidebar-achieves">
                         <li class="widget-list-item"><a href="{{ url_for("scc.archive_all", date_filter="all") }}" target="_blank">ALL</a></li>
+                        {% for e in archive %}
+                            <li class="widget-list-item"><a href="">{{ e[0] }}</a></li>
+                        {% endfor %}
                     </ul>
                 </aside>
                 <aside id="categories">
