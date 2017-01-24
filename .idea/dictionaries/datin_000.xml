@@ -3,6 +3,8 @@
     <words>
       <w>baidu</w>
       <w>ckeditor</w>
+      <w>crsf</w>
+      <w>jinja</w>
       <w>sqlite</w>
     </words>
   </dictionary>

@@ -133,7 +133,14 @@
                         <div style="float: right;">{{ ar.create_date.strftime("%Y-%m-%d") }}</div>
                     </div>
                 {% endfor %}
+            {% else %}
+                <h3>查询失败！可能的原因是</h3>
+                <ul>
+                    <li>输入了不正确的日期缩写</li>
+                    <li>您正在尝试注入数据库</li>
+                </ul>
             {% endif %}
+
         </div>
     </div>
 </div>
