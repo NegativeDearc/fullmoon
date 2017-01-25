@@ -3,4 +3,3 @@
 FROM   [Article]
 WHERE  [Article].[author] = "scc"
        AND [Article].[status] = "PUBLISHED";
-

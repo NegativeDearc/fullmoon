@@ -5,6 +5,8 @@
       <w>ckeditor</w>
       <w>crsf</w>
       <w>jinja</w>
+      <w>sqlalchemry</w>
+      <w>sqlalchemy</w>
       <w>sqlite</w>
     </words>
   </dictionary>

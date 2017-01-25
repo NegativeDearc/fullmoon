@@ -10,8 +10,12 @@ class Config(object):
 
     # register template fold path for all blueprint
     @classmethod
-    def template_path(self, postfix=None):
+    def template_path(cls, postfix=None):
         return os.path.join(os.path.dirname(__file__), 'templates', str(postfix))
+
+    @staticmethod
+    def upload_path():
+        return os.path.join(os.path.dirname(__file__), 'static', 'upload')
 
     # security keys of flask
     SECRET_KEY = '26e9e25a-b0b5-11e6-9db0-60f81dba2c0c'
@@ -26,6 +30,7 @@ class Config(object):
     SQLALCHEMY_ECHO = True
 
     PIC_ALLOW_POSTFIX = {".jpeg", '.jpg', '.png', '.bmp'}  # == set([])
+    PIC_ALLOW_POSTFIX_WITHOUT_DOT = {"jpeg", 'jpg', 'png', 'bmp'}  # == set([])
 
 
 class ProductionConfig(Config):

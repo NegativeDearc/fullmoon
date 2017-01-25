@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% if rv %}
+    <div class="table">
+    <table class="table table-bordered">
+        <tr>
+            <td>图片编号</td>
+            <td>搜索结果</td>
+            <td>操作</td>
+        </tr>
+
+        {% for r in rv %}
+            <tr>
+            <td><a href="#" class="hover_show">{{ r.No }}<div class="hover_image"><img src="{{ r.url }}"></div></a></td>
+            {% if r.content%}
+                <td>
+                {% for e in r.content %}
+                    <li>{{ e[0] }}</li>
+                    <li>{{ e[1] }}</li>
+                {% endfor %}
+                </td>
+            {% else %}
+                <td>没有查询到结果</td>
+            {% endif %}
+            <td>1</td>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+{% endif %}
+</body>
+</html>

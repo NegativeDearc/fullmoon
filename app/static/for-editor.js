@@ -171,3 +171,20 @@ var approve_comment = function () {
         complete:function () {$("#comments-refresh").trigger("click");}
     });
 };
+
+var get_static_file=function () {
+    var self = $(this);
+    var tag = self.prop("tagName");
+    $.ajax({
+        beforeSend: function(){if (tag == "A"){} else {self.addClass("fa-spin");}},// Use the fa-spin class to get any icon to rotate
+        url: temp_4_url,
+        dataType:"html",
+        type: "GET",
+        success: function (data) {
+            $("#files").find(".panel-body").html(data);
+        },
+        complete:function() {
+            self.removeClass("fa-spin");
+        }
+    })
+};

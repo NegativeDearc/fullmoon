@@ -259,6 +259,42 @@ class Article(db.Model):
         rv = db.session.execute(sql, params={"a": author}).fetchall()
         return rv
 
+    @classmethod
+    def search_pic_use(cls, t=None):
+        sql1 = text("""
+            DROP TABLE IF EXISTS [docs];
+        """)
+        sql2 = text("""
+            CREATE VIRTUAL TABLE [docs] USING [fts4](
+                uuid,
+                content);
+        """)
+        sql3 = text("""
+            INSERT INTO [docs]
+                ([docs])
+                VALUES ('optimize');
+        """)
+        sql4 = text("""
+            INSERT INTO [docs]
+                ([uuid],
+                [content])
+                SELECT [Article].[uuid],
+                   [Article].[content]
+            FROM   [Article];
+        """)
+        sql5 = text("""
+            SELECT [uuid],
+                   SNIPPET ([docs], '<b style="color:red";>', '</b>', '...', 1, 10)
+            FROM   [docs]
+            WHERE  [docs] MATCH :a;
+        """)
+        db.session.execute(sql1)
+        db.session.execute(sql2)
+        db.session.execute(sql3)
+        db.session.execute(sql4)
+        rv = db.session.execute(sql5, params={"a": t}).fetchall()
+        return rv
+
 
 class Comment(db.Model):
     """

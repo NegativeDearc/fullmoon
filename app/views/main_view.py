@@ -133,3 +133,21 @@ def main_temp_2():
 def main_temp_3():
     comments = Comment.approved_message()
     return render_template("comments_info_temp.html", comments=comments)
+
+
+@main.route('/render_temp/temp_4')
+@login_required
+def main_temp_4():
+    # render template for static file management
+    rv = []
+    path = ProductionConfig.upload_path()
+    for pic in os.listdir(path):
+        if pic.split('.')[-1] in ProductionConfig.PIC_ALLOW_POSTFIX_WITHOUT_DOT:
+            temp = Article.search_pic_use(t=pic)
+            url = '/'.join([main.static_url_path, "upload", pic])
+            if temp:
+                rv.append({"No": pic, "url": url, "content": temp})
+            else:
+                rv.append({"No": pic, "url": url, "content": None})
+    print rv
+    return render_template("uploaded_files_management_temp.html", rv=rv)

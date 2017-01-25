@@ -11,7 +11,7 @@
     <script src="{{ url_for('main.static',filename='ckeditor/ckeditor.js') }}"></script>
     <script src="{{ url_for('main.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('main.static',filename='bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('main.static',filename='get_token.js') }}"></script>
+    <script src="{{ url_for('main.static',filename='for-editor.js') }}"></script>
 
     <style>
         body{font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;}
@@ -19,6 +19,17 @@
         .second-menu > li {text-indent:2%;}
         .nav-header > a > .fa-angle-down {float:right;}
         .fa-angle-down {padding: 5px 5px}
+        .hover_image {display: none}
+        .hover_show:hover .hover_image {
+            background: #ffffb6;
+            padding: 10px;
+            border: 1px #dadada solid;
+            border-radius: 10px;
+            box-shadow: 5px 5px 5px #dadada;
+            display: block;
+            position: absolute;
+            z-index: 99;
+        }
     </style>
 </head>
 <body>
@@ -39,7 +50,12 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">首页</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">操作<span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li role="presentation"><a href="">返回Blog首页</a></li>
+            </ul>
+        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -71,8 +87,9 @@
                         </ul>
                     <li class="nav-header"><a href="#manage_system" data-toggle="collapse"><i class="fa fa-th"></i>&nbsp;其他<i class="fa fa-angle-down"></i></a></li>
                         <ul id="manage_system" class="nav nav-list collapse second-menu">
-                            <li role="presentation"><a href="#"><i class="fa fa-image"></i>&nbsp;静态文件管理</a></li>
-                            <li role="presentation"><a href="#">功能2</a></li>
+                            <li role="presentation"><a href="#files" data-toggle="tab" id="files-tab"><i class="fa fa-image"></i>&nbsp;静态文件管理</a></li>
+                            <li role="presentation"><a href="#"><i class="fa fa-stethoscope"></i>&nbsp;关键词检索</a></li>
+                            <li role="presentation"><a href="#"><i class="fa fa-superpowers"></i>&nbsp;性能检测</a></li>
                         </ul>
                 </ul>
             </div>
@@ -169,6 +186,11 @@
                     <div class="panel-heading">Manage Comments<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;" id="comments-refresh"></i></a></div>
                     <div class="panel-body"></div>
                 </div>
+                <!--file management-->
+                <div class="tab-pane panel panel-info" id="files">
+                    <div class="panel-heading">Manage Static Files<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;" id="files-refresh"></i></a></div>
+                    <div class="panel-body"></div>
+                </div>
             </div><!--tab content-->
         </div>
     </div>
@@ -179,6 +201,7 @@
     var $AUTHOR = "{{ current_user.user }}";
     var temp_1_url = "{{ url_for('main.main_temp_1') }}";
     var temp_3_url = "{{ url_for('main.main_temp_3') }}";
+    var temp_4_url = "{{ url_for('main.main_temp_4') }}";
 
     $(document).ready(function () {
         //data-toggle tooltip
@@ -280,6 +303,9 @@
         //ajax for comments need to be handled
         $("#comments-refresh").on("click", get_comments);
         $("#comments-tab").on("shown.bs.tab", get_comments);
+        //static file management
+        $("#files-refresh").on("click", get_static_file);
+        $("#files-tab").on("shown.bs.tab", get_static_file);
     })
 </script>
 </body>
