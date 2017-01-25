@@ -71,7 +71,7 @@
                 <h3>全部列表</h3>
                 <ul>
                     {% for e in archive %}
-                        <li><a href="">{{ e[0] }}</a></li>
+                        <li><a href="{{ url_for('cxw.archive_all', date_filter=e[0][:6]) }}">{{ e[0] }}</a></li>
                     {% endfor %}
                 </ul>
                 <!-- a heat map for article here-->
@@ -80,10 +80,10 @@
                 <!-- a word cloud here -->
             </div>
             <div class="col-md-8 col-xs-12">
-                <h3>目录(共{{ archive|length }}篇)</h3>
+                <h3>目录(共{{ published_article|length }}篇)</h3>
                 {% for article in published_article %}
                     <div style="overflow: hidden;border-bottom: 1px #dadada dashed">
-                    <div style="float: left;"><a href="?article={{ article.uuid }}" target="_blank">{{ article.title }}</a></div>
+                    <div style="float: left;"><a href="{{ url_for('cxw.cxw_article', uuid=article.uuid) }}" target="_blank">{{ article.title }}</a></div>
                     <div style="float: right;">{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</div>
                     </div>
                 {% endfor %}

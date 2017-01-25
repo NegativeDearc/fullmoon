@@ -20,6 +20,13 @@ def cxw_blog():
     return render_template("CxwBlog.html", published_article=published_article, archive=archive)
 
 
+@cxw.route('/blog/archive/<string:date_filter>')
+def archive_all(date_filter):
+    archive = Article.archive_statistic(author="cxw")
+    published_article = Article.archive(date_filter=date_filter, author="cxw")
+    return render_template("CxwBlog.html", published_article=published_article, archive=archive)
+
+
 @cxw.route("/blog/article/<string:uuid>", methods=["GET", "POST"])
 def cxw_article(uuid):
     article = Article.get_article_by_uuid(uuid=uuid)
