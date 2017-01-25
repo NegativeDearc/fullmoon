@@ -180,6 +180,7 @@ var get_static_file=function () {
         url: temp_4_url,
         dataType:"html",
         type: "GET",
+        async:true,
         success: function (data) {
             $("#files").find(".panel-body").html(data);
         },

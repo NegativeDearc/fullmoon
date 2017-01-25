@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-</head>
 <body>
 {% if rv %}
     <div class="table">
@@ -31,6 +28,8 @@
         {% endfor %}
     </table>
     </div>
+{% else %}
+    <div>没有任何静态文件！</div>
 {% endif %}
 </body>
 </html>

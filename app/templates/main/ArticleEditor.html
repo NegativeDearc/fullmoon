@@ -88,8 +88,8 @@
                     <li class="nav-header"><a href="#manage_system" data-toggle="collapse"><i class="fa fa-th"></i>&nbsp;其他<i class="fa fa-angle-down"></i></a></li>
                         <ul id="manage_system" class="nav nav-list collapse second-menu">
                             <li role="presentation"><a href="#files" data-toggle="tab" id="files-tab"><i class="fa fa-image"></i>&nbsp;静态文件管理</a></li>
-                            <li role="presentation"><a href="#"><i class="fa fa-stethoscope"></i>&nbsp;关键词检索</a></li>
-                            <li role="presentation"><a href="#"><i class="fa fa-superpowers"></i>&nbsp;性能检测</a></li>
+                            <li role="presentation"><a href="#keywords" data-toggle="tab" id="keywords-tab"><i class="fa fa-stethoscope"></i>&nbsp;关键词检索</a></li>
+                            <li role="presentation"><a href="#performance" data-toggle="tab" id="performance-tab"><i class="fa fa-superpowers"></i>&nbsp;性能检测</a></li>
                         </ul>
                 </ul>
             </div>
@@ -189,6 +189,16 @@
                 <!--file management-->
                 <div class="tab-pane panel panel-info" id="files">
                     <div class="panel-heading">Manage Static Files<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;" id="files-refresh"></i></a></div>
+                    <div class="panel-body"></div>
+                </div>
+                <!-- key words -->
+                <div class="tab-pane panel panel-warning" id="keywords">
+                    <div class="panel-heading">Keywords Search(Word Cloud)<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;" id="keywords-refresh"></i></a></div>
+                    <div class="panel-body"></div>
+                </div>
+                <!-- website performance -->
+                <div class="tab-pane panel panel-info" id="performance">
+                    <div class="panel-heading">Website status<a href="#"><i class="fa fa-refresh" style="float: right;display: block;vertical-align: middle;padding: 5px 5px;" id="performance-refresh"></i></a></div>
                     <div class="panel-body"></div>
                 </div>
             </div><!--tab content-->
@@ -306,6 +316,9 @@
         //static file management
         $("#files-refresh").on("click", get_static_file);
         $("#files-tab").on("shown.bs.tab", get_static_file);
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            console.log($(e.target));
+        });
     })
 </script>
 </body>
