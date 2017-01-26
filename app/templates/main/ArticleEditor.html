@@ -300,8 +300,8 @@
                 data:{"_method":"DELETE"},
                 dataType:"json",
                 success:function () {
-                    console.log('success');
                     $("#check_to_delete").modal("hide");
+                    $("#article-refresh").trigger("click")
                 }
            });
         });

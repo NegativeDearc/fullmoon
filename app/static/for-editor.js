@@ -59,7 +59,6 @@ var rm_active = function () {
 var modal_delete = function () {
     //ajax to delete the article
     var uuid = $(this).parents().siblings('td:first').html();
-    console.log(uuid);
     $("#check_to_delete").find(".modal-body p").attr("id",uuid);
     $("#check_to_delete").modal("show");
 };

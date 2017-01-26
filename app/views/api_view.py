@@ -80,20 +80,17 @@ class ArticleApi(Resource):
         :return: {动作信息: http返回代码}
         """
         form = {k: None if v == '' else v for k, v in request.form.items()}
-        print form
 
         if Article.get_article_by_uuid(uuid=form.get('uuid'), abort=False):
             # article update logical here
             # check the form
             if Article.update_article(form):
-                print "trying to update"
                 return {'message': 'update success'}, 200
             else:
                 return {'message': 'update failed'}, 500
         else:
             try:
                 # add new record
-                print "trying to add"
                 db.session.add(Article(form))
                 db.session.commit()
                 return {'message': 'add success'}

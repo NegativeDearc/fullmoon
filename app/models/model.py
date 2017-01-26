@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 from sqlalchemy import CheckConstraint, UniqueConstraint, desc, asc
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.orm.interfaces import MapperExtension
 from sqlalchemy.sql.expression import text, HasCTE
+from sqlalchemy import event
 from database import db
 import uuid
 from datetime import datetime
@@ -22,35 +22,29 @@ def gen_dat():
     return datetime.now()
 
 
-# extension for Comment
-class ExtensionForComment(MapperExtension):
-    pass
+class ArticleBase(object):
+    """
+    REF: http://stackoverflow.com/questions/12753450/sqlalchemy-mixins-and-event-listener
+    REF: http://docs.sqlalchemy.org/en/latest/orm/events.html#mapper-events
+    """
+    @staticmethod
+    def notice_by_email(mapper, connection, target):
+        # target is a real instance of mapper,
+        # If the event is configured with raw=True,
+        # this will instead be the InstanceState state-management object associated with the instance.
+        print(dir(target))
+        print(target.id)
 
-
-# extension for Visit DB
-class ExtensionForVisit(MapperExtension):
-    def before_update(self, mapper, connection, instance):
-        print "instance %s before insert !" % instance
-
-
-# extension for Article
-class ExtensionForArticle(MapperExtension):
-    pass
-
-
-# extension for Login
-class ExtensionForLogin(MapperExtension):
-    pass
-
-
-# extension for Security
-class ExtensionForSecurity(MapperExtension):
-    pass
+    @classmethod
+    def after_insert(cls):
+        # normal usage : sqlalchemy.event.listen()
+        # decorate model: @event.listen_for()
+        event.listen(cls, "after_insert", cls.notice_by_email)
 
 
 # if you want use db.create_all()
 # import all db models after import db from app
-class Article(db.Model):
+class Article(db.Model, ArticleBase):
     """
     A table store all articles for user.
     Include {
@@ -295,6 +289,12 @@ class Article(db.Model):
         rv = db.session.execute(sql5, params={"a": t}).fetchall()
         return rv
 
+Article.after_insert()
+
+
+class CommentBase(object):
+    pass
+
 
 class Comment(db.Model):
     """
@@ -401,6 +401,17 @@ class Comment(db.Model):
             limit(5). \
             all()
         return rv
+
+
+class LoginBase(object):
+    @staticmethod
+    def password_being_changed(mapper, connection, target):
+        print("password being changed")
+
+    @classmethod
+    def pwd_be_changed(cls):
+        # if someone changed his/her password, user must get an email notice
+        event.listen(cls, 'after_update', cls.password_being_changed)
 
 
 class Login(db.Model, UserMixin):
