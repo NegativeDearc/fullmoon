@@ -91,6 +91,10 @@
                             <li role="presentation"><a href="#keywords" data-toggle="tab" id="keywords-tab"><i class="fa fa-stethoscope"></i>&nbsp;关键词检索</a></li>
                             <li role="presentation"><a href="#performance" data-toggle="tab" id="performance-tab"><i class="fa fa-superpowers"></i>&nbsp;性能检测</a></li>
                         </ul>
+                    <li class="nav-header"><a href="#account" data-toggle="collapse"><i class="fa fa-cogs"></i>&nbsp;账号设置<i class="fa fa-angle-down"></i></a></li>
+                    <ul id="account" class="nav nav-list collapse second-menu">
+                        <li role="presentation"><a href="#password" data-toggle="tab" id="password-tab"><i class="fa fa-user-times"></i>&nbsp;修改密码</a></li>
+                    </ul>
                 </ul>
             </div>
         </div>
@@ -316,9 +320,9 @@
         //static file management
         $("#files-refresh").on("click", get_static_file);
         $("#files-tab").on("shown.bs.tab", get_static_file);
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-            console.log($(e.target));
-        });
+{#        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {#}
+{#            console.log($(e.target));#}
+{#        });#}
     })
 </script>
 </body>

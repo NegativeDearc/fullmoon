@@ -44,6 +44,18 @@ var b64_to_utf8 = function(str) {
     return decodeURIComponent(escape(window.atob(str)));
 };
 
+/*
+this function aim to solve the problem when click the siblings of a menu in nav list,
+two li tag will be activated, you can't change tabs between them unless you remove the
+class="active".
+
+i posted a question at segmentfault.com. let's see which answer will be the best.
+ */
+var rm_active = function () {
+    $("li").removeClass("active");
+    $(this).addClass("active");
+};
+
 var modal_delete = function () {
     //ajax to delete the article
     var uuid = $(this).parents().siblings('td:first').html();
@@ -103,6 +115,7 @@ var select_select = function(){
 };
 
 var get_article = function () {
+    rm_active();
     var self = $(this);
     var tag = self.prop("tagName");
     $.ajax({
@@ -125,6 +138,7 @@ var get_article = function () {
 };
 
 var get_comments = function () {
+    rm_active();
     var self = $(this);
     var tag = self.prop("tagName");
     $.ajax({
@@ -146,7 +160,7 @@ var get_comments = function () {
 
 var del_comment = function () {
     var uid = $(this).parent().siblings("td:first").children("a").attr("title");
-    console.log(uid);
+    // console.log(uid);
     //add a confirm info here
     $.ajax({
         beforeSend:function (request) {
@@ -173,6 +187,7 @@ var approve_comment = function () {
 };
 
 var get_static_file=function () {
+    rm_active();
     var self = $(this);
     var tag = self.prop("tagName");
     $.ajax({
