@@ -43,6 +43,8 @@ class ArticleBase(object):
             send_msg(msg)
             return True
 
+        gen_msg()
+
     @classmethod
     def after_insert(cls):
         # normal usage : sqlalchemy.event.listen()
