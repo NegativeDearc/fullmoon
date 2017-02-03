@@ -14,6 +14,7 @@ from flask.ext.mail import Message
 from app.config import config
 from app.tools.decorators import async
 
+
 # global method
 def gen_uid():
     return uuid.uuid1().__str__()
@@ -35,11 +36,16 @@ class ArticleBase(object):
         # this will instead be the InstanceState state-management object associated with the instance.
         @async
         def send_msg(msg):
-            mail.send(msg)
+            from app import app
+            # solved the issue: runtimeerror-working-outside-of-app
+            # https://github.com/mattupstate/flask-mail/issues/63
+            with app.app_context():
+                mail.send(msg)
 
         def gen_msg():
-            msg = Message('test', recipients=['datingwithme@live.cn'])
-            msg.body = target
+            msg = Message(u'数据库新增文章成功！', recipients=['root_cxwlovescc@163.com'])
+            # issue: 554 DT:SPM 发送的邮件内容包含了未被许可的信息，或被系统识别为垃圾邮件。
+            msg.body = u'数据库新增文章成功！来自flask'
             send_msg(msg)
             return True
 
