@@ -1,9 +1,18 @@
 # -*- coding:utf-8 -*-
+from security import MailConfig
 import os
 
 
 class Config(object):
     CONFIG_NAME = 'config'
+    # flask-mail config
+    MAIL_SERVER = 'smtp.163.com'
+    MAIL_PORT = 25
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = MailConfig.MAIL_USERNAME
+    MAIL_PASSWORD = MailConfig.MAIL_PASSWORD
+    MAIL_DEFAULT_SENDER = MailConfig.MAIL_DEFAULT_SENDER
+    MAIL_DEBUG = True
     # register static fold path for all blueprint
     static_path = os.path.join(os.path.dirname(__file__), 'static')
     pdf_path = os.path.join(os.path.dirname(__file__), 'static', 'pdf')
@@ -24,7 +33,7 @@ class Config(object):
     # For Win: sqlite:/// c:/absolute/path/to/database
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
                               os.path.abspath(
-                                  os.path.join(os.path.dirname(__file__),'models','test.db')
+                                  os.path.join(os.path.dirname(__file__), 'models', 'test.db')
                               )
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_ECHO = True

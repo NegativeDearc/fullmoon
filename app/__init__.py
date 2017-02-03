@@ -4,7 +4,7 @@ from config import config
 from flask.ext.login import LoginManager
 from flask.ext.httpauth import HTTPBasicAuth
 import os
-from models.database import db
+from models.database import db, mail
 from models.model import Login
 from uuid import uuid1
 from flask.ext.restful import Api
@@ -36,7 +36,6 @@ def create_app(conf):
     api.add_resource(ApiComment, '/api/comment/id/<id>', endpoint='comment')
     api.add_resource(ApiRoute, '/api/token/', endpoint='route')
 
-
     db.init_app(app)
     # http://blog.csdn.net/yannanxiu/article/details/53426359
     # http://www.pythondoc.com/flask-sqlalchemy/api.html#flask.ext.sqlalchemy.SQLAlchemy.init_app
@@ -66,6 +65,7 @@ def create_app(conf):
         return True
 
     lm.init_app(app)
+    mail.init_app(app)
 
     for view in view_list:
         # register static fold path to blueprint

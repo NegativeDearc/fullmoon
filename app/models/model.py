@@ -3,15 +3,16 @@ from sqlalchemy import CheckConstraint, UniqueConstraint, desc, asc
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import text, HasCTE
 from sqlalchemy import event
-from database import db
+from database import db, mail
 import uuid
 from datetime import datetime
 from collections import OrderedDict
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired, BadSignature
 from flask.ext.login import UserMixin
+from flask.ext.mail import Message
 from app.config import config
-
+from app.tools.decorators import async
 
 # global method
 def gen_uid():
@@ -32,8 +33,15 @@ class ArticleBase(object):
         # target is a real instance of mapper,
         # If the event is configured with raw=True,
         # this will instead be the InstanceState state-management object associated with the instance.
-        print(dir(target))
-        print(target.id)
+        @async
+        def send_msg(msg):
+            mail.send(msg)
+
+        def gen_msg():
+            msg = Message('test', recipients=['datingwithme@live.cn'])
+            msg.body = target
+            send_msg(msg)
+            return True
 
     @classmethod
     def after_insert(cls):

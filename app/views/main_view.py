@@ -106,7 +106,6 @@ def main_get_token():
 @login_required
 def main_verify_token(expires=600):
     token = g.user.generate_auth_token(expiration=expires)
-    print token
     return jsonify({"token": token})
 
 
