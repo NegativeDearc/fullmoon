@@ -43,6 +43,13 @@
             padding: 10px;
             margin: 10px;
         }
+        .tag {
+            font-size: 9px;
+            display: inline-block;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            padding: 3px;
+        }
         .comment-ul > {list-style: none;}
         .comment-ul > li {list-style: none;margin-top: 5px;}
 
@@ -114,6 +121,12 @@
                 <div style="display: inline-block">日期：</div>&nbsp;{{ article.create_date.strftime("%Y/%m/%d") }}
                 <div style="display: inline-block">作者：</div>&nbsp;{{ article.author }}
             </div>
+            <!--test ok-->
+            {% if article.tags %}
+                {% for tag in article.tags.split(',') %}
+                    <div class="tag">{{ tag }}</div>
+                {% endfor %}
+            {% endif %}
             <hr>
             <div>{{ article.content|safe }}</div>
             </div>

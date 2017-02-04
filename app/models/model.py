@@ -147,7 +147,7 @@ class Article(db.Model, ArticleBase):
         cls.query.filter(cls.uuid == form.get('uuid')).update({
             'title': form.get('title', cls.title),  # if can't get title then will no change
             'content': form.get('content', cls.content),  # if can't get content then will no change
-            'tags': form.get('tags', None),
+            'tags': form.get('tags', cls.tags),
             # todo: UTC GMT+00时间，需要加上8小时才是中国时间GMT+08
             'edit_date': datetime.strptime(form.get('edit_date'), '%Y-%m-%dT%H:%M:%S.%fZ'),
             'status': form.get('status', cls.status)  # if can't get content then will no change

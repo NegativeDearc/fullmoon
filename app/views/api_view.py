@@ -84,10 +84,7 @@ class ArticleApi(Resource):
         tags = request.form.getlist("tag[]")
         if tags:
             tags = ','.join(tags)
-        else:
-            tags = None
-
-        form.update({"tags": tags})
+            form.update({"tags": tags})
 
         if Article.get_article_by_uuid(uuid=form.get('uuid'), abort=False):
             # article update logical here
