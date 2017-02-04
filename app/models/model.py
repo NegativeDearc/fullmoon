@@ -43,7 +43,7 @@ class ArticleBase(object):
                 mail.send(msg)
 
         def gen_msg():
-            msg = Message(u'数据库新增文章成功！', recipients=['root_cxwlovescc@163.com'])
+            msg = Message(u'数据库新增文章成功！', recipients=['datingwithme@live.cn'])
             # issue: 554 DT:SPM 发送的邮件内容包含了未被许可的信息，或被系统识别为垃圾邮件。
             msg.body = u'数据库新增文章成功！来自flask'
             send_msg(msg)
