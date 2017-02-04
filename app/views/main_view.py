@@ -69,7 +69,7 @@ def main_upload_img():
         # ckeditor generate csrf token, named as "ckCsrfToken", how to use it?
         callback = request.args.get('CKEditorFuncNum')
         f = request.files['upload']
-        # use standard library to detect the postfix of picture
+        # todo: use standard library to detect the postfix of picture
         # https://docs.python.org/2/library/imghdr.html
         postfix = '.'+(f.content_type.split("/")[-1])
         filename = time.strftime("%Y%m%d%H%M%S", time.localtime()) + postfix

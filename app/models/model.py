@@ -44,12 +44,13 @@ class ArticleBase(object):
 
         def gen_msg():
             msg = Message(u'数据库新增文章成功！', recipients=['datingwithme@live.cn'])
-            # issue: 554 DT:SPM 发送的邮件内容包含了未被许可的信息，或被系统识别为垃圾邮件。
             msg.body = u'数据库新增文章成功！来自flask'
             send_msg(msg)
             return True
 
-        gen_msg()
+        print(dir(target))
+        # todo: prevent send mail in testing model
+        # gen_msg()
 
     @classmethod
     def after_insert(cls):
@@ -100,7 +101,7 @@ class Article(db.Model, ArticleBase):
         self.title = form.get('title', None)
         self.author = form.get('author', None)
         self.content = form.get('content', None)
-        self.tags = None
+        self.tags = form.get('tags', None)
         self.create_date = datetime.now()
         self.edit_date = datetime.now()
         self.category = ''
@@ -146,7 +147,8 @@ class Article(db.Model, ArticleBase):
         cls.query.filter(cls.uuid == form.get('uuid')).update({
             'title': form.get('title', cls.title),  # if can't get title then will no change
             'content': form.get('content', cls.content),  # if can't get content then will no change
-            # UTC GMT+00时间，需要加上8小时才是中国时间GMT+08
+            'tags': form.get('tags', None),
+            # todo: UTC GMT+00时间，需要加上8小时才是中国时间GMT+08
             'edit_date': datetime.strptime(form.get('edit_date'), '%Y-%m-%dT%H:%M:%S.%fZ'),
             'status': form.get('status', cls.status)  # if can't get content then will no change
         })
@@ -393,7 +395,7 @@ class Comment(db.Model):
             db.session.commit()
             return True
         except Exception as e:
-            print e
+            print(e)
             return False
 
     @classmethod

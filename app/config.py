@@ -5,6 +5,7 @@ import os
 
 class Config(object):
     CONFIG_NAME = 'config'
+    DEBUG = None
     # flask-mail config
     MAIL_SERVER = 'smtpdm.aliyun.com'
     MAIL_PORT = 25

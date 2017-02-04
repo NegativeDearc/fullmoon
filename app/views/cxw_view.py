@@ -53,7 +53,7 @@ def cxw_article(uuid):
 @cxw.route("/blog/article/<string:uuid>/editor", methods=["GET", "POST"])
 @login_required
 def cxw_article_editor(uuid):
-    article = Article.get_article_by_uuid(uuid=uuid)
+    article = Article.get_article_by_uuid(uuid=uuid, abort=False)
 
     if request.method == "POST":
         db.session.query(Article).filter(Article.uuid == uuid).update({

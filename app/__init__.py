@@ -102,7 +102,7 @@ def sanitize_html(value):
     return soup
 
 
-# use re to remove all blank/tab/white space at html
+# todo: use re to remove all blank/tab/white space at html
 def remove_blank(value):
     pass
 

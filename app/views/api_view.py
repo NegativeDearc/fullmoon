@@ -80,6 +80,14 @@ class ArticleApi(Resource):
         :return: {动作信息: http返回代码}
         """
         form = {k: None if v == '' else v for k, v in request.form.items()}
+        # receive tags list, transfer list to string
+        tags = request.form.getlist("tag[]")
+        if tags:
+            tags = ','.join(tags)
+        else:
+            tags = None
+
+        form.update({"tags": tags})
 
         if Article.get_article_by_uuid(uuid=form.get('uuid'), abort=False):
             # article update logical here
