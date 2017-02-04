@@ -260,12 +260,14 @@ class Article(db.Model, ArticleBase):
     @classmethod
     def archive_statistic(cls, author=None):
         # statistic archive for years, return the value like 201601(1) 201602(2)
+        # issue[fixed]: only generate current month
         sql = text("""
-            SELECT STRFTIME ("%Y%m", [Article].[create_date]) || "(" ||
-                   COUNT (STRFTIME ("%Y%m", [Article].[create_date])) || ")" AS [archive]
+            SELECT STRFTIME ("%Y%m", [Article].[create_date]) || "(" || COUNT (*) || ")" AS [archive]
             FROM   [Article]
-            WHERE  [Article].[author] =:a
-                   AND [Article].[status] = "PUBLISHED";
+            WHERE  [Article].[author] = :a
+                   AND [Article].[status] = "PUBLISHED"
+            GROUP  BY STRFTIME ("%Y%m", [Article].[create_date])
+            ORDER  BY [Article].[create_date];
         """)
 
         rv = db.session.execute(sql, params={"a": author}).fetchall()

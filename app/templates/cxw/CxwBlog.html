@@ -70,6 +70,7 @@
             <div class="col-md-4">
                 <h3>全部列表</h3>
                 <ul>
+                    <li><a href="{{ url_for('cxw.archive_all', date_filter="all") }}">全部文章</a></li>
                     {% for e in archive %}
                         <li><a href="{{ url_for('cxw.archive_all', date_filter=e[0][:6]) }}">{{ e[0] }}</a></li>
                     {% endfor %}

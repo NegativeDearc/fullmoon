@@ -32,30 +32,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="876">
-              <caret line="149" column="45" selection-start-line="149" selection-start-column="45" selection-end-line="149" selection-end-column="45" />
+            <state relative-caret-position="296">
+              <caret line="266" column="42" selection-start-line="266" selection-start-column="42" selection-end-line="266" selection-end-column="42" />
               <folding>
                 <element signature="e#23#90#0" expanded="true" />
-                <marker date="1486190915255" expanded="true" signature="9849:10125" ph="SELECT STRFT... " />
-                <marker date="1486190915255" expanded="true" signature="10320:10347" ph="DROP TABLE I... " />
-                <marker date="1486190915255" expanded="true" signature="10537:10616" ph="INSERT INTO " />
-                <marker date="1486190915255" expanded="true" signature="10667:10737" ph="INSERT INTO " />
-                <marker date="1486190915255" expanded="true" signature="10754:10846" ph="SELECT [Arti... " />
-                <marker date="1486190915255" expanded="true" signature="10897:11056" ph="SELECT [uuid... " />
-                <marker date="1486190915255" expanded="true" signature="13964:13981" ph="select * fro... cte" />
+                <marker date="1486193635318" expanded="true" signature="9901:10229" ph="SELECT STRFT... " />
+                <marker date="1486193635318" expanded="true" signature="10424:10451" ph="DROP TABLE I... " />
+                <marker date="1486193635318" expanded="true" signature="10641:10720" ph="INSERT INTO " />
+                <marker date="1486193635318" expanded="true" signature="10771:10841" ph="INSERT INTO " />
+                <marker date="1486193635318" expanded="true" signature="10858:10950" ph="SELECT [Arti... " />
+                <marker date="1486193635318" expanded="true" signature="11001:11160" ph="SELECT [uuid... " />
+                <marker date="1486193635318" expanded="true" signature="14068:14085" ph="select * fro... cte" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ArticleTemplateTheme_1.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ArticleTemplateTheme_1.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/cxw/ArticleTemplateTheme_1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
+            <state relative-caret-position="494">
               <caret line="126" column="52" selection-start-line="126" selection-start-column="52" selection-end-line="126" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CxwBlog.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/cxw/CxwBlog.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="72" column="90" selection-start-line="72" selection-start-column="90" selection-end-line="72" selection-end-column="90" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cxw_view.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/cxw_view.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -157,7 +177,6 @@
         <option value="$PROJECT_DIR$/app/templates/scc/SccBlog.html" />
         <option value="$PROJECT_DIR$/app/templates/scc/AllArticle.html" />
         <option value="$PROJECT_DIR$/app/views/scc_view.py" />
-        <option value="$PROJECT_DIR$/app/templates/cxw/CxwBlog.html" />
         <option value="$PROJECT_DIR$/app/static/get_token.js" />
         <option value="$PROJECT_DIR$/app/templates/main/comments_info_temp.html" />
         <option value="$PROJECT_DIR$/app/templates/main/uploaded_files_management_temp.html" />
@@ -175,9 +194,10 @@
         <option value="$PROJECT_DIR$/app/views/cxw_view.py" />
         <option value="$PROJECT_DIR$/app/templates/main/article_info_temp.html" />
         <option value="$PROJECT_DIR$/app/templates/main/ArticleEditor.html" />
-        <option value="$PROJECT_DIR$/app/models/model.py" />
         <option value="$PROJECT_DIR$/app/views/api_view.py" />
         <option value="$PROJECT_DIR$/app/templates/cxw/ArticleTemplateTheme_1.html" />
+        <option value="$PROJECT_DIR$/app/templates/cxw/CxwBlog.html" />
+        <option value="$PROJECT_DIR$/app/models/model.py" />
       </list>
     </option>
   </component>
@@ -322,6 +342,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -671,7 +695,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25340393" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -681,7 +705,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32786885" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.49394855" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30491802" sideWeight="0.4969743" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28688523" sideWeight="0.48789713" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33606556" sideWeight="0.48789713" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24158126" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43934426" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -867,13 +891,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/scc/SccBlog.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="276" column="7" selection-start-line="276" selection-start-column="7" selection-end-line="276" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/scc-js.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -998,14 +1015,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/cxw_view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="54" column="29" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/scc_view.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1027,7 +1036,7 @@
         <state relative-caret-position="-200">
           <caret line="106" column="8" selection-start-line="106" selection-start-column="8" selection-end-line="106" selection-end-column="8" />
           <folding>
-            <element signature="e#23#74#0" expanded="true" />
+            <element signature="e#23#74#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1048,30 +1057,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/cxw/CxwBlog.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="85" column="102" selection-start-line="85" selection-start-column="102" selection-end-line="85" selection-end-column="102" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/main/article_info_temp.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="33" column="85" selection-start-line="33" selection-start-column="85" selection-end-line="33" selection-end-column="85" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/main/ArticleEditor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="225" column="47" selection-start-line="225" selection-start-column="47" selection-end-line="225" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/for-editor.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-615">
@@ -1088,28 +1073,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/model.py">
+    <entry file="file://$PROJECT_DIR$/app/templates/cxw/ArticleTemplateTheme_1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="876">
-          <caret line="149" column="45" selection-start-line="149" selection-start-column="45" selection-end-line="149" selection-end-column="45" />
-          <folding>
-            <element signature="e#23#90#0" expanded="true" />
-            <marker date="1486190915255" expanded="true" signature="9849:10125" ph="SELECT STRFT... " />
-            <marker date="1486190915255" expanded="true" signature="10320:10347" ph="DROP TABLE I... " />
-            <marker date="1486190915255" expanded="true" signature="10537:10616" ph="INSERT INTO " />
-            <marker date="1486190915255" expanded="true" signature="10667:10737" ph="INSERT INTO " />
-            <marker date="1486190915255" expanded="true" signature="10754:10846" ph="SELECT [Arti... " />
-            <marker date="1486190915255" expanded="true" signature="10897:11056" ph="SELECT [uuid... " />
-            <marker date="1486190915255" expanded="true" signature="13964:13981" ph="select * fro... cte" />
-          </folding>
+        <state relative-caret-position="494">
+          <caret line="126" column="52" selection-start-line="126" selection-start-column="52" selection-end-line="126" selection-end-column="52" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/cxw/ArticleTemplateTheme_1.html">
+    <entry file="file://$PROJECT_DIR$/app/templates/main/article_info_temp.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="126" column="52" selection-start-line="126" selection-start-column="52" selection-end-line="126" selection-end-column="52" />
+        <state relative-caret-position="456">
+          <caret line="33" column="85" selection-start-line="33" selection-start-column="85" selection-end-line="33" selection-end-column="85" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/scc/SccBlog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="740">
+          <caret line="276" column="7" selection-start-line="276" selection-start-column="7" selection-end-line="276" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/main/ArticleEditor.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="225" column="47" selection-start-line="225" selection-start-column="47" selection-end-line="225" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/cxw/CxwBlog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="72" column="90" selection-start-line="72" selection-start-column="90" selection-end-line="72" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/cxw_view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="266" column="42" selection-start-line="266" selection-start-column="42" selection-end-line="266" selection-end-column="42" />
+          <folding>
+            <element signature="e#23#90#0" expanded="true" />
+            <marker date="1486193635318" expanded="true" signature="9901:10229" ph="SELECT STRFT... " />
+            <marker date="1486193635318" expanded="true" signature="10424:10451" ph="DROP TABLE I... " />
+            <marker date="1486193635318" expanded="true" signature="10641:10720" ph="INSERT INTO " />
+            <marker date="1486193635318" expanded="true" signature="10771:10841" ph="INSERT INTO " />
+            <marker date="1486193635318" expanded="true" signature="10858:10950" ph="SELECT [Arti... " />
+            <marker date="1486193635318" expanded="true" signature="11001:11160" ph="SELECT [uuid... " />
+            <marker date="1486193635318" expanded="true" signature="14068:14085" ph="select * fro... cte" />
+          </folding>
         </state>
       </provider>
     </entry>
