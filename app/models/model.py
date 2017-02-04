@@ -50,12 +50,11 @@ class ArticleBase(object):
             for m in db.session.query(Login.mail).all():
                 lst_mail.append(m.mail)
 
-            body = render_template("mail_add_an_article.html")
+            html = render_template("mail_add_an_article.html", target=target)
             print subject
             print lst_mail
-            print body
             # msg = Message(subject=subject, recipients=lst_mail)
-            # msg.body = u'数据库新增文章成功！来自flask'
+            # msg.html = html
             # send_msg(msg)
             # return True
 

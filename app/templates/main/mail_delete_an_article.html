@@ -1,22 +1,236 @@
 <!DOCTYPE html>
-<html lang="en">
-<body>
-<h5 style="text-align: center">有一篇文章被删除了，以防万一，这封邮件将作为存档递送给你。</h5>
-<div>
-    <div class="title" style="text-align: center">{{ target.title }}</div>
-    <div class="uuid" style="text-align: center;font-size:9px;color: #dadada;">{{ target.uuid }}</div>
-    <div class="date" style="display: inline-block">创建日期：{{ target.create_date }}</div>
-    <div class="date" style="display: inline-block">修改日期：{{ target.edit_date }}</div>
-    <div class="read">阅读次数：{{ target.read_times }}</div>
-    <div class="tags">
-        {% if target.tags %}
-            {% for tag in target.tags.split(",") %}
-                <div style="color: #4078c0;font-size: 12px;display: inline-block;background-color: #f2f8fa;border-radius: 3px;padding: 0.2em 0.9em;margin: 0 0.5em 0.5em 0;white-space: nowrap;">{{ tag }}</div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div class="content">{{ target.content|safe }}</div>
-</div>
-<div class="warning" style="color: red;">本邮件由系统自动发送，请勿回复！</div>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="margin:0;padding: 0;">
+<table data-module="noti-4" data-bgcolor="Main BG" bgcolor="#414a51" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="currentTable">
+    <tr>
+        <td height="50">
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="text-align:center;vertical-align:top;font-size:0;" class="editable">
+            <table align="center" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td align="center" width="600">
+                    <!--header-->
+                    <table class="table-inner" width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td data-bgcolor="header bar" bgcolor="#ff646a" style="border-top-left-radius:6px; border-top-right-radius:6px;text-align:center;vertical-align:top;font-size:0;" align="center">
+                                <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td height="20">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td data-color="headline" data-size="headline" align="center" style="font-family: 'Open sans', Arial, sans-serif; color:#FFFFFF; font-size:16px; font-weight: bold;" class="editable">
+                                            <singleline>
+                                                文章删除通知
+                                            </singleline>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="20">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <!--end header-->
+                    <table class="table-inner" width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td data-bgcolor="container" bgcolor="#FFFFFF" align="center" style="text-align:center;vertical-align:top;font-size:0;">
+                                <table align="center" width="90%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td height="35">
+                                        </td>
+                                    </tr>
+                                    <!--logo-->
+
+                                    <tr>
+                                        <td align="center" style="vertical-align:top;font-size:0;">
+                                             <a href="#"><img src="http://www.stampready.net/dashboard/editor/user_uploads/zip_uploads/2016/07/16/grU041icHJuIPotz53mxEnC2/Notification-4/images/logo.png" alt="img" width="50" style="display:block; line-height:0px; font-size:0px; border:0px;" data-crop="false" /></a>
+                                        </td>
+                                    </tr>
+                                    <!--end logo-->
+
+                                    <tr>
+                                        <td height="5">
+                                        </td>
+                                    </tr>
+                                    <!--slogan-->
+
+                                    <tr>
+                                        <td data-color="slogan" data-size="slogan" align="center" style="font-family: 'Open Sans', Arial, sans-serif; color:#95a5a6; font-size:12px; letter-spacing: 1px;font-style:italic;">
+                                            <singleline>
+                                                Newsletter Bundle
+                                            </singleline>
+                                        </td>
+                                    </tr>
+                                    <!--end slogan-->
+
+                                    <tr>
+                                        <td height="40">
+                                        </td>
+                                    </tr>
+                                    <!--image-->
+
+                                    <tr>
+                                        <td align="center" style="line-height: 0px;">
+                                            <img data-crop="false" style="display:block; line-height:0px; font-size:0px; border:0px;" class="img1" src="http://www.stampready.net/dashboard/editor/user_uploads/zip_uploads/2016/07/16/grU041icHJuIPotz53mxEnC2/Notification-4/images/500.png" alt="img" width="100%" height="auto" />
+                                        </td>
+                                    </tr>
+                                    <!--end image-->
+
+                                    <tr>
+                                        <td height="40">
+                                        </td>
+                                    </tr>
+                                    <!--headline-->
+
+                                    <tr>
+                                        <td data-link-style="text-decoration:none; color:#414a51;" data-link-color="Headline Link" data-color="Headline" data-size="Headline" align="center" style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 22px; color: rgb(65, 81, 65); font-weight: bold;">
+                                            您删除了一篇文章-{{ target.title }}
+                                        </td>
+                                    </tr>
+                                    <!--end headline-->
+
+                                    <tr>
+                                        <td align="center" style="text-align:center;vertical-align:top;font-size:0;">
+                                            <table width="40" border="0" align="center" cellpadding="0" cellspacing="0">
+                                                <tr>
+                                                    <td data-border-bottom-color="Dash" height="20" style=" border-bottom:3px solid #ff646a;">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="15">
+                                        </td>
+                                    </tr>
+                                    <!--content-->
+
+                                    <tr>
+                                        <td data-link-style="text-decoration:none; color:#ff646a;" data-link-color="Content Link" data-color="Content" data-size="Content" align="center" style="font-family: 'Open sans', Arial, sans-serif; color:#7f8c8d; font-size:14px; line-height: 28px;">
+                                            <multiline>
+                                                {{ target.content }}
+                                            </multiline>
+                                        </td>
+                                    </tr>
+                                    <!--end content-->
+
+                                    <tr>
+                                        <td height="40">
+                                        </td>
+                                    </tr>
+                                    <!--button-->
+
+                                    <tr>
+                                        <td align="center" style="text-align:center;vertical-align:top;font-size:0;">
+                                            <table data-bgcolor="Button" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#ff646a" class="textbutton" style="border-radius:4px;">
+                                                <tr>
+                                                    <td data-link-style="text-decoration:none; color:#ffffff;" data-link-color="Button Link" data-size="Button" height="40" align="center" style="font-family: 'Open sans', Arial, sans-serif; color:#FFFFFF; font-size:14px; padding-left: 25px;padding-right: 25px;font-weight: bold; ">
+                                                        <a href="http://www.cxwloves.cc" style="text-decoration:none; color:#ffffff" data-color="Button Link">查看其他文章</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!--end button-->
+
+                                    <tr>
+                                        <td height="5">
+                                        </td>
+                                    </tr>
+                                    <!--detail-->
+
+                                    <tr>
+                                        <td data-color="detail" data-size="detail" align="center" style="font-family: 'Open sans', Arial, sans-serif; color:#a7aeb3; font-size:11px; line-height: auto;font-style: italic;">
+                                                *已经被删除的文章无法恢复
+                                        </td>
+                                    </tr>
+                                    <!--end detail-->
+
+                                    <tr>
+                                        <td height="40">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-bgcolor="preference bg" height="45" align="center" bgcolor="#f4f4f4" style="border-bottom-left-radius:6px;border-bottom-right-radius:6px;">
+                                <table align="center" width="90%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td height="10">
+                                        </td>
+                                    </tr>
+                                    <!--preference-->
+
+                                    <tr>
+                                        <td data-link-style="text-decoration:none; color:#ff646a;" data-link-color="Preference Link" data-color="Preference" data-size="Preference" class="preference-link" align="center" style="font-family: 'Open sans', Arial, sans-serif; color:#95a5a6; font-size:12px;font-style: italic;">
+                                            Copyright&nbsp;&copy;&nbsp;2016-2017&nbsp;www.cxwloves.cc
+                                        </td>
+                                    </tr>
+                                    <!--end preference-->
+
+                                    <tr>
+                                        <td height="10">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table align="center" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td height="20">
+                            </td>
+                        </tr>
+                        <!--social-->
+
+                        <tr>
+                            <td align="center" style="text-align:center;vertical-align:top;font-size:0;">
+                                <table width="120" border="0" align="center" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td align="center" style="line-height: 0px;">
+                                             <a href="#"><img src="http://www.stampready.net/dashboard/editor/user_uploads/zip_uploads/2016/07/16/grU041icHJuIPotz53mxEnC2/Notification-4/images/fb.png" alt="img" width="16" style="display:block; line-height:0px; font-size:0px; border:0px;" /></a>
+                                        </td>
+                                        <td width="10">
+                                        </td>
+                                        <td align="center" style="line-height: 0px;">
+                                             <a href="#"><img src="http://www.stampready.net/dashboard/editor/user_uploads/zip_uploads/2016/07/16/grU041icHJuIPotz53mxEnC2/Notification-4/images/tw.png" alt="img" width="16" style="display:block; line-height:0px; font-size:0px; border:0px;" /></a>
+                                        </td>
+                                        <td width="10">
+                                        </td>
+                                        <td align="center" style="line-height: 0px;">
+                                             <a href="#"><img src="http://www.stampready.net/dashboard/editor/user_uploads/zip_uploads/2016/07/16/grU041icHJuIPotz53mxEnC2/Notification-4/images/gg.png" alt="img" width="16" style="display:block; line-height:0px; font-size:0px; border:0px;" /></a>
+                                        </td>
+                                        <td width="10">
+                                        </td>
+                                        <td align="center" style="line-height: 0px;">
+                                             <a href="#"><img src="http://www.stampready.net/dashboard/editor/user_uploads/zip_uploads/2016/07/16/grU041icHJuIPotz53mxEnC2/Notification-4/images/in.png" alt="img" width="16" style="display:block; line-height:0px; font-size:0px; border:0px;" /></a>
+                                        </td>
+                                    </tr>
+                                    <!--end social-->
+
+                                </table>
+                            </td>
+                        </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height="30">
+        </td>
+    </tr>
+</table>
 </body>
 </html>
