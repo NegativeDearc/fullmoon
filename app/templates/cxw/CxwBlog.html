@@ -19,6 +19,16 @@
                 display: none;
             }
         }
+        .tag {
+            color: #4078c0;
+            font-size: 12px;
+            display: inline-block;
+            background-color: #f2f8fa;
+            border-radius: 3px;
+            padding: 0.2em 0.9em;
+            margin: 0 0.5em 0.5em 0;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -78,7 +88,10 @@
                 <!-- a heat map for article here-->
                 <hr>
                 <h3>分类</h3>
+                <li class="tag"><a href="#">test</a></li>
                 <!-- a word cloud here -->
+                <hr>
+
             </div>
             <div class="col-md-8 col-xs-12">
                 <h3>目录(共{{ published_article|length }}篇)</h3>
