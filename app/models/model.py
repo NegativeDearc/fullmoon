@@ -9,6 +9,7 @@ from datetime import datetime
 from collections import OrderedDict
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired, BadSignature
+from flask import render_template
 from flask.ext.login import UserMixin
 from flask.ext.mail import Message
 from app.config import config
@@ -30,33 +31,71 @@ class ArticleBase(object):
     REF: http://docs.sqlalchemy.org/en/latest/orm/events.html#mapper-events
     """
     @staticmethod
-    def notice_by_email(mapper, connection, target):
+    def add_an_article(mapper, connection, target):
         # target is a real instance of mapper,
         # If the event is configured with raw=True,
         # this will instead be the InstanceState state-management object associated with the instance.
         @async
         def send_msg(msg):
             from app import app
-            # solved the issue: runtimeerror-working-outside-of-app
+            # issue[fixed]: runtime error-working-outside-of-app
             # https://github.com/mattupstate/flask-mail/issues/63
             with app.app_context():
                 mail.send(msg)
 
         def gen_msg():
-            msg = Message(u'数据库新增文章成功！', recipients=['datingwithme@live.cn'])
-            msg.body = u'数据库新增文章成功！来自flask'
+            subject = u"{0} 刚刚新增了一篇文章,快来查看吧!".format(target.author)
+
+            lst_mail = []
+            for m in db.session.query(Login.mail).all():
+                lst_mail.append(m.mail)
+
+            body = render_template("mail_add_an_article.html")
+            print subject
+            print lst_mail
+            print body
+            # msg = Message(subject=subject, recipients=lst_mail)
+            # msg.body = u'数据库新增文章成功！来自flask'
+            # send_msg(msg)
+            # return True
+
+        # todo: prevent send mail in testing model
+        gen_msg()
+
+    @staticmethod
+    def delete_an_article(mapper, connection, target):
+        @async
+        def send_msg(msg):
+            from app import app
+            # issue[fixed]: runtime error-working-outside-of-app
+            # https://github.com/mattupstate/flask-mail/issues/63
+            with app.app_context():
+                mail.send(msg)
+
+        def gen_msg():
+            subject = u"有一篇文章被删除了"
+            rv = db.session.query(Login).filter(Login.user == target.author).one()
+            email = rv.mail
+            html = render_template("mail_delete_an_article.html", target=target)
+
+            msg = Message(subject=subject, recipients=[email])
+            msg.html = html
             send_msg(msg)
             return True
 
-        print(dir(target))
-        # todo: prevent send mail in testing model
-        # gen_msg()
+        gen_msg()
 
     @classmethod
     def after_insert(cls):
         # normal usage : sqlalchemy.event.listen()
         # decorate model: @event.listen_for()
-        event.listen(cls, "after_insert", cls.notice_by_email)
+        event.listen(cls, "after_insert", cls.add_an_article)
+
+    @classmethod
+    def after_delete(cls):
+        # caution: before_delete event
+        # if someone delete an article, he will get the archive in mail in case
+        event.listen(cls, "before_delete", cls.delete_an_article)
 
 
 # if you want use db.create_all()
@@ -310,6 +349,7 @@ class Article(db.Model, ArticleBase):
         return rv
 
 Article.after_insert()
+Article.after_delete()
 
 
 class CommentBase(object):

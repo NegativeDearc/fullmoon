@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<h5 style="text-align: center">有一篇文章被删除了，以防万一，这封邮件将作为存档递送给你。</h5>
+<div>
+    <div class="title" style="text-align: center">{{ target.title }}</div>
+    <div class="uuid" style="text-align: center;font-size:9px;color: #dadada;">{{ target.uuid }}</div>
+    <div class="date" style="display: inline-block">创建日期：{{ target.create_date }}</div>
+    <div class="date" style="display: inline-block">修改日期：{{ target.edit_date }}</div>
+    <div class="read">阅读次数：{{ target.read_times }}</div>
+    <div class="tags">
+        {% if target.tags %}
+            {% for tag in target.tags.split(",") %}
+                <div style="color: #4078c0;font-size: 12px;display: inline-block;background-color: #f2f8fa;border-radius: 3px;padding: 0.2em 0.9em;margin: 0 0.5em 0.5em 0;white-space: nowrap;">{{ tag }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="content">{{ target.content|safe }}</div>
+</div>
+<div class="warning" style="color: red;">本邮件由系统自动发送，请勿回复！</div>
+</body>
+</html>
