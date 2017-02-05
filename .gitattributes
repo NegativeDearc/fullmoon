@@ -11,4 +11,6 @@ app/static/trianglify.min.js linguist-vendored
 app/static/pdfjs-1.5.188/* linguist-vendored
 app/static/highlight.js/* linguist-vendored
 app/static/taggingJS-1.3.3/* linguist-vendored
-app/anime.js linguist-vendored
+app/static/anime.js linguist-vendored
+app/static/anime-click.js linguist-vendored
+app/static/qrcode.js linguist-vendored

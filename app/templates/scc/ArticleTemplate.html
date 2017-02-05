@@ -11,6 +11,7 @@
     <script src="{{ url_for('scc.static',filename='bootstrap.min.js') }}"></script>
     <script src="{{ url_for('scc.static',filename='baidu-analysis.js') }}"></script>
     <script src="{{ url_for('scc.static',filename='scc-js.js') }}"></script>
+    <script src="{{ url_for('scc.static',filename='qrcode.js') }}"></script>
 
     <title>{{ article_by_uuid.title }}</title>
     <style>
@@ -63,7 +64,9 @@
 
         .media {
             padding: 10px;
-{#            border-bottom: 1px solid #dadada;#}
+            /*
+            border-bottom: 1px solid #dadada;
+             */
             margin: 10px;
         }
         .share_links {
@@ -144,7 +147,7 @@
                 <article class="post">
                     <div class="post-inner-content">
                         <header>
-                            <h2 class="title">{{ article_by_uuid.title }}</h2>
+                            <h2 class="title" id="title">{{ article_by_uuid.title }}</h2>
                             <div id="uuid" style="display: none;">{{ article_by_uuid.uuid }}</div>
                             <div class="meta">
                                 <i class="fa fa-calendar"></i>
@@ -163,11 +166,11 @@
                     <div id="comments"></div>
                     <!-- share for social sites-->
                     <div class="share_links">
-                        <div><i class="fa fa-weibo fa-2x" title="分享到微博" data-toggle="tooltip"></i></div>
+                        <div><i class="fa fa-weibo fa-2x" title="分享到微博" data-toggle="tooltip" onclick="share_weibo()"></i></div>
                         <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
-                        <div><i class="fa fa-wechat fa-2x" title="分享到微信" data-toggle="tooltip"></i></div>
+                        <div><i class="fa fa-wechat fa-2x" title="分享到微信" data-toggle="tooltip" onclick="alert('currently unavailable')"></i></div>
                         <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
-                        <div><i class="fa fa-qq fa-2x" title="分享到QQ" data-toggle="tooltip"></i></div>
+                        <div><i class="fa fa-qq fa-2x" title="分享到QQ空间" data-toggle="tooltip" onclick="share_qzone()"></i></div>
                     </div>
                 </article>
             </div>
