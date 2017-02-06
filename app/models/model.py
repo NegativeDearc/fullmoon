@@ -51,12 +51,11 @@ class ArticleBase(object):
                 lst_mail.append(m.mail)
 
             html = render_template("mail_add_an_article.html", target=target)
-            print subject
-            print lst_mail
-            # msg = Message(subject=subject, recipients=lst_mail)
-            # msg.html = html
-            # send_msg(msg)
-            # return True
+
+            msg = Message(subject=subject, recipients=lst_mail)
+            msg.html = html
+            send_msg(msg)
+            return True
 
         # todo: prevent send mail in testing model
         gen_msg()
@@ -350,10 +349,52 @@ Article.after_delete()
 
 
 class CommentBase(object):
-    pass
+    @staticmethod
+    def comment_auditing(mapper, connection, target):
+        @async
+        def send_msg(msg):
+            from app import app
+            # issue[fixed]: runtime error-working-outside-of-app
+            # https://github.com/mattupstate/flask-mail/issues/63
+            with app.app_context():
+                mail.send(msg)
+
+        def gen_msg():
+            pass
+
+        gen_msg()
+
+    @staticmethod
+    def comment_approved(target, value, oldvalue, initiator):
+        # REF: http://docs.sqlalchemy.org/en/latest/orm/events.html#attribute-events
+        pass
+
+    @staticmethod
+    def comment_deleted(mapper, connection, target):
+        pass
+
+    @classmethod
+    def after_insert(cls):
+        # after insert a comment,
+        # the admin should be noticed to decide to show or not show the comment
+        event.listen(cls, "after_insert", cls.comment_auditing)
+
+    @classmethod
+    def after_approve(cls):
+        # when a comment is approved
+        # the writer of the comment should be noticed
+        # meanwhile the replied user should be noticed(user or admin)
+        # so it is a attribute event
+        pass
+
+    @classmethod
+    def failed_approve(cls):
+        # if a comment failed to approve, generate a delete event
+        # the writer should be noticed
+        event.listen(cls, "after_delete", cls.comment_deleted)
 
 
-class Comment(db.Model):
+class Comment(db.Model, CommentBase):
     """
     store the comments leaved by reader
     """
@@ -459,6 +500,10 @@ class Comment(db.Model):
             all()
         return rv
 
+Comment.after_insert()
+Comment.after_approve()
+CommentBase.failed_approve()
+
 
 class LoginBase(object):
     @staticmethod
@@ -468,10 +513,10 @@ class LoginBase(object):
     @classmethod
     def pwd_be_changed(cls):
         # if someone changed his/her password, user must get an email notice
-        event.listen(cls, 'after_update', cls.password_being_changed)
+        event.listen(cls, 'before_update', cls.password_being_changed)
 
 
-class Login(db.Model, UserMixin):
+class Login(db.Model, UserMixin, LoginBase):
     """
     table store user name and password
     Include {
