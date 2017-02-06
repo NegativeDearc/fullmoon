@@ -30,6 +30,7 @@ class ArticleBase(object):
     REF: http://stackoverflow.com/questions/12753450/sqlalchemy-mixins-and-event-listener
     REF: http://docs.sqlalchemy.org/en/latest/orm/events.html#mapper-events
     """
+
     @staticmethod
     def add_an_article(mapper, connection, target):
         # target is a real instance of mapper,
@@ -193,7 +194,7 @@ class Article(db.Model, ArticleBase):
             db.session.commit()
             return True
         except Exception as e:
-            print e
+            print(e)
 
     @classmethod
     def get_article_by_uuid(cls, uuid, abort=True):
@@ -212,7 +213,7 @@ class Article(db.Model, ArticleBase):
         # get articles which are in published status
         n = page * 1
         return cls.query.filter(cls.status == 'PUBLISHED', cls.author == author). \
-            order_by(desc(cls.create_date)).all()[n - 1:n]
+                   order_by(desc(cls.create_date)).all()[n - 1:n]
 
     @classmethod
     def pagination(cls, page, author='scc'):
@@ -280,7 +281,7 @@ class Article(db.Model, ArticleBase):
         # add date parse here to search the archive
         # if the date_filter is not pass the check, return a 404 page
         if date_filter == "all":
-            rv = cls.query.filter(cls.author == author, cls.status == "PUBLISHED").\
+            rv = cls.query.filter(cls.author == author, cls.status == "PUBLISHED"). \
                 order_by(desc(cls.create_date)).all()
             return rv
         else:
@@ -288,7 +289,7 @@ class Article(db.Model, ArticleBase):
             # use db.func instead of cls.create_date.strftime()
             rv = cls.query.filter(cls.author == author,
                                   cls.status == "PUBLISHED",
-                                  db.func.strftime("%Y%m", cls.create_date) == date_filter).\
+                                  db.func.strftime("%Y%m", cls.create_date) == date_filter). \
                 order_by(desc(cls.create_date)).all()
             return rv
 
@@ -344,6 +345,7 @@ class Article(db.Model, ArticleBase):
         rv = db.session.execute(sql5, params={"a": t}).fetchall()
         return rv
 
+
 Article.after_insert()
 Article.after_delete()
 
@@ -360,7 +362,20 @@ class CommentBase(object):
                 mail.send(msg)
 
         def gen_msg():
-            pass
+            # query author mail from 3 tables
+            rv = db.session.query(Login, Article).\
+                join(Article, Article.author == Login.user).\
+                join(Comment, Article.uuid == Comment.uid).\
+                filter(Article.uuid == target.uid).one()
+
+            author_mail = rv.Login.mail
+            article_name = rv.Article.title
+
+            subject = u"关于你的文章<{0}>,有一条新的评论待审核".format(article_name)
+            msg = Message(subject=subject, recipients=[author_mail])
+            msg.html = render_template("mail_comment_auditing.html", target=target)
+            send_msg(msg=msg)
+            return True
 
         gen_msg()
 
@@ -486,7 +501,7 @@ class Comment(db.Model, CommentBase):
             db.session.commit()
             return True
         except Exception as e:
-            print e
+            print(e)
             return False
 
     @classmethod
@@ -499,6 +514,7 @@ class Comment(db.Model, CommentBase):
             limit(5). \
             all()
         return rv
+
 
 Comment.after_insert()
 Comment.after_approve()

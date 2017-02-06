@@ -168,7 +168,7 @@
                     <div class="share_links">
                         <div><i class="fa fa-weibo fa-2x" title="分享到微博" data-toggle="tooltip" onclick="share_weibo()"></i></div>
                         <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
-                        <div><i class="fa fa-wechat fa-2x" title="分享到微信" data-toggle="tooltip" onclick="alert('currently unavailable')"></i></div>
+                        <div><i class="fa fa-wechat fa-2x" title="分享到微信"></i></div>
                         <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
                         <div><i class="fa fa-qq fa-2x" title="分享到QQ空间" data-toggle="tooltip" onclick="share_qzone()"></i></div>
                     </div>
@@ -234,6 +234,13 @@
         $("[data-toggle=tooltip]").tooltip();
         //if null in <input> tags don't show submit button
         //ajax comments by uuid
+        $(".fa.fa-wechat").on("mouseover mouseout", function () {
+             if(event.type == "mouseover"){
+                share_weixin();
+             }else if(event.type == "mouseout"){
+                $("#qrcode").remove();
+             }
+        });
         var uuid = $("#uuid").html();
         //ajax load comments
         $.ajax({
