@@ -211,16 +211,14 @@ class Article(db.Model, ArticleBase):
     @classmethod
     def latest_article(cls, page=1, author='scc'):
         # get articles which are in published status
-        n = page * 5
-        return cls.query. \
-                   filter(cls.status == 'PUBLISHED', cls.author == author). \
-                   order_by(desc(cls.create_date)). \
-                   all()[n - 5:n]
+        n = page * 1
+        return cls.query.filter(cls.status == 'PUBLISHED', cls.author == author). \
+            order_by(desc(cls.create_date)).all()[n - 1:n]
 
     @classmethod
     def pagination(cls, page, author='scc'):
         # get paginate of query
-        return cls.query.filter(cls.author == author).paginate(page, per_page=5, error_out=True)
+        return cls.query.filter(cls.author == author).paginate(page, per_page=1, error_out=True)
 
     @classmethod
     def administration_article(cls, user=None, category="all"):

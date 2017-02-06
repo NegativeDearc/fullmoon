@@ -18,6 +18,7 @@ def scc_root(page=1):
         return redirect(url_for("scc.scc_article", uuid=request.args.get("article")))
 
     pagination = Article.pagination(page=int(request.args.get('page', page)), author='scc')
+    print pagination.has_next
     latest_10 = Article.latest_article(page=int(request.args.get('page', page)), author='scc')
     return render_template('SccBlog.html',
                            latest_10=latest_10,

@@ -72,12 +72,12 @@
 
         .post > .post-inner-content {
             padding: 45px 50px;
-            background-color: #fff;
+            background-color: #ffffff;
             border: 1px solid #dadada;
             border-top: none;
             margin-bottom: 20px;
         }
-         .post > .post-inner-content > header > .title > a {
+        .post > .post-inner-content > header > .title > a {
             color: #444;
             text-decoration: none;
         }
@@ -88,13 +88,18 @@
         .content {
             margin-top: 10px;
         }
-        .pager > li > a {
-            color: #449d44;
+        .pager {
+            margin-top: -10px;
+            float: right;
         }
-        .pager > li > a:hover{
-            background: #449d44;
+        .pager > li > a {
+            border-radius: 1px;
+            color: #ff4949;
+        }
+        .pager > li > a:hover {
+            background: #ff4949;
             color: #ffffff;
-            border: #449d44;
+            border: 1px solid #FF4949;/*if not add 1px to border, it will show small when hover*/
         }
         @media (max-width: 767px) {
             #sidebar {
@@ -103,6 +108,7 @@
             }
         }
         .well {
+            border-radius: 1px;
             padding: 30px;
             overflow: hidden;
             clear: both;
@@ -196,23 +202,34 @@
 <div class="container" id="ct2">
     <div class="row">
         <div class="col-md-8 col-sm-12" id="content">
-    {% for item in latest_10 %}
-        <article class="post">
-            <div class="post-inner-content">
-                <header>
-                    <h2 class="title"><a href="?article={{ item.uuid }}" target="_blank">{{ item.title }}</a></h2>
-                    <div class="meta">
-                        <i class="fa fa-calendar"></i>
-                        <div class="time" title="最后编辑:{{ item.edit_date.strftime("%Y-%m-%d %H:%M") }}"><time class="created" datetime="{{ item.create_date }}">{{ item.create_date.strftime("%Y-%m-%d %H:%M") }}</time></div>
+        {% for item in latest_10 %}
+            <article class="post">
+                <div class="post-inner-content">
+                    <header>
+                        <h2 class="title"><a href="?article={{ item.uuid }}" target="_blank">{{ item.title }}</a></h2>
+                        <div class="meta">
+                            <i class="fa fa-calendar"></i>
+                            <div class="time" title="最后编辑:{{ item.edit_date.strftime("%Y-%m-%d %H:%M") }}"><time class="created" datetime="{{ item.create_date }}">{{ item.create_date.strftime("%Y-%m-%d %H:%M") }}</time></div>
+                        </div>
+                    </header>
+                    <hr>
+                    <div class="content">
+                        <div>{{ item.content|safe}}</div>
                     </div>
-                </header>
-                <hr>
-                <div class="content">
-                    <div>{{ item.content|safe}}</div>
                 </div>
-            </div>
-        </article>
-    {% endfor %}
+            </article>
+        {% endfor %}
+        <!-- pagination for articles -->
+        <nav>
+            <ul class="pager">
+            {% if pagination.has_prev %}
+                <li><a href="{{ url_for("scc.scc_root",page=pagination.prev_num) }}" target="_self">前一篇</a></li>
+            {% endif %}
+            {% if pagination.has_next %}
+                <li><a href="{{ url_for("scc.scc_root",page=pagination.next_num) }}" target="_self">下一篇</a></li>
+            {% endif %}
+            </ul>
+        </nav><!--nav-->
         </div><!--col-md-8-->
         <!--aside-->
         <div class="col-md-4 col-sm-12" id="sidebar">
@@ -255,17 +272,6 @@
             </div>
         </div><!--col-md-4-->
     </div><!--row-->
-    <!-- pagination for articles -->
-    <nav>
-        <ul class="pager">
-    {% if pagination.has_next %}
-            <li><a href="{{ url_for("scc.scc_root",page=pagination.next_num) }}" target="_self">Next</a></li>
-    {% endif %}
-    {% if pagination.has_prev %}
-            <li><a href="{{ url_for("scc.scc_root",page=pagination.prev_num) }}" target="_self">Previous</a></li>
-    {% endif %}
-        </ul>
-    </nav>
 </div>
 <!--all article-->
 
