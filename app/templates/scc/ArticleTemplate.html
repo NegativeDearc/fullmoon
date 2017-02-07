@@ -84,6 +84,7 @@
         footer > .container > .row > .col-md-2 >  ul > li {
             display: block;
             list-style: none;
+            text-wrap: avoid;
         }
 
     </style>
@@ -158,20 +159,20 @@
                         <div class="content">
                             <div>{{ article_by_uuid.content|safe }}</div>
                         </div>
+                        <!-- share for social sites-->
+                        <div class="share_links">
+                            <div><i class="fa fa-weibo fa-2x" title="分享到微博" data-toggle="tooltip" onclick="share_weibo()"></i></div>
+                            <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
+                            <div><i class="fa fa-wechat fa-2x" style="position: relative"></i></div>
+                            <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
+                            <div><i class="fa fa-qq fa-2x" title="分享到QQ空间" data-toggle="tooltip" onclick="share_qzone()"></i></div>
+                        </div>
                     </div>
                     <!-- love it  button -->
                     <div class="love_it"></div>
                         <!-- how to cancel the love ? need don't like button? -->
                     <!-- ajax comments -->
                     <div id="comments"></div>
-                    <!-- share for social sites-->
-                    <div class="share_links">
-                        <div><i class="fa fa-weibo fa-2x" title="分享到微博" data-toggle="tooltip" onclick="share_weibo()"></i></div>
-                        <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
-                        <div><i class="fa fa-wechat fa-2x" title="分享到微信"></i></div>
-                        <div style="height: 20px;border-left: #FFFFFF 1px solid;display: inline-block"></div>
-                        <div><i class="fa fa-qq fa-2x" title="分享到QQ空间" data-toggle="tooltip" onclick="share_qzone()"></i></div>
-                    </div>
                 </article>
             </div>
         </div>

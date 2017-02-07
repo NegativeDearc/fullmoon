@@ -73,7 +73,9 @@ share_qzone = function () {
 };
 
 share_weixin = function () {
-    var qr_div = $('<div id="qrcode" style="z-index: 9;position:absolute;padding: 10px;border: 1px solid #dadada;background: #dadada"></div>');
+    var _this = $(".fa.fa-wechat");
+    var _offset = _this.offset();
+    var qr_div = $('<div id="qrcode" style="margin-left: -64px;margin-top: -206px;center;z-index: 9;position:absolute;padding: 10px;border: 1px solid #dadada;background: #ffffff;">扫描分享到朋友圈</div>');
     var _url = document.location;
     var qrcode = new QRCode(qr_div[0], {
         text: _url,
@@ -83,5 +85,7 @@ share_weixin = function () {
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.H
     });
-    $(".fa.fa-wechat").html(qr_div);
+    console.log(_offset);
+    // qr_div.css(_offset);
+    _this.parent("div").append(qr_div);
 };
