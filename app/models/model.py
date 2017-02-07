@@ -385,8 +385,9 @@ class CommentBase(object):
         # To detect if the column-based attributes on the object have net changes,
         # and therefore resulted in an UPDATE statement,
         # use object_session(instance).is_modified(instance, include_collections=False).
-        print("=====================", target.approved)
-        print(db.session(mapper).is_modified(mapper, include_collections=False))
+        # issue: after_update event didn't work
+        print("=====================")
+        # print(db.session(mapper).is_modified(mapper, include_collections=False))
 
     @staticmethod
     def comment_deleted(mapper, connection, target):
@@ -480,6 +481,7 @@ class Comment(db.Model, CommentBase):
 
     @staticmethod
     def approved_message():
+        # todo: filter user by article uuid
         rv = db.session.query(Comment). \
             filter(Comment.approved == False). \
             order_by(desc(Comment.uid), desc(Comment.message_date)). \
@@ -522,7 +524,7 @@ class Comment(db.Model, CommentBase):
 
 Comment.after_insert()
 Comment.after_approve()
-CommentBase.failed_approve()
+Comment.failed_approve()
 
 
 class LoginBase(object):

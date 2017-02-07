@@ -135,19 +135,15 @@ class ApiComment(Resource):
         pass
 
     def put(self, id):
-        print request.form
         try:
             Comment.appr_message(row_id=request.form.get("_id_"))
             return {"message": "success"}, 200
         except Exception as e:
-            print e
             return {"message": "failed"}, 500
 
     def delete(self, id):
-        print request.form
         try:
             Comment.del_message(row_id=request.form.get("_id_"))
             return {"message": "success"}, 200
         except Exception as e:
-            print e
             return {"message": "failed"}, 500
