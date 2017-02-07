@@ -346,10 +346,6 @@ class Article(db.Model, ArticleBase):
         return rv
 
 
-Article.after_insert()
-Article.after_delete()
-
-
 class CommentBase(object):
     @staticmethod
     def comment_auditing(mapper, connection, target):
@@ -386,8 +382,7 @@ class CommentBase(object):
         # and therefore resulted in an UPDATE statement,
         # use object_session(instance).is_modified(instance, include_collections=False).
         # issue: after_update event didn't work
-        print("=====================")
-        # print(db.session(mapper).is_modified(mapper, include_collections=False))
+        print "12345678"
 
     @staticmethod
     def comment_deleted(mapper, connection, target):
@@ -404,7 +399,6 @@ class CommentBase(object):
         # when a comment is approved
         # the writer of the comment should be noticed
         # meanwhile the replied user should be noticed(user or admin)
-        # so it is a attribute event
         event.listen(cls, "after_update", cls.comment_approved)
 
     @classmethod
@@ -522,11 +516,6 @@ class Comment(db.Model, CommentBase):
         return rv
 
 
-Comment.after_insert()
-Comment.after_approve()
-Comment.failed_approve()
-
-
 class LoginBase(object):
     @staticmethod
     def password_being_changed(mapper, connection, target):
@@ -629,3 +618,10 @@ class Login(db.Model, UserMixin, LoginBase):
         else:
             login = Login.query.filter(Login.id == user_id).one()
             return login
+
+# register event listener
+Article.after_insert()
+Article.after_delete()
+Comment.after_insert()
+Comment.after_approve()
+Comment.failed_approve()
