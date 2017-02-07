@@ -380,9 +380,13 @@ class CommentBase(object):
         gen_msg()
 
     @staticmethod
-    def comment_approved(target, value, oldvalue, initiator):
-        # REF: http://docs.sqlalchemy.org/en/latest/orm/events.html#attribute-events
-        pass
+    def comment_approved(mapper, connection, target):
+        # REF: http://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.after_update
+        # To detect if the column-based attributes on the object have net changes,
+        # and therefore resulted in an UPDATE statement,
+        # use object_session(instance).is_modified(instance, include_collections=False).
+        print("=====================", target.approved)
+        print(db.session(mapper).is_modified(mapper, include_collections=False))
 
     @staticmethod
     def comment_deleted(mapper, connection, target):
@@ -400,7 +404,7 @@ class CommentBase(object):
         # the writer of the comment should be noticed
         # meanwhile the replied user should be noticed(user or admin)
         # so it is a attribute event
-        pass
+        event.listen(cls, "after_update", cls.comment_approved)
 
     @classmethod
     def failed_approve(cls):

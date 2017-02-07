@@ -13,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/fullmoon$fullmoon.coverage" NAME="fullmoon Coverage Results" MODIFIED="1486438390319" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/fullmoon$fullmoon.coverage" NAME="fullmoon Coverage Results" MODIFIED="1486459356589" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -35,7 +35,7 @@
       <file leaf-file-name="CxwBlog.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/cxw/CxwBlog.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1976">
+            <state relative-caret-position="47">
               <caret line="104" column="10" selection-start-line="104" selection-start-column="10" selection-end-line="104" selection-end-column="10" />
               <folding />
             </state>
@@ -52,19 +52,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1501">
-              <caret line="385" column="0" selection-start-line="385" selection-start-column="0" selection-end-line="385" selection-end-column="0" />
+            <state relative-caret-position="113">
+              <caret line="382" column="8" selection-start-line="382" selection-start-column="8" selection-end-line="382" selection-end-column="8" />
               <folding>
-                <marker date="1486438163812" expanded="true" signature="11091:11419" ph="SELECT STRFT... " />
-                <marker date="1486438163812" expanded="true" signature="11614:11641" ph="DROP TABLE I... " />
-                <marker date="1486438163812" expanded="true" signature="11831:11910" ph="INSERT INTO " />
-                <marker date="1486438163812" expanded="true" signature="11961:12031" ph="INSERT INTO " />
-                <marker date="1486438163812" expanded="true" signature="12048:12140" ph="SELECT [Arti... " />
-                <marker date="1486438163812" expanded="true" signature="12191:12350" ph="SELECT [uuid... " />
-                <marker date="1486438163812" expanded="true" signature="17272:17289" ph="select * fro... cte" />
+                <element signature="e#15115#19369#0" expanded="false" />
+                <marker date="1486459345222" expanded="true" signature="11091:11419" ph="SELECT STRFT... " />
+                <marker date="1486459345222" expanded="true" signature="11614:11641" ph="DROP TABLE I... " />
+                <marker date="1486459345222" expanded="true" signature="11831:11910" ph="INSERT INTO " />
+                <marker date="1486459345222" expanded="true" signature="11961:12031" ph="INSERT INTO " />
+                <marker date="1486459345222" expanded="true" signature="12048:12140" ph="SELECT [Arti... " />
+                <marker date="1486459345222" expanded="true" signature="12191:12350" ph="SELECT [uuid... " />
+                <marker date="1486459345222" expanded="true" signature="17699:17716" ph="select * fro... cte" />
               </folding>
             </state>
           </provider>
@@ -94,11 +95,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scc-js.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="scc-js.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/static/scc-js.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="88" column="16" selection-start-line="88" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+            <state relative-caret-position="257">
+              <caret line="88" column="27" selection-start-line="88" selection-start-column="27" selection-end-line="88" selection-end-column="27" />
               <folding>
                 <marker date="1486453177220" expanded="true" signature="3877:4011" ph="..." />
                 <marker date="1486453177220" expanded="true" signature="3915:4010" ph="..." />
@@ -185,11 +186,11 @@
         <option value="$PROJECT_DIR$/.gitattributes" />
         <option value="$PROJECT_DIR$/app/views/scc_view.py" />
         <option value="$PROJECT_DIR$/app/templates/scc/SccBlog.html" />
-        <option value="$PROJECT_DIR$/app/models/model.py" />
         <option value="$PROJECT_DIR$/app/templates/main/mail_comment_auditing.html" />
         <option value="$PROJECT_DIR$/app/templates/main/comment_info_temp.html" />
         <option value="$PROJECT_DIR$/app/templates/scc/ArticleTemplate.html" />
         <option value="$PROJECT_DIR$/app/static/scc-js.js" />
+        <option value="$PROJECT_DIR$/app/models/model.py" />
       </list>
     </option>
   </component>
@@ -714,7 +715,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.49394855" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30491802" sideWeight="0.4969743" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2590164" sideWeight="0.48789713" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39344263" sideWeight="0.48789713" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24158126" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43934426" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1023,14 +1024,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/cxw/CxwBlog.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1976">
-          <caret line="104" column="10" selection-start-line="104" selection-start-column="10" selection-end-line="104" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/scc/SccBlog.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1292">
@@ -1074,18 +1067,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/scc_view.py">
+    <entry file="file://$PROJECT_DIR$/app/static/scc-js.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
-          <folding />
+        <state relative-caret-position="257">
+          <caret line="88" column="27" selection-start-line="88" selection-start-column="27" selection-end-line="88" selection-end-column="27" />
+          <folding>
+            <marker date="1486453177220" expanded="true" signature="3877:4011" ph="..." />
+            <marker date="1486453177220" expanded="true" signature="3915:4010" ph="..." />
+            <marker date="1486453177220" expanded="true" signature="3915:4011" ph="..." />
+            <marker date="1486453177220" expanded="true" signature="3922:4004" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/main/WelcomePage.html">
+    <entry file="file://$PROJECT_DIR$/app/templates/cxw/CxwBlog.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="12" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="11" selection-end-column="44" />
+        <state relative-caret-position="47">
+          <caret line="104" column="10" selection-start-line="104" selection-start-column="10" selection-end-line="104" selection-end-column="10" />
           <folding />
         </state>
       </provider>
@@ -1102,31 +1100,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/model.py">
+    <entry file="file://$PROJECT_DIR$/app/templates/main/WelcomePage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1501">
-          <caret line="385" column="0" selection-start-line="385" selection-start-column="0" selection-end-line="385" selection-end-column="0" />
-          <folding>
-            <marker date="1486438163812" expanded="true" signature="11091:11419" ph="SELECT STRFT... " />
-            <marker date="1486438163812" expanded="true" signature="11614:11641" ph="DROP TABLE I... " />
-            <marker date="1486438163812" expanded="true" signature="11831:11910" ph="INSERT INTO " />
-            <marker date="1486438163812" expanded="true" signature="11961:12031" ph="INSERT INTO " />
-            <marker date="1486438163812" expanded="true" signature="12048:12140" ph="SELECT [Arti... " />
-            <marker date="1486438163812" expanded="true" signature="12191:12350" ph="SELECT [uuid... " />
-            <marker date="1486438163812" expanded="true" signature="17272:17289" ph="select * fro... cte" />
-          </folding>
+        <state relative-caret-position="19">
+          <caret line="12" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="11" selection-end-column="44" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/scc-js.js">
+    <entry file="file://$PROJECT_DIR$/app/views/scc_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="88" column="16" selection-start-line="88" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+        <state relative-caret-position="19">
+          <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="382" column="8" selection-start-line="382" selection-start-column="8" selection-end-line="382" selection-end-column="8" />
           <folding>
-            <marker date="1486453177220" expanded="true" signature="3877:4011" ph="..." />
-            <marker date="1486453177220" expanded="true" signature="3915:4010" ph="..." />
-            <marker date="1486453177220" expanded="true" signature="3915:4011" ph="..." />
-            <marker date="1486453177220" expanded="true" signature="3922:4004" ph="..." />
+            <element signature="e#15115#19369#0" expanded="false" />
+            <marker date="1486459345222" expanded="true" signature="11091:11419" ph="SELECT STRFT... " />
+            <marker date="1486459345222" expanded="true" signature="11614:11641" ph="DROP TABLE I... " />
+            <marker date="1486459345222" expanded="true" signature="11831:11910" ph="INSERT INTO " />
+            <marker date="1486459345222" expanded="true" signature="11961:12031" ph="INSERT INTO " />
+            <marker date="1486459345222" expanded="true" signature="12048:12140" ph="SELECT [Arti... " />
+            <marker date="1486459345222" expanded="true" signature="12191:12350" ph="SELECT [uuid... " />
+            <marker date="1486459345222" expanded="true" signature="17699:17716" ph="select * fro... cte" />
           </folding>
         </state>
       </provider>
