@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 from sqlalchemy import CheckConstraint, UniqueConstraint, desc, asc
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.sql.expression import text, HasCTE
+from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.sql.expression import text, HasCTE, select, update
 from sqlalchemy import event
 from database import db, mail
 import uuid
@@ -23,6 +24,8 @@ def gen_uid():
 
 def gen_dat():
     return datetime.now()
+
+Session = scoped_session()
 
 
 class ArticleBase(object):
@@ -376,36 +379,45 @@ class CommentBase(object):
         gen_msg()
 
     @staticmethod
-    def comment_approved(mapper, connection, target):
+    def comment_approved(session, query, query_context, result):
         # REF: http://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.after_update
         # To detect if the column-based attributes on the object have net changes,
         # and therefore resulted in an UPDATE statement,
         # use object_session(instance).is_modified(instance, include_collections=False).
-        # issue: after_update event didn't work
-        print "12345678"
+        # issue[]: after_update event didn't work
+        print("after delete event worked")
 
     @staticmethod
     def comment_deleted(mapper, connection, target):
-        pass
+        # if use cls.query(xx).filter(xx=yy).delete(), the event will not worked
+        # but using db.session.delete(record), it will work
+        print("after delete event worked")
 
     @classmethod
     def after_insert(cls):
         # after insert a comment,
         # the admin should be noticed to decide to show or not show the comment
-        event.listen(cls, "after_insert", cls.comment_auditing)
+        event.listen(cls, "after_insert", cls.comment_auditing, propagate=True)
 
     @classmethod
     def after_approve(cls):
         # when a comment is approved
         # the writer of the comment should be noticed
         # meanwhile the replied user should be noticed(user or admin)
-        event.listen(cls, "after_update", cls.comment_approved)
+        # issue[]: "after_update" event listener didn't work
+        # REF:http://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.SessionEvents.after_bulk_update
+        # This is called as a result of the Query.update() method.
+        event.listen(Session, "after_bulk_update", cls.comment_approved)
 
     @classmethod
     def failed_approve(cls):
         # if a comment failed to approve, generate a delete event
         # the writer should be noticed
-        event.listen(cls, "after_delete", cls.comment_deleted)
+        # issue[fixed]: after_delete didn't work
+        # REF: http://docs.sqlalchemy.org/en/latest/orm/query.html?highlight=session%20update#the-query-object
+        # The MapperEvents.before_delete() and MapperEvents.after_delete() events are not invoked from this method.
+        # Instead, the SessionEvents.after_bulk_delete() method is provided to act upon a mass DELETE of entity rows.
+        event.listen(cls, "after_delete", cls.comment_deleted, propagate=True)
 
 
 class Comment(db.Model, CommentBase):
@@ -486,9 +498,11 @@ class Comment(db.Model, CommentBase):
     def del_message(cls, row_id=None):
         # use id to delete comments, do not use uid
         try:
-            cls.query.filter(cls.id == row_id).delete()
+            # if use the cls.query.filter(cls.id == row_id).delete()
+            # the "after_delete" event will not work
+            rv = cls.query.filter(cls.id == row_id).first()
+            db.session.delete(rv)
             db.session.commit()
-            return True
         except Exception as e:
             print(e)
             return False
@@ -497,7 +511,12 @@ class Comment(db.Model, CommentBase):
     def appr_message(cls, row_id=None):
         # use id to approve comments, do not use uid
         try:
-            cls.query.filter(cls.id == row_id).update({"approved": True})
+            # for "after_update" event
+            # db.session.query(cls).filter(cls.id == row_id).update({"approved": True}) not work
+            # cls.query.filter(cls.id == row_id).update({"approved": True}) not work
+            # db.session.query(cls).filter(cls.id == row_id).update({"approved": True})
+            # raw sql UPDATE [Comment] SET [approved] = 1 WHERE [id] = :a; not worked
+            db.session.query(cls).filter(cls.id == row_id).update({"approved": True})
             db.session.commit()
             return True
         except Exception as e:

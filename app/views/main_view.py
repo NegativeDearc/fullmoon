@@ -150,5 +150,4 @@ def main_temp_4():
                 rv.append({"No": pic, "url": url, "content": temp})
             else:
                 rv.append({"No": pic, "url": url, "content": None})
-    print rv
     return render_template("uploaded_files_management_temp.html", rv=rv)
