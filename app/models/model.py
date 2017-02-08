@@ -25,8 +25,6 @@ def gen_uid():
 def gen_dat():
     return datetime.now()
 
-Session = scoped_session()
-
 
 class ArticleBase(object):
     """
@@ -379,13 +377,15 @@ class CommentBase(object):
         gen_msg()
 
     @staticmethod
-    def comment_approved(session, query, query_context, result):
+    def comment_approved(target, value, oldvalue, initiator):
         # REF: http://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.MapperEvents.after_update
         # To detect if the column-based attributes on the object have net changes,
         # and therefore resulted in an UPDATE statement,
         # use object_session(instance).is_modified(instance, include_collections=False).
         # issue[]: after_update event didn't work
-        print("after delete event worked")
+        if not oldvalue and value:
+            # oldvalue:False to value:True
+            print("after update event worked")
 
     @staticmethod
     def comment_deleted(mapper, connection, target):
@@ -407,7 +407,7 @@ class CommentBase(object):
         # issue[]: "after_update" event listener didn't work
         # REF:http://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.SessionEvents.after_bulk_update
         # This is called as a result of the Query.update() method.
-        event.listen(Session, "after_bulk_update", cls.comment_approved)
+        event.listen(Comment.approved, "set", Comment.comment_approved, propagate=False)
 
     @classmethod
     def failed_approve(cls):
@@ -516,7 +516,8 @@ class Comment(db.Model, CommentBase):
             # cls.query.filter(cls.id == row_id).update({"approved": True}) not work
             # db.session.query(cls).filter(cls.id == row_id).update({"approved": True})
             # raw sql UPDATE [Comment] SET [approved] = 1 WHERE [id] = :a; not worked
-            db.session.query(cls).filter(cls.id == row_id).update({"approved": True})
+            rv = db.session.query(cls).filter(cls.id == row_id).first()
+            rv.approved = True
             db.session.commit()
             return True
         except Exception as e:
