@@ -311,6 +311,12 @@ class Article(db.Model, ArticleBase):
         return rv
 
     @classmethod
+    def tag_statistic(cls, author=None):
+        # this function is a statistic collection for the article with same tag
+        # eg:..python(2) flask(3)...
+        pass
+
+    @classmethod
     def search_pic_use(cls, t=None):
         sql1 = text("""
             DROP TABLE IF EXISTS [docs];
@@ -404,9 +410,10 @@ class CommentBase(object):
         # when a comment is approved
         # the writer of the comment should be noticed
         # meanwhile the replied user should be noticed(user or admin)
-        # issue[]: "after_update" event listener didn't work
+        # issue[fixed]: "after_update" event listener didn't work
         # REF:http://docs.sqlalchemy.org/en/latest/orm/events.html#sqlalchemy.orm.events.SessionEvents.after_bulk_update
         # This is called as a result of the Query.update() method.
+        # use attribute event "set" instead
         event.listen(Comment.approved, "set", Comment.comment_approved, propagate=False)
 
     @classmethod
