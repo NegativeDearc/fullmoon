@@ -88,7 +88,9 @@
                 <!-- a heat map for article here-->
                 <hr>
                 <h3>分类</h3>
-                <li class="tag"><a href="#">test</a></li>
+                {% for k, v in tags.items() %}
+                    <li class="tag"><a href="{{ url_for("cxw.tag_archive", tag_filter=k) }}">{{ k }}({{ v.nums }})</a></li>
+                {% endfor %}
                 <!-- a word cloud here -->
                 <hr>
 

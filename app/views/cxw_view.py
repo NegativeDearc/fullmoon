@@ -16,15 +16,25 @@ def cxw_blog():
         return redirect(url_for("cxw.cxw_article", uuid=request.args.get("article")))
 
     archive = Article.archive_statistic(author="cxw")
+    tags = Article.tag_statistic(author="cxw")
     published_article = Article.get_published_article(usr='cxw')
-    return render_template("CxwBlog.html", published_article=published_article, archive=archive)
+    return render_template("CxwBlog.html", published_article=published_article, archive=archive, tags=tags)
 
 
 @cxw.route('/blog/archive/<string:date_filter>')
 def archive_all(date_filter):
     archive = Article.archive_statistic(author="cxw")
+    tags = Article.tag_statistic(author="cxw")
     published_article = Article.archive(date_filter=date_filter, author="cxw")
-    return render_template("CxwBlog.html", published_article=published_article, archive=archive)
+    return render_template("CxwBlog.html", published_article=published_article, archive=archive, tags=tags)
+
+
+@cxw.route("/blog/tag/<string:tag_filter>")
+def tag_archive(tag_filter="all"):
+    archive = Article.archive_statistic(author="cxw")
+    published_article = Article.tag(tag_filter=tag_filter, author="cxw")
+    tags = Article.tag_statistic(author="cxw")
+    return render_template("CxwBlog.html", published_article=published_article, archive=archive, tags=tags)
 
 
 @cxw.route("/blog/article/<string:uuid>", methods=["GET", "POST"])

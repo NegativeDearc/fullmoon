@@ -3,6 +3,8 @@ from sqlalchemy import CheckConstraint, UniqueConstraint, desc, asc
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.sql.expression import text, HasCTE, select, update
+from sqlalchemy.sql.functions import concat
+from sqlalchemy.sql import func
 from sqlalchemy import event
 from database import db, mail
 import uuid
@@ -267,7 +269,7 @@ class Article(db.Model, ArticleBase):
         return rv
 
     @classmethod
-    def categories(cls):
+    def categories(cls, author=None):
         pass
 
     @classmethod
@@ -311,10 +313,37 @@ class Article(db.Model, ArticleBase):
         return rv
 
     @classmethod
+    def tag(cls, tag_filter="all", author=None):
+        if tag_filter == "all":
+            pass
+        else:
+            rv = cls.query.filter(Article.status == "PUBLISHED",
+                                  Article.author == author,
+                                  Article.tags.like("%.%".replace(".", tag_filter))
+                                  ).all()
+            return rv
+
+    @classmethod
     def tag_statistic(cls, author=None):
         # this function is a statistic collection for the article with same tag
         # eg:..python(2) flask(3)...
-        pass
+        rv_string = db.session.query(func.group_concat(Article.tags).label("tag_string")).\
+            filter(Article.author == author, Article.status == "PUBLISHED").all()
+        rv = rv_string[0].tag_string.split(",")
+        od = OrderedDict()
+        for r in rv:
+            rs = db.session.query(func.count(Article.id).label("tag_num"), Article.uuid.label("tag_uuid")).\
+                filter(Article.author == author,
+                       Article.status == "PUBLISHED",
+                       Article.tags.like("%.%".replace(".", r))
+                       ).all()
+            od.update({
+                r: {
+                    "nums": rs[0].tag_num,
+                    "uuid": rs[0].tag_uuid
+                }
+            })
+        return od
 
     @classmethod
     def search_pic_use(cls, t=None):
