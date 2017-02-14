@@ -417,7 +417,7 @@ class CommentBase(object):
         # To detect if the column-based attributes on the object have net changes,
         # and therefore resulted in an UPDATE statement,
         # use object_session(instance).is_modified(instance, include_collections=False).
-        # issue[]: after_update event didn't work
+        # issue[fixed]: after_update event didn't work
         if not oldvalue and value:
             # oldvalue:False to value:True
             print("after update event worked")

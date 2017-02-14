@@ -13,6 +13,7 @@ import urllib
 import hashlib
 import re
 
+# todo: a web mail reminder use celery
 lm = LoginManager()
 auth = HTTPBasicAuth()
 
