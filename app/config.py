@@ -16,6 +16,9 @@ class Config(object):
     # register static fold path for all blueprint
     static_path = os.path.join(os.path.dirname(__file__), 'static')
     pdf_path = os.path.join(os.path.dirname(__file__), 'static', 'pdf')
+    # celery config
+    CELERY_BROKER_URL = "redis://localhost:6379"
+    CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
     # register template fold path for all blueprint
     @classmethod

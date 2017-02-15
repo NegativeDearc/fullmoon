@@ -11,6 +11,7 @@ from flask.ext.restful import Api
 from bs4 import BeautifulSoup
 import urllib
 import hashlib
+from celery import Celery
 import re
 
 # todo: a web mail reminder use celery
@@ -75,6 +76,22 @@ def create_app(conf):
         # register blueprint to app
         app.register_blueprint(view)
     return app
+
+
+def create_celery(app=None):
+    celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
+    celery.conf.update(app.config)
+    TaskBase = celery.Task
+
+    class ContextTask(TaskBase):
+        abstract = True
+
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+
+    celery.Task = ContextTask
+    return celery
 
 
 def csrf_protect():
