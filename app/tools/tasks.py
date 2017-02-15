@@ -16,18 +16,26 @@ celery = create_celery(app=app)
 # before we run the app, we must run the celery process first.
 # issue[fixed] :"ImportError: No module named app"
 # solution: "celery -A app.tools.tasks.celery worker --loglevel=info" from the root
-# caution: celery 4.0 not support Windows anymore, use celery==3.1 instead
+# caution1: celery 4.0 not support Windows anymore, use celery==3.1 instead
+# caution2: RuntimeError: Running a worker with superuser privileges when the
+# worker accepts messages serialized with pickle is a very bad idea!
+# If you really want to continue then you have to set the C_FORCE_ROOT
+# environment variable (but please think about this before you do).
+
 @celery.task
 def add_together(a, b):
     return a + b
 
 
-@celery.task
-def send_mail(self, msg, debug=app.debug):
+# http://docs.celeryproject.org/en/latest/reference/celery.app.task.html?highlight=self.retry#celery.app.task.Task.retry
+@celery.task(bind=True)
+def send_mail(self, msg):
+    debug = app.debug
     if debug:
         print("mail at debug model will not be sent!")
     else:
         try:
-            mail.send(msg)
+            with app.app_context():
+                mail.send(msg)
         except Exception as e:
             self.retry(exc=e, countdown=15, max_retries=5)

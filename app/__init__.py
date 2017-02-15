@@ -145,7 +145,7 @@ def jinja_length(element):
         return len(element)
 
 
-app = create_app(config['development'])
+app = create_app(config['production'])
 app.jinja_env.globals['crsf_token'] = generate_csrf_token
 app.jinja_env.globals['uuid'] = generate_uuid
 app.jinja_env.filters['sanitize_html'] = sanitize_html
@@ -154,7 +154,7 @@ app.jinja_env.filters['gravatar_url'] = gravatar_url
 app.jinja_env.filters['length'] = jinja_length
 
 if not app.debug:
-    print("debugging is True")
+    print("debugging model is off, you're now in production model")
     # in production,logs must be recorded
     # from app.logs.log import DebugFalseLog
     #
