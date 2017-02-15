@@ -1,6 +1,7 @@
 # coding:utf-8
 from app import create_celery
 from app import app
+from app.models.database import mail
 
 celery = create_celery(app=app)
 
@@ -19,3 +20,14 @@ celery = create_celery(app=app)
 @celery.task
 def add_together(a, b):
     return a + b
+
+
+@celery.task
+def send_mail(self, msg, debug=app.debug):
+    if debug:
+        print("mail at debug model will not be sent!")
+    else:
+        try:
+            mail.send(msg)
+        except Exception as e:
+            self.retry(exc=e, countdown=15, max_retries=5)

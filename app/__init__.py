@@ -154,7 +154,7 @@ app.jinja_env.filters['gravatar_url'] = gravatar_url
 app.jinja_env.filters['length'] = jinja_length
 
 if not app.debug:
-    print True
+    print("debugging is True")
     # in production,logs must be recorded
     # from app.logs.log import DebugFalseLog
     #

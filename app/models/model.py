@@ -1,12 +1,10 @@
 # -*- coding:utf-8 -*-
 from sqlalchemy import CheckConstraint, UniqueConstraint, desc, asc
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy.sql.expression import text, HasCTE, select, update
-from sqlalchemy.sql.functions import concat
+from sqlalchemy.sql.expression import text
 from sqlalchemy.sql import func
 from sqlalchemy import event
-from database import db, mail
+from database import db
 import uuid
 from datetime import datetime
 from collections import OrderedDict
@@ -16,7 +14,6 @@ from flask import render_template
 from flask.ext.login import UserMixin
 from flask.ext.mail import Message
 from app.config import config
-from app.tools.decorators import async
 
 
 # global method
@@ -39,14 +36,6 @@ class ArticleBase(object):
         # target is a real instance of mapper,
         # If the event is configured with raw=True,
         # this will instead be the InstanceState state-management object associated with the instance.
-        @async
-        def send_msg(msg):
-            from app import app
-            # issue[fixed]: runtime error-working-outside-of-app
-            # https://github.com/mattupstate/flask-mail/issues/63
-            with app.app_context():
-                mail.send(msg)
-
         def gen_msg():
             subject = u"{0} 刚刚新增了一篇文章,快来查看吧!".format(target.author)
 
@@ -58,22 +47,13 @@ class ArticleBase(object):
 
             msg = Message(subject=subject, recipients=lst_mail)
             msg.html = html
-            send_msg(msg)
-            return True
+            return msg
 
-        # todo: prevent send mail in testing model
-        gen_msg()
+        from app.tools.tasks import send_mail
+        send_mail.delay(msg=gen_msg())
 
     @staticmethod
     def delete_an_article(mapper, connection, target):
-        @async
-        def send_msg(msg):
-            from app import app
-            # issue[fixed]: runtime error-working-outside-of-app
-            # https://github.com/mattupstate/flask-mail/issues/63
-            with app.app_context():
-                mail.send(msg)
-
         def gen_msg():
             subject = u"有一篇文章被删除了"
             rv = db.session.query(Login).filter(Login.user == target.author).one()
@@ -82,10 +62,10 @@ class ArticleBase(object):
 
             msg = Message(subject=subject, recipients=[email])
             msg.html = html
-            send_msg(msg)
-            return True
+            return msg
 
-        gen_msg()
+        from app.tools.tasks import send_mail
+        send_mail.delay(msg=gen_msg())
 
     @classmethod
     def after_insert(cls):
@@ -385,14 +365,6 @@ class Article(db.Model, ArticleBase):
 class CommentBase(object):
     @staticmethod
     def comment_auditing(mapper, connection, target):
-        @async
-        def send_msg(msg):
-            from app import app
-            # issue[fixed]: runtime error-working-outside-of-app
-            # https://github.com/mattupstate/flask-mail/issues/63
-            with app.app_context():
-                mail.send(msg)
-
         def gen_msg():
             # query author mail from 3 tables
             rv = db.session.query(Login, Article).\
@@ -406,10 +378,10 @@ class CommentBase(object):
             subject = u"关于你的文章<{0}>,有一条新的评论待审核".format(article_name)
             msg = Message(subject=subject, recipients=[author_mail])
             msg.html = render_template("mail_comment_auditing.html", target=target)
-            send_msg(msg=msg)
-            return True
+            return msg
 
-        gen_msg()
+        from app.tools.tasks import send_mail
+        send_mail.delay(msg=gen_msg())
 
     @staticmethod
     def comment_approved(target, value, oldvalue, initiator):
