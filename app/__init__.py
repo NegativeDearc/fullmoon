@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 import urllib
 import hashlib
 from celery import Celery
+from logs.log import DebugFalseLog
 import re
 
 # todo: a web mail reminder use celery
@@ -158,6 +159,5 @@ if not app.debug:
     # in production,logs must be recorded
     # from app.logs.log import DebugFalseLog
     #
-    # handler = DebugFalseLog().get_handler()
-    # app.logger.addHandler(handler)
-    pass
+    handler = DebugFalseLog().get_handler()
+    app.logger.addHandler(handler)

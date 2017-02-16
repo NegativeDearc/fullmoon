@@ -19,6 +19,10 @@ class Config(object):
     # celery config
     CELERY_BROKER_URL = "redis://localhost:6379"
     CELERY_RESULT_BACKEND = "redis://localhost:6379"
+    CELERY_TIMEZONE = "Asia/Shanghai"
+    CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24
+    CELERYD_POOL_RESTARTS = True
+    CELERYD_TASK_TIME_LIMIT = 60 * 10
 
     # register template fold path for all blueprint
     @classmethod
@@ -47,8 +51,10 @@ class Config(object):
 
 class ProductionConfig(Config):
     CONFIG_NAME = 'production'
+    MAIL_DEBUG = False
     DEBUG = False
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_ECHO = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class DevelopmentConfig(Config):

@@ -2,8 +2,11 @@
 from app import create_celery
 from app import app
 from app.models.database import mail
+from celery import platforms
+from smtplib import SMTPDataError
 
 celery = create_celery(app=app)
+platforms.C_FORCE_ROOT = True  # or export C_FORCE_ROOT="true"
 
 
 # how to run the celery process?
@@ -21,6 +24,9 @@ celery = create_celery(app=app)
 # worker accepts messages serialized with pickle is a very bad idea!
 # If you really want to continue then you have to set the C_FORCE_ROOT
 # environment variable (but please think about this before you do).
+#  nohup /root/Webapps/fullmoon/venv/bin/python
+# /root/Webapps/fullmoon/venv/bin/celery -A app.tools.tasks.celery worker --loglevel=info > celery_nohup
+
 
 @celery.task
 def add_together(a, b):
@@ -35,7 +41,23 @@ def send_mail(self, msg):
         print("mail at debug model will not be sent!")
     else:
         try:
+            # issue: I've already add task to app_context by create_celery function
+            # why do I need to with app_context again?
             with app.app_context():
                 mail.send(msg)
+        except SMTPDataError as e:
+            print("The SMTP server didn't accept the data, %s" % e)
         except Exception as e:
-            self.retry(exc=e, countdown=15, max_retries=5)
+            self.retry(exc=e, countdown=30, max_retries=3)
+
+
+@celery.task
+def login_failed():
+    # if someone trying to login to backend, but failed
+    pass
+
+
+@celery.task
+def login_success():
+    # if someone trying to login to backend, and succeed
+    pass
