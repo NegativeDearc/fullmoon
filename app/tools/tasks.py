@@ -6,7 +6,7 @@ from celery import platforms
 from smtplib import SMTPDataError
 
 celery = create_celery(app=app)
-platforms.C_FORCE_ROOT = True  # or export C_FORCE_ROOT="true"
+platforms.C_FORCE_ROOT = True  # or export C_FORCE_ROOT="true" at linux
 
 
 # how to run the celery process?

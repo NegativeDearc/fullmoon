@@ -11,7 +11,6 @@
     <script src="{{ url_for('cxw.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('cxw.static',filename='bootstrap.min.js') }}"></script>
     <script src="{{ url_for('scc.static',filename='scc-js.js') }}"></script>
-    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
     {%- if article %}
     <title>{{ article.title }}</title>
     {% else %}
@@ -61,8 +60,10 @@
 {% if edit %}
     <script>
         $(window).load(function () {
+            var img_upload_host = window.location.origin + "/editor/upload_image";
             CKEDITOR.replace("ckeditor",{
-                "height":"600px"
+                "height":"600px",
+                "filebrowserImageUploadUrl":img_upload_host
             });
         });
     </script>
