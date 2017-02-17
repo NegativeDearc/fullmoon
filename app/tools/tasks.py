@@ -37,7 +37,7 @@ def add_together(a, b):
 # http://docs.celeryproject.org/en/latest/reference/celery.app.task.html?highlight=self.retry#celery.app.task.Task.retry
 # issue: have problems execute tasks in linux, maybe the problem of serialization
 # try to change to JSON, instead of pickle
-@celery.task(bind=True)
+@celery.task(bind=True, max_retries=3, default_retry_delay=60*0.5, track_started=True)
 def send_mail(self, raw_msg):
     debug = app.debug
     if debug:
@@ -53,7 +53,7 @@ def send_mail(self, raw_msg):
         except SMTPDataError as e:
             print("The SMTP server didn't accept the data, %s" % e)
         except Exception as e:
-            self.retry(exc=e, countdown=30, max_retries=3)
+            self.retry(exc=e)
 
 
 @celery.task
