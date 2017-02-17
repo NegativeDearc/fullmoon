@@ -12,7 +12,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired, BadSignature
 from flask import render_template
 from flask.ext.login import UserMixin
-from flask.ext.mail import Message
 from app.config import config
 
 
@@ -44,13 +43,14 @@ class ArticleBase(object):
                 lst_mail.append(m.mail)
 
             html = render_template("mail_add_an_article.html", target=target)
-
-            msg = Message(subject=subject, recipients=lst_mail)
-            msg.html = html
-            return msg
+            return {
+                "subject": subject,
+                "recipients": lst_mail,
+                "html": html
+            }
 
         from app.tools.tasks import send_mail
-        send_mail.delay(msg=gen_msg())
+        send_mail.delay(raw_msg=gen_msg())
 
     @staticmethod
     def delete_an_article(mapper, connection, target):
@@ -60,12 +60,14 @@ class ArticleBase(object):
             email = rv.mail
             html = render_template("mail_delete_an_article.html", target=target)
 
-            msg = Message(subject=subject, recipients=[email])
-            msg.html = html
-            return msg
+            return {
+                "subject": subject,
+                "recipients": [email],
+                "html": html
+            }
 
         from app.tools.tasks import send_mail
-        send_mail.delay(msg=gen_msg())
+        send_mail.delay(raw_msg=gen_msg())
 
     @classmethod
     def after_insert(cls):
@@ -376,12 +378,15 @@ class CommentBase(object):
             article_name = rv.Article.title
 
             subject = u"关于你的文章<{0}>,有一条新的评论待审核".format(article_name)
-            msg = Message(subject=subject, recipients=[author_mail])
-            msg.html = render_template("mail_comment_auditing.html", target=target)
-            return msg
+            html = render_template("mail_comment_auditing.html", target=target)
+            return {
+                "subject": subject,
+                "recipients": [author_mail],
+                "html": html
+            }
 
         from app.tools.tasks import send_mail
-        send_mail.delay(msg=gen_msg())
+        send_mail.delay(raw_msg=gen_msg())
 
     @staticmethod
     def comment_approved(target, value, oldvalue, initiator):

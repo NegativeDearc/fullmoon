@@ -4,6 +4,7 @@ from app import app
 from app.models.database import mail
 from celery import platforms
 from smtplib import SMTPDataError
+from flask.ext.mail import Message
 
 celery = create_celery(app=app)
 platforms.C_FORCE_ROOT = True  # or export C_FORCE_ROOT="true" at linux
@@ -34,8 +35,10 @@ def add_together(a, b):
 
 
 # http://docs.celeryproject.org/en/latest/reference/celery.app.task.html?highlight=self.retry#celery.app.task.Task.retry
+# issue: have problems execute tasks in linux, maybe the problem of serialization
+# try to change to JSON, instead of pickle
 @celery.task(bind=True)
-def send_mail(self, msg):
+def send_mail(self, raw_msg):
     debug = app.debug
     if debug:
         print("mail at debug model will not be sent!")
@@ -44,6 +47,8 @@ def send_mail(self, msg):
             # issue: I've already add task to app_context by create_celery function
             # why do I need to with app_context again?
             with app.app_context():
+                msg = Message(subject=raw_msg["subject"], recipients=raw_msg["recipients"])
+                msg.html = raw_msg["html"]
                 mail.send(msg)
         except SMTPDataError as e:
             print("The SMTP server didn't accept the data, %s" % e)

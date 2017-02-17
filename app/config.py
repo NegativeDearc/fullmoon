@@ -1,5 +1,8 @@
 # -*- coding:utf-8 -*-
-from security import MailConfig
+try:
+    from security import MailConfig
+except ImportError:
+    print("failed load security file, you'll not be able to use some modules")
 import os
 
 
@@ -17,12 +20,15 @@ class Config(object):
     static_path = os.path.join(os.path.dirname(__file__), 'static')
     pdf_path = os.path.join(os.path.dirname(__file__), 'static', 'pdf')
     # celery config
-    CELERY_BROKER_URL = "redis://localhost:6379"
-    CELERY_RESULT_BACKEND = "redis://localhost:6379"
+    CELERY_BROKER_URL = "redis://localhost:6379/0"
+    CELERY_RESULT_BACKEND = "redis://localhost:6379/1"
     CELERY_TIMEZONE = "Asia/Shanghai"
     CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24
     CELERYD_POOL_RESTARTS = True
     CELERYD_TASK_TIME_LIMIT = 60 * 10
+    CELERY_TASK_SERIALIZER = 'json'
+    CELERY_EVENT_SERIALIZER = 'json'
+    CELERY_RESULT_SERIALIZER = 'json'
 
     # register template fold path for all blueprint
     @classmethod
