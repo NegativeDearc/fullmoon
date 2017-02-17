@@ -37,15 +37,10 @@ class ArticleBase(object):
         # this will instead be the InstanceState state-management object associated with the instance.
         def gen_msg():
             subject = u"{0} 刚刚新增了一篇文章,快来查看吧!".format(target.author)
-
-            lst_mail = []
-            for m in db.session.query(Login.mail).all():
-                lst_mail.append(m.mail)
-
             html = render_template("mail_add_an_article.html", target=target)
             return {
                 "subject": subject,
-                "recipients": lst_mail,
+                "recipients": ["datingwithme@live.cn"],
                 "html": html
             }
 

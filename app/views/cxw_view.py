@@ -39,9 +39,6 @@ def tag_archive(tag_filter="all"):
 
 @cxw.route("/blog/article/<string:uuid>", methods=["GET", "POST"])
 def cxw_article(uuid):
-    from app.tools.tasks import add_read_times
-    add_read_times.delay(uuid=uuid)
-
     article = Article.get_article_by_uuid(uuid=uuid)
 
     if request.args.get("edit") == "true":
