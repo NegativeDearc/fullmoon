@@ -116,7 +116,7 @@ class Article(db.Model, ArticleBase):
     create_date = db.Column(db.DATETIME, nullable=False)
     edit_date = db.Column(db.DATETIME, nullable=False)
     category = db.Column(db.String(20), nullable=False)
-    read_times = db.Column(db.INTEGER, default=1, nullable=False)
+    read_times = db.Column(db.INTEGER, nullable=False)
     status = db.Column(db.String(10), nullable=False)
 
     def __init__(self, form={}):
@@ -128,7 +128,7 @@ class Article(db.Model, ArticleBase):
         self.create_date = datetime.now()
         self.edit_date = datetime.now()
         self.category = ''
-        self.read_times = ''
+        self.read_times = 0
         self.status = form.get('status', None)
 
     def __repr__(self):

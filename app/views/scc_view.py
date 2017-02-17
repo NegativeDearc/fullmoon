@@ -29,6 +29,9 @@ def scc_root(page=1):
 
 @scc.route('/blog/article/<string:uuid>', methods=['GET', 'POST'])
 def scc_article(uuid):
+    from app.tools.tasks import add_read_times
+    add_read_times.delay(uuid=uuid)
+
     if request.args.get('edit') == 'true':
         return redirect(url_for("scc.article_editor", uuid=uuid))
     if request.args.get("logout") == "true":

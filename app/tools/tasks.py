@@ -2,6 +2,7 @@
 from app import create_celery
 from app import app
 from app.models.database import mail
+from app.models.model import Article, db
 from celery import platforms
 from smtplib import SMTPDataError
 from flask.ext.mail import Message
@@ -19,7 +20,7 @@ platforms.C_FORCE_ROOT = True  # or export C_FORCE_ROOT="true" at linux
 # in Linux "venv/bin/celery worker -A tasks.celery --loglevel=info" is ok too
 # before we run the app, we must run the celery process first.
 # issue[fixed] :"ImportError: No module named app"
-# solution: "celery -A app.tools.tasks.celery worker --loglevel=info" from the root
+# solution: "celery worker -A app.tools.tasks.celery --loglevel=info" from the root
 # caution1: celery 4.0 not support Windows anymore, use celery==3.1 instead
 # caution2: RuntimeError: Running a worker with superuser privileges when the
 # worker accepts messages serialized with pickle is a very bad idea!
@@ -27,13 +28,6 @@ platforms.C_FORCE_ROOT = True  # or export C_FORCE_ROOT="true" at linux
 # environment variable (but please think about this before you do).
 #  nohup /root/Webapps/fullmoon/venv/bin/python
 # /root/Webapps/fullmoon/venv/bin/celery -A app.tools.tasks.celery worker --loglevel=info > celery_nohup
-
-
-@celery.task
-def add_together(a, b):
-    return a + b
-
-
 # http://docs.celeryproject.org/en/latest/reference/celery.app.task.html?highlight=self.retry#celery.app.task.Task.retry
 # issue: have problems execute tasks in linux, maybe the problem of serialization
 # try to change to JSON, instead of pickle
@@ -66,3 +60,13 @@ def login_failed():
 def login_success():
     # if someone trying to login to backend, and succeed
     pass
+
+
+@celery.task
+def add_read_times(uuid=None):
+    rv = db.session.query(Article).filter(Article.uuid == uuid).one()
+    if isinstance(rv.read_times, int):
+        rv.read_times += 1
+    else:
+        rv.read_times = 0
+    db.session.commit()
