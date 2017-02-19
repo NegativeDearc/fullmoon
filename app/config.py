@@ -20,8 +20,8 @@ class Config(object):
     static_path = os.path.join(os.path.dirname(__file__), 'static')
     pdf_path = os.path.join(os.path.dirname(__file__), 'static', 'pdf')
     # celery config
-    CELERY_BROKER_URL = "amqp://guest:guest@localhost:5672//"
-    CELERY_RESULT_BACKEND = "amqp://guest:guest@localhost:5672//"
+    CELERY_BROKER_URL = "amqp://guest@localhost:5672//"
+    CELERY_RESULT_BACKEND = "amqp://guest@localhost:5672//"
     CELERY_TIMEZONE = "Asia/Shanghai"
     CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24
     CELERYD_POOL_RESTARTS = True

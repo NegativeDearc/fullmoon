@@ -40,6 +40,7 @@ def send_mail(self, raw_msg):
         try:
             # issue: I've already add task to app_context by create_celery function
             # why do I need to with app_context again?
+            print(raw_msg)
             with app.app_context():
                 msg = Message(subject=raw_msg["subject"], recipients=raw_msg["recipients"])
                 msg.html = raw_msg["html"]
