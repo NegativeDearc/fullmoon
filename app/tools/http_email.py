@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 try:
-    from security import MailConfig
+    from app.security import MailConfig
 except ImportError:
     print("failed load security file, you'll not be able to use some modules")
 
@@ -36,17 +36,22 @@ def unique_id():
     return uuid.uuid4().__str__()
 
 
-def single_mail_api(recipients="", subject="", text="", html="", method="GET"):
+def single_mail_api(recipients="", subject="", text=None, html="", method="GET"):
     # https://help.aliyun.com/document_detail/29442.html?spm=5176.doc29441.6.567.kBMXeE
     # paras must be encode with utf-8
     # base URL
     base_http_url = " http://dm.aliyuncs.com/"
     base_https_url = " https://dm.aliyuncs.com/"
-    # 邮件发送接口参数
-    # ToAddress目标地址，多个Email地址可以逗号分隔
-    if isinstance(recipients, list):
-        recipients = ",".join(recipients)
 
+    if isinstance(recipients, list):
+        # ToAddress目标地址，多个Email地址可以逗号分隔
+        recipients = ",".join(recipients)
+    if isinstance(html, unicode):
+        # 中文必须转换成utf-8，否则出错
+        html = html.encode("utf-8")
+    if isinstance(subject, unicode):
+        subject = subject.encode("utf-8")
+    # 邮件发送接口参数
     private_params = dict(Action="SingleSendMail", AccountName=MailConfig.MAIL_USERNAME, ReplyToAddress="true",
                           AddressType="1", ToAddress=recipients, Subject=subject, HtmlBody=html)
     # 公共方法参数
@@ -97,3 +102,8 @@ def single_mail_api(recipients="", subject="", text="", html="", method="GET"):
             raise HttpMailSendException(r.text)
     else:
         raise HttpMethodException("HTTP Method Unsupported.")
+
+if __name__ == "__main__":
+    single_mail_api(recipients=u"datingwithme@live.cn",
+                    subject=u"Python发送邮件",
+                    html=u"Python通过HTTP方式发送邮件")
