@@ -44,8 +44,8 @@ class ArticleBase(object):
                 "html": html
             }
 
-        from app.tools.tasks import send_mail
-        send_mail.delay(raw_msg=gen_msg())
+        from app.tools.tasks import send_mail_by_http
+        send_mail_by_http.delay(raw_msg=gen_msg())
 
     @staticmethod
     def delete_an_article(mapper, connection, target):
@@ -61,8 +61,8 @@ class ArticleBase(object):
                 "html": html
             }
 
-        from app.tools.tasks import send_mail
-        send_mail.delay(raw_msg=gen_msg())
+        from app.tools.tasks import send_mail_by_http
+        send_mail_by_http.delay(raw_msg=gen_msg())
 
     @classmethod
     def after_insert(cls):
@@ -380,8 +380,8 @@ class CommentBase(object):
                 "html": html
             }
 
-        from app.tools.tasks import send_mail
-        send_mail.delay(raw_msg=gen_msg())
+        from app.tools.tasks import send_mail_by_http
+        send_mail_by_http.delay(raw_msg=gen_msg())
 
     @staticmethod
     def comment_approved(target, value, oldvalue, initiator):

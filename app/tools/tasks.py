@@ -1,6 +1,8 @@
 # coding:utf-8
 from app import create_celery
 from app import app
+from app.tools.http_email import single_mail_api
+from app.tools.MyException import HttpMailSendException
 from app.models.database import mail
 from app.models.model import Article, db
 from celery import platforms
@@ -32,7 +34,7 @@ platforms.C_FORCE_ROOT = True  # or export C_FORCE_ROOT="true" at linux
 # issue: have problems execute tasks in linux, maybe the problem of serialization
 # try to change to JSON, instead of pickle
 @celery.task(bind=True, max_retries=3, default_retry_delay=60*0.5, track_started=True)
-def send_mail(self, raw_msg):
+def send_mail_by_smtp(self, raw_msg):
     debug = app.debug
     if debug:
         print("mail at debug model will not be sent!")
@@ -40,6 +42,7 @@ def send_mail(self, raw_msg):
         try:
             # issue: I've already add task to app_context by create_celery function
             # why do I need to with app_context again?
+            # 为了提升阿里云IP地址发送邮件的质量，阿里云强制限制从云主机对外连接TCP25端口发送邮件，发邮件使用云邮产品。
             print(raw_msg)
             with app.app_context():
                 msg = Message(subject=raw_msg["subject"], recipients=raw_msg["recipients"])
@@ -49,6 +52,20 @@ def send_mail(self, raw_msg):
             print("The SMTP server didn't accept the data, %s" % e)
         except Exception as e:
             self.retry(exc=e)
+
+
+@celery.task(bind=True, max_retries=3, default_retry_delay=60*0.5, track_started=True)
+def send_mail_by_http(self, raw_msg):
+    debug = app.debug
+    if debug:
+        print("mail at debug model will not be sent!")
+    else:
+        try:
+            single_mail_api(recipients=raw_msg["recipients"], subject=raw_msg["subject"], html=raw_msg["html"])
+        except HttpMailSendException as e:
+            self.retry(exc=e)
+        except Exception as e:
+            print(e)
 
 
 @celery.task

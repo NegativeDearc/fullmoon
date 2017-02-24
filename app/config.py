@@ -11,7 +11,8 @@ class Config(object):
     DEBUG = None
     # flask-mail config
     MAIL_SERVER = 'smtpdm.aliyun.com'
-    MAIL_PORT = 25
+    MAIL_PORT = 465
+    MAIL_USE_SSL = True
     MAIL_USERNAME = MailConfig.MAIL_USERNAME
     MAIL_PASSWORD = MailConfig.MAIL_PASSWORD
     MAIL_DEFAULT_SENDER = MailConfig.MAIL_DEFAULT_SENDER
