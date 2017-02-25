@@ -61,7 +61,7 @@ def send_mail_by_http(self, raw_msg):
         print("mail at debug model will not be sent!")
     else:
         try:
-            single_mail_api(recipients=raw_msg["recipients"], subject=raw_msg["subject"], html=raw_msg["html"])
+            single_mail_api(recipients=raw_msg["recipients"], subject=raw_msg["subject"], html=unicode(raw_msg["html"]))
         except HttpMailSendException as e:
             self.retry(exc=e)
         except Exception as e:

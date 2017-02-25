@@ -36,10 +36,11 @@ def unique_id():
     return uuid.uuid4().__str__()
 
 
-def single_mail_api(recipients="", subject="", text=None, html="", method="GET"):
+def single_mail_api(recipients=None, subject=None, text=None, html=None, method="GET"):
     # https://help.aliyun.com/document_detail/29442.html?spm=5176.doc29441.6.567.kBMXeE
     # paras must be encode with utf-8
     # base URL
+    # issue[fixed]: can't encode html correctly and raise signature don't match error
     base_http_url = " http://dm.aliyuncs.com/"
     base_https_url = " https://dm.aliyuncs.com/"
 
@@ -71,8 +72,11 @@ def single_mail_api(recipients="", subject="", text=None, html="", method="GET")
     params_keys.sort()
     params_str = ''
     # 对value进行URL编码后拼接为字符串，key原则上需要，但因为全部是英文字母故略去
+    # 注意"/"也需要URL编码，使用urllib.quote_plus()会导致空格转换成+而非%20，
+    # 而使用urllib.quote需要取消safe，因为"/"不会被编码
+    # 如果字符串不符合要求，签名计算无法通过
     for key in params_keys:
-        params_str += key + '=' + urllib.quote_plus(str(public_params[key])) + '&'
+        params_str += key + '=' + urllib.quote(str(public_params[key]), safe="") + '&'
 
     # 别忘记去掉最末的&
     params_str_encoded = urllib.quote(params_str[:-1])
@@ -104,6 +108,15 @@ def single_mail_api(recipients="", subject="", text=None, html="", method="GET")
         raise HttpMethodException("HTTP Method Unsupported.")
 
 if __name__ == "__main__":
-    single_mail_api(recipients=u"datingwithme@live.cn",
-                    subject=u"Python发送邮件",
-                    html=u"Python通过HTTP方式发送邮件")
+    html = """
+        <html>
+        <body>
+        <p>测试测试 空格  </p>
+        </body>
+        </html>
+    """
+    print(unicode(html, "utf-8"))
+    print(type(html))
+    single_mail_api(recipients="datingwithme@live.cn",
+                    subject="Python发送邮件",
+                    html=html)
