@@ -1,11 +1,13 @@
 # -*- coding:utf-8 -*-
-from flask import request, g, make_response
+import StringIO
+from flask import request, g, make_response, session
 from uuid import uuid1
 from flask.ext.restful import Resource
 from app.models.model import db, Article, Login, Comment
 from sqlalchemy.exc import IntegrityError
 from collections import OrderedDict
 from sqlalchemy import asc
+from app.tools.captcha import ImageChar
 from app import auth
 
 
@@ -44,6 +46,31 @@ class ToolsApi(Resource):
 
     def post(self):
         return {'uuid': uuid1().__str__()}
+
+
+class CaptchaApi(Resource):
+    """
+    captcha
+    """
+    def get(self):
+        captcha, captcha_pic = ImageChar().captcha()
+        # print('....', captcha)
+        # add captcha words to session
+        if session.get("captcha"):
+            session.pop("captcha")
+            session["captcha"] = captcha
+        else:
+            session["captcha"] = captcha
+        # response picture to buffer
+        buf = StringIO.StringIO()
+        captcha_pic.save(buf, "JPEG")
+        buf_str = buf.getvalue()
+        response = make_response(buf_str)
+        response.headers['Content-Type'] = 'image/jpeg'
+        return response
+
+    def post(self):
+        pass
 
 
 class ArticleApi(Resource):

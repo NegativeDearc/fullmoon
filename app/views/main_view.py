@@ -37,6 +37,17 @@ def main_login():
     return render_template('YouMustLogin.html')
 
 
+@main.route("/reset", methods=["GET", "POST"])
+def main_reset_password():
+    if request.method == "POST":
+        if request.form.get("captcha") == session.get("captcha"):
+            print("captcha passed")
+        else:
+            flash(u"验证码错误")
+        return redirect(url_for("main.main_reset_password"))
+    return render_template("ForgetPassword.html")
+
+
 @main.route('/pdfRender')
 def main_pdf_render():
     url = ''

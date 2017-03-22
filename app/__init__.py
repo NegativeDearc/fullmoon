@@ -32,9 +32,10 @@ def create_app(conf):
     # to apply config to app,must before init of SQLAlchemy and LoginManager
     app.config.from_object(conf)
     #
-    from app.views.api_view import ToolsApi, ArticleApi, ApiRoute, ApiComment
+    from app.views.api_view import ToolsApi, ArticleApi, ApiRoute, ApiComment, CaptchaApi
     api = Api(app)
     api.add_resource(ToolsApi, '/api/tools/uuid/', endpoint='tool')
+    api.add_resource(CaptchaApi, '/api/tools/captcha', endpoint='captcha')
     api.add_resource(ArticleApi, '/api/article/uuid/<uuid>', endpoint='article')
     api.add_resource(ApiComment, '/api/comment/id/<id>', endpoint='comment')
     api.add_resource(ApiRoute, '/api/token/', endpoint='route')
