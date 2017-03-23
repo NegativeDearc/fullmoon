@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response, g, flash, session, \
     abort
+from sqlalchemy.orm.exc import NoResultFound
 from app.models.model import Article, Login, Comment
 from flask.ext.login import login_required, login_user, current_user, logout_user, login_fresh, login_url
 from app.config import ProductionConfig
@@ -41,7 +42,10 @@ def main_login():
 def main_reset_password():
     if request.method == "POST":
         if request.form.get("captcha") == session.get("captcha"):
-            print("captcha passed")
+            try:
+                Login.query.filter(Login.mail == request.form.get("user")).one()
+            except NoResultFound:
+                flash(u"用户不存在")
         else:
             flash(u"验证码错误")
         return redirect(url_for("main.main_reset_password"))
