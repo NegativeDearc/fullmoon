@@ -19,6 +19,7 @@ Flask-Mail==0.9.1
 Flask-RESTful==0.3.5
 Flask-SQLAlchemy==2.1
 flower==0.9.1
+Frozen-Flask==0.14
 futures==3.0.5
 ipaddr==2.1.11
 itsdangerous==0.24

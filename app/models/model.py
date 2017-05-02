@@ -6,10 +6,11 @@ from sqlalchemy.sql import func
 from sqlalchemy import event
 from database import db
 import uuid
+import base64
 from datetime import datetime
 from collections import OrderedDict
 from werkzeug.security import generate_password_hash, check_password_hash
-from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired, BadSignature
+from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired, BadSignature, URLSafeTimedSerializer
 from flask import render_template
 from flask.ext.login import UserMixin
 from app.config import config
@@ -575,6 +576,18 @@ class Login(db.Model, UserMixin, LoginBase):
         self.password_hash = generate_password_hash(password, method="pbkdf2:sha1", salt_length=16)
         self.mail = mail
 
+    @staticmethod
+    def update_password(mail, password):
+        """
+        :param mail:
+        :param password:
+        :return:
+        """
+        password_hash = generate_password_hash(password, method="pbkdf2:sha1", salt_length=16)
+        print(password_hash)
+        # Login.query.filter(Login.mail == mail).update({"password_hash": password_hash})
+        return 1
+
     def generate_auth_token(self, expiration=600):
         # 自己构造HTTP头Authorization: Basic 用BASE64加密"用户:密码"
         # 我们一直试着尽可能地坚持 HTTP 标准协议。既然我们需要实现认证我们需要在 HTTP 上下文中去完成，
@@ -646,6 +659,27 @@ class Login(db.Model, UserMixin, LoginBase):
         else:
             login = Login.query.filter(Login.id == user_id).one()
             return login
+
+    @staticmethod
+    def generate_reset_url(expiration=86400, mail=mail):
+        s = TimedJSONWebSignatureSerializer(
+            secret_key=config['default'].SECRET_KEY,
+            expires_in=expiration
+        )
+        verify_url = 'http://localhost:5000/reset-action/' + s.dumps({"mail": mail})
+        print(verify_url)
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = TimedJSONWebSignatureSerializer(secret_key=config['default'].SECRET_KEY)
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None
+        except BadSignature:
+            return None
+        return data["mail"]
+
 
 # register event listener
 Article.after_insert()
