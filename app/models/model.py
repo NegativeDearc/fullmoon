@@ -584,8 +584,24 @@ class Login(db.Model, UserMixin, LoginBase):
         :return:
         """
         password_hash = generate_password_hash(password, method="pbkdf2:sha1", salt_length=16)
-        print(password_hash)
-        # Login.query.filter(Login.mail == mail).update({"password_hash": password_hash})
+        # print(password_hash)
+
+        db.session.query(Login).filter(Login.mail == mail).update({"password_hash": password_hash})
+        db.session.commit()
+        # send a notification mail at background
+
+        def send_reset_notification(mail):
+            html = render_template("mail_send_password_change_notification.html")
+
+            msg = {
+                "subject": u"密码更改通知",
+                "recipients": [mail],
+                "html": html
+            }
+            return msg
+
+        from app.tools.tasks import send_mail_by_http
+        send_mail_by_http.delay(send_reset_notification(mail=mail))
         return 1
 
     def generate_auth_token(self, expiration=600):
@@ -666,8 +682,22 @@ class Login(db.Model, UserMixin, LoginBase):
             secret_key=config['default'].SECRET_KEY,
             expires_in=expiration
         )
+
         verify_url = 'http://localhost:5000/reset-action/' + s.dumps({"mail": mail})
-        print(verify_url)
+        # print(verify_url)
+
+        def send_reset_url(mail, url):
+            html = render_template("mail_reset_password.html", url=url)
+
+            msg = {
+                "subject": u"重置你的密码",
+                "recipients": [mail],
+                "html": html
+            }
+            return msg
+
+        from app.tools.tasks import send_mail_by_http
+        send_mail_by_http.delay(send_reset_url(mail=mail, url=verify_url))
 
     @staticmethod
     def verify_reset_token(token):

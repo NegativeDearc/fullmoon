@@ -55,6 +55,7 @@ class Config(object):
 
     PIC_ALLOW_POSTFIX = {".jpeg", '.jpg', '.png', '.bmp'}  # == set([])
     PIC_ALLOW_POSTFIX_WITHOUT_DOT = {"jpeg", 'jpg', 'png', 'bmp'}  # == set([])
+    VERIFY_URL = 'http://localhost:5000/reset-action/'
 
 
 class ProductionConfig(Config):
@@ -63,6 +64,7 @@ class ProductionConfig(Config):
     DEBUG = False
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    VERIFY_URL = 'http://www.cxwloves.cc/reset-action/'
 
 
 class DevelopmentConfig(Config):

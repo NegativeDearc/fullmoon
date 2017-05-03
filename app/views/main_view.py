@@ -47,12 +47,14 @@ def main_reset_password():
         try:
             Login.query.filter(Login.mail == mail).one()
             session.mail_send_for_reset = mail
-            print(session.mail_send_for_reset)
+            # print(session.mail_send_for_reset)
             # send verify mail background by celery
             Login.generate_reset_url(mail=mail)
             flash(u"验证邮件发送成功，页面很快将自动关闭")
+            return redirect(url_for("main.main_reset_password"))
         except NoResultFound:
             flash(u"用户不存在")
+            return redirect(url_for("main.main_reset_password"))
     return render_template("ForgetPassword.html")
 
 
@@ -66,10 +68,12 @@ def main_reset_action(token):
         if request.form.get("pwd1") == request.form.get("pwd2") and \
                         request.form.get("captcha") == session.get("captcha"):
             flash(u"验证成功，页面将很快跳转到登陆页面")
+            # todo:自动计时跳转功能待设计
             Login.update_password(mail, request.form.get("pwd1"))
-            # return redirect(url_for("main.main_login"))
+            return redirect(url_for("main.main_login"))
         else:
             flash(u"验证出错")
+            return redirect(url_for("main.main_reset_action", token=token))
     return render_template("ResetPassword.html")
 
 
