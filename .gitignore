@@ -2,3 +2,4 @@
 security.py
 *.pyc
 *.mp4
+*.html

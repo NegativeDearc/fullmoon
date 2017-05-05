@@ -51,6 +51,10 @@ def scc_article(uuid):
 @scc.route('/blog/article/<string:uuid>/editor', methods=['GET', 'POST'])
 @login_required
 def article_editor(uuid):
+    if request.args.get("logout") == "true":
+        logout_user()
+        return redirect(url_for("scc.scc_article", uuid=uuid))
+
     article_by_uuid = Article.get_article_by_uuid(uuid=uuid, abort=False)
     if request.method == 'POST':
         # update article then redirect to the article url

@@ -12,11 +12,28 @@
     <script src="{{ url_for('scc.static',filename='baidu-analysis.js') }}"></script>
     <script src="{{ url_for('scc.static',filename='scc-js.js') }}"></script>
     <script src="{{ url_for('scc.static',filename='qrcode.js') }}"></script>
+    <script src="{{ url_for('scc.static',filename='particles.min.js') }}"></script>
+
 
     <title>{{ article_by_uuid.title }}</title>
     <style>
         body {
             font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+        }
+
+        .navbar-default {
+            background-color: transparent;
+            border-radius: 0px;
+            border-color: transparent;
+        }
+
+        .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+            color: #1D8CE0;
+        }
+
+        .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+            color: #1D8CE0;
+            background-color: transparent;
         }
 
         .time {
@@ -29,6 +46,7 @@
             background-color: #fff;
             border: 1px solid #dadada;
             margin-bottom: 20px;
+            z-index: 2;
         }
          .post > .post-inner-content > header > .title > a {
             color: #444;
@@ -101,6 +119,8 @@
 {% endif %}
 </head>
 <body>
+<div id="particles-js" style="width: 100%; height: 100%; position: fixed; top: 0; z-index:-1;"></div>
+
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -116,27 +136,17 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">控制面板<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-              <li role="presentation"><a href="/editor"><i class="fa fa-user-o"></i>&nbsp;登陆</a></li>
-              <li><a href="?edit=true"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑本文</a></li>
-          </ul>
-        </li>
-      </ul>
+      <!--<ul class="nav navbar-nav">
+          <li><a href="?edit=true"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑本文</a></li>
+      </ul><-->
 
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Me<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#"><i class="fa fa-question"></i>&nbsp;Who Am I</a></li>
-            <li class="divider"></li>
-            {% if current_user.is_authenticated %}
-                <li role="presentation"><a href="?logout=true"><i class="fa fa-power-off"></i>&nbsp;Log out</a></li>
-            {% endif %}
-          </ul>
-        </li>
+        {% if current_user.is_authenticated %}
+            <li role="presentation"><a href="?logout=true"><i class="fa fa-power-off"></i>&nbsp;Log out</a></li>
+        {% else %}
+            <li><a href="?edit=true"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a></li>
+            <li role="presentation"><a href="/editor"><i class="fa fa-user-o"></i>&nbsp;登陆</a></li>
+        {% endif %}
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -233,6 +243,10 @@
 {% endif %}
 
 <script>
+    particlesJS.load('particles-js', '/scc/static/particlesjs-config.json', function() {
+        console.log('callback - particles.js config loaded');
+    });
+
     $(document).ready(function () {
         $("[data-toggle=tooltip]").tooltip();
         //if null in <input> tags don't show submit button

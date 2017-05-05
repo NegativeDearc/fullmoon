@@ -14,3 +14,4 @@ app/static/taggingJS-1.3.3/* linguist-vendored
 app/static/anime.js linguist-vendored
 app/static/anime-click.js linguist-vendored
 app/static/qrcode.js linguist-vendored
+app/static/audiojs/* linguist-vendored
