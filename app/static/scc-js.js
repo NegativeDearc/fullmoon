@@ -85,7 +85,7 @@ share_weixin = function () {
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.M
     });
-    console.log(_offset);
+    console.log(qr_div);
     // qr_div.css(_offset);
     _this.parent("div").append(qr_div);
 };
