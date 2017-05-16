@@ -29,6 +29,7 @@ class ImageChar(RandomChr):
     step 4: add jitter to image
     step 5: merger all texts
     """
+    # using truetype fonts in Linux, you need copy fonts to /usr/share/fonts/truetype/ from c:/windows/fonts/
     font = ImageFont.truetype('msyh.ttc', 36) or ImageFont.truetype('consolas.ttc', 36)
     words = 8
 

@@ -678,13 +678,27 @@ class Login(db.Model, UserMixin, LoginBase):
 
     @staticmethod
     def generate_reset_url(expiration=86400, mail=mail):
+        """
+        :param expiration: the verify information will be expired in 24 hrs
+        :param mail: mail address to receive notification
+        :return:nothing
+        """
+        # a problem here: the website can't verify if the mail send by host machine itself
+        # it can receive change password request from a test computer
+        # so next step, todo:verify the machine if send the request by IP address/uuid?
         s = TimedJSONWebSignatureSerializer(
             secret_key=config['default'].SECRET_KEY,
             expires_in=expiration
         )
 
-        verify_url = 'http://localhost:5000/reset-action/' + s.dumps({"mail": mail})
+        from app import app
+        if app.debug:
+            verify_url = 'http://localhost:5000/reset-action/' + s.dumps({"mail": mail})
+        else:
+            verify_url = 'http://cxwloves.cc/reset-action/' + s.dumps({"mail": mail})
+
         # print(verify_url)
+        # print(s.dumps({"mail": mail}))
 
         def send_reset_url(mail, url):
             html = render_template("mail_reset_password.html", url=url)
