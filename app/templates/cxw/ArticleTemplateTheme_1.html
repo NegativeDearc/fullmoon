@@ -126,13 +126,15 @@
             <h3 style="text-align: center;">{{ article.title }}</h3>
             <div style="text-align: center">
                 <div id="uuid" style="display: none;">{{ article.uuid }}</div>
-                <div style="display: inline-block">日期：</div>&nbsp;{{ article.create_date.strftime("%Y/%m/%d") }}
-                <div style="display: inline-block">作者：</div>&nbsp;{{ article.author }}
+                <div style="display: inline-block;font-size: 8px">日期：&nbsp;{{ article.create_date.strftime("%Y/%m/%d") }}</div>
+                <div style="display: inline-block;font-size: 8px">作者：&nbsp;{{ article.author }}</div>
             </div>
             <!--test ok-->
             {% if article.tags %}
                 {% for tag in article.tags.split(',') %}
-                    <div class="tag">{{ tag }}</div>
+                    <div class="tag">
+                        <a href="{{ url_for("cxw.tag_archive", tag_filter=tag) }}" target="_blank" style="text-decoration: none">{{ tag }}</a>
+                    </div>
                 {% endfor %}
             {% endif %}
             <hr>
