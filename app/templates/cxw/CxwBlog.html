@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="{{ url_for('cxw.static',filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('cxw.static',filename='bootstrap-paper.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('cxw.static',filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
     <script src="{{ url_for('cxw.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('cxw.static',filename='bootstrap.min.js') }}"></script>
@@ -28,6 +28,12 @@
             padding: 0.2em 0.9em;
             margin: 0 0.5em 0.5em 0;
             white-space: nowrap;
+        }
+        .tag > a {
+            text-decoration: none;
+        }
+        .tag:hover {
+            box-shadow: 0 0 2px 2px silver;
         }
     </style>
 </head>

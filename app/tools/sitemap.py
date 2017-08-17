@@ -15,6 +15,7 @@ from flask import current_app
 # </url>
 # </urlset>
 # http://flask.pocoo.org/snippets/108/
+# todo:1 export article to .html/.md from database 2. generate sitemap.xml automatically
 
 with app.app_context():
     print app.url_map
