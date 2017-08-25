@@ -1,12 +1,14 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response, g, flash, session, \
-    abort
+    abort, current_app
 from sqlalchemy.orm.exc import NoResultFound
 from app.models.model import Article, Login, Comment
 from flask.ext.login import login_required, login_user, current_user, logout_user, login_fresh, login_url
 from app.config import ProductionConfig
+
 import os
 import time
+
 
 main = Blueprint('main', __name__)
 
@@ -20,6 +22,27 @@ def before_request():
 @main.route('/index')
 def main_root():
     return render_template('WelcomePage.html')
+
+
+@main.route('/sitemap.xml')
+def main_sitemap():
+    pages = []
+    users = Article.query.order_by(Article.author).all()
+
+    for user in users:
+        if user.author == "cxw":
+            url = url_for('cxw.cxw_article', uuid=user.uuid)
+        elif user.author == "scc":
+            url = url_for('scc.scc_article', uuid=user.uuid)
+
+        modified_time = user.edit_date.date().isoformat()
+        pages.append([url, modified_time])
+
+    sitemap_xml = render_template('sitemap.xml', pages=pages)
+    response = make_response(sitemap_xml)
+    response.headers["Content-Type"] = "application/xml"
+
+    return response
 
 
 @main.route('/login', methods=['GET', 'POST'])
