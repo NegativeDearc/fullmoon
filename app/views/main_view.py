@@ -35,7 +35,6 @@ def main_sitemap():
         elif user.author == "scc":
             url = url_for('scc.scc_article', uuid=user.uuid)[1:]
 
-        print url
         modified_time = user.edit_date.date().isoformat()
         pages.append([url, modified_time])
 
@@ -43,6 +42,14 @@ def main_sitemap():
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"
 
+    return response
+
+
+@main.route('/robots.txt')
+def main_robots():
+    robots_text = render_template('robots.txt')
+    response = make_response(robots_text)
+    response.headers["Content-Type"] = "text/plain"
     return response
 
 
