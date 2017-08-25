@@ -27,14 +27,15 @@ def main_root():
 @main.route('/sitemap.xml')
 def main_sitemap():
     pages = []
-    users = Article.query.order_by(Article.author).all()
+    users = Article.query.order_by(Article.author).filter(Article.status == "PUBLISHED").all()
 
     for user in users:
         if user.author == "cxw":
-            url = url_for('cxw.cxw_article', uuid=user.uuid)
+            url = url_for('cxw.cxw_article', uuid=user.uuid)[1:]
         elif user.author == "scc":
-            url = url_for('scc.scc_article', uuid=user.uuid)
+            url = url_for('scc.scc_article', uuid=user.uuid)[1:]
 
+        print url
         modified_time = user.edit_date.date().isoformat()
         pages.append([url, modified_time])
 
