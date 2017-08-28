@@ -8,6 +8,7 @@ from app.config import ProductionConfig
 
 import os
 import time
+from datetime import datetime, timedelta
 
 
 main = Blueprint('main', __name__)
@@ -217,3 +218,10 @@ def main_temp_4():
             else:
                 rv.append({"No": pic, "url": url, "content": None})
     return render_template("uploaded_files_management_temp.html", rv=rv)
+
+
+@main.route('/render_temp/temp_5')
+@login_required
+def main_temp_5():
+
+    return render_template("dash_info_temp.html")

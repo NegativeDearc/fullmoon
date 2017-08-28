@@ -3,42 +3,51 @@
 <body>
     <div class="table table-responsive" id="manage_table">
     <table class="table table-bordered">
-    <tr>
+    <thead style="text-align: center;font-weight: bold">
         <td>标题</td>
-        <td>标签</td>
-        <td>正文</td>
+{#        <td>标签</td>#}
+{#        <td>正文</td>#}
         <td>创建日期</td>
         <td>状态</td>
         <td colspan="3">操作</td>
-    </tr>
+    </thead>
         {% for article in article_for_administration %}
             <tr>
             <td class="uuid" style="display: none;">{{ article.uuid }}</td>
-            <td>{{ article.title }}</td>
-            <td>{{ article.tags }}</td>
-            <td>{{ article.content[:40]|sanitize_html }}</td>
+            <td>
+                {{ article.title }}
+                {% if article.tags is not none %}
+                    {% for tag in article.tags.split(",") %}
+                        <sup><span class="badge">{{ tag }}</span></sup>
+                    {% endfor %}
+                {% else %}
+                    <sup><span class="badge">None</span></sup>
+                {% endif %}
+            </td>
+{#            <td>{{ article.tags }}</td>#}
+{#            <td>{{ article.content[:50]|sanitize_html }}</td>#}
             <td>{{ article.create_date.strftime("%Y-%m-%d %H:%M") }}</td>
             <td>
                 <label for="">
-                    <select name="" class="select_of_status btn btn-block">
+                    <select name="" class="select_of_status form-control" style="font-size: 8px;">
                         <option value="{{ article.status }}">{{ article.status }}</option>
                     </select>
                 </label>
             </td>
-            <td>
-                <a href="/{{ article.author }}/blog/article/{{ article.uuid }}" data-toggle="tooltip" title="查看文章" target="_blank" class="btn btn-sm btn-default btn-block">
-                    <i class="fa fa-code" style="color: darkmagenta"></i>
+            <td style="text-align: center">
+                <a href="/{{ article.author }}/blog/article/{{ article.uuid }}" data-toggle="tooltip" title="查看文章" target="_blank">
+                    <i class="fa fa-2x fa-code" style="color: darkmagenta"></i>
                 </a>
             </td>
-            <td>
-                <a href="/{{ article.author }}/blog/article/{{ article.uuid }}/editor" data-toggle="tooltip" title="修改文章" target="_blank" class="btn btn-sm btn-default btn-block">
-                    <i class="fa fa-pencil" style="color: blue"></i>
+            <td style="text-align: center">
+                <a href="/{{ article.author }}/blog/article/{{ article.uuid }}/editor" data-toggle="tooltip" title="修改文章" target="_blank">
+                    <i class="fa fa-2x fa-pencil" style="color: blue"></i>
                 </a>
             </td>
-            <td>
-                <button data-toggle="tooltip" title="删除文章" class="btn btn-sm btn-default btn-block">
-                    <i class="fa fa-trash-o" style="color: red"></i>
-                </button>
+            <td style="text-align: center">
+                <a href="#" data-toggle="tooltip" title="删除文章">
+                    <i class="fa fa-2x fa-trash-o" style="color: red"></i>
+                </a>
             </td>
             </tr>
         {% endfor %}

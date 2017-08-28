@@ -2,5 +2,36 @@
 <html lang="en">
 <body>
 
+{% macro dash_tile(title="", icon="", number="", description="") %}
+    <div class="title" style="font-size: 13px; font-weight: 400; color: #73879C">
+        <i class={{ icon }}></i>
+        {{ title }}
+    </div>
+    <div class="number" style="font-weight: 600; font-size: 40px;color: #73879C">{{ number }}</div>
+    <div class="description" style="font-size: 13px; font-weight: 400; color: #73879C">{{ description }}</div>
+{% endmacro %}
+
+<div class="row" style="padding: 3px;text-align: center;">
+    <div class="col-xs-6 col-sm-3">
+        {{ dash_tile(title="Total Articles", icon="fa fa-table", number=2000, description="Till 2017-09-02") }}
+    </div>
+
+    <div class="col-xs-6 col-sm-3" style="border-left: 2px solid #ADB2B5;">
+        {{ dash_tile(title="Total Words", number=2000, description="Last Aritcle 2017-09-02") }}
+    </div>
+
+    <div class="col-xs-6 col-sm-3" style="border-left: 2px solid #ADB2B5;">
+        {{ dash_tile(title="Total Comments", number=2000, description="till 2017-09-02") }}
+    </div>
+
+    <div class="col-xs-6 col-sm-3" style="border-left: 2px solid #ADB2B5;">
+        {{ dash_tile(title="Read Times", number=2000, description="till 2017-09-02") }}
+    </div>
+
+    <!-- heat map with calender-->
+    <div class="col-xs-12 col-sm-12" style="border-top: 2px solid #ADB2B5;">5</div>
+    <!-- curve by year/month -->
+    <div class="col-xs-12 col-sm-12" style="border-top: 2px solid #ADB2B5;">6</div>
+</div>
 </body>
 </html>

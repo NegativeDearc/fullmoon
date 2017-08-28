@@ -69,10 +69,15 @@ def cxw_article_editor(uuid):
         db.session.query(Article).filter(Article.uuid == uuid).update({
             "title": request.form.get("title"),
             "content": request.form.get("ckeditor"),
-            "edit_date": datetime.now()
+            "edit_date": datetime.now(),
+            "tags": ",".join(request.form.getlist("tag[]"))
         })
         db.session.commit()
-        return redirect(url_for("cxw.cxw_article", uuid=uuid))
+
+        if article.status == "PUBLISHED":
+            return redirect(url_for("cxw.cxw_article", uuid=uuid))
+        else:
+            return redirect(url_for("main.main_edit"))
     return render_template("ArticleTemplateTheme_1.html", article=article, edit=True)
 
 

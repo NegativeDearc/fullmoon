@@ -80,12 +80,13 @@ var select_click = function(){
          type:"POST",
          data:{"uuid":uuid,"_method":"POST","demands":"1"},
          success:function (data) {
-             console.log(data);
+             // console.log(data);
              for (var i=0;i<data['list'].length;i++) {
                  var d = data['list'][i];
                  self.append('<option value="' + d + '">' + d + '</option>');
             }
-        }
+         },
+         async: false
     });
 };
 
@@ -111,6 +112,19 @@ var select_select = function(){
             $("#article-refresh").trigger("click");
         }
 })
+};
+
+var get_dashboard = function() {
+    rm_active();
+    var self = $(this);
+    $.ajax({
+        url: temp_5_url,
+        dataType: "html",
+        type: "GET",
+        success: function(data) {
+            $("#dashboard").find(".panel-body").html(data)
+        }
+    })
 };
 
 var get_article = function () {

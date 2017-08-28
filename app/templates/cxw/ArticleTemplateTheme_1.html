@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="{{ url_for('cxw.static',filename='bootstrap-paper.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('cxw.static',filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('cxw.static',filename='highlight.js/styles/monokai-sublime.css') }}">
+
     <script src="{{ url_for('cxw.static',filename='ckeditor/ckeditor.js') }}"></script>
     <script src="{{ url_for('cxw.static',filename='jquery.min.js') }}"></script>
     <script src="{{ url_for('cxw.static',filename='bootstrap.min.js') }}"></script>
     <script src="{{ url_for('scc.static',filename='scc-js.js') }}"></script>
+
     {%- if article %}
     <title>{{ article.title }}</title>
     {% else %}
@@ -61,6 +63,9 @@
 
     </style>
 {% if edit %}
+    <link rel="stylesheet" href="{{ url_for('main.static',filename='taggingJS-1.3.3/tag-basic-style.css') }}">
+    <script src="{{ url_for('main.static',filename='taggingJS-1.3.3/tagging.min.js') }}"></script>
+
     <script>
         $(window).load(function () {
             var img_upload_host = window.location.origin + "/editor/upload_image";
@@ -68,6 +73,14 @@
                 "height":"600px",
                 "filebrowserImageUploadUrl":img_upload_host
             });
+
+            var tag, $tagbox;
+            var tags = "{{ article.tags }}";
+
+            tag = $('#tags').tagging({"edit-on-delete": false});
+            $tagbox = tag[0];
+
+            $tagbox.tagging("add", tags.split(","));
         });
     </script>
 {% endif %}
@@ -197,6 +210,10 @@ $(document).ready(function () {
                 <div class="form-group">
                     <label for="title">修改标题</label>
                     <input type="text" value="{{ article.title }}" class="form-control" name="title" id="title">
+                </div>
+                <div class="form-group">
+                    <label for="tags">修改标签</label>
+                    <div type="text" id="tags" data-tags-input-name="tag"></div>
                 </div>
                 <div class="form-group">
                     <label for="ckeditor">修改正文</label>

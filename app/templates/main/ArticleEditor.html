@@ -32,6 +32,11 @@
             position: absolute;
             z-index: 99;
         }
+        table > tbody > tr > td, table > thead > tr > td {
+            vertical-align: middle!important;
+        }
+        select {font-size: 9px!important;}
+        #check_to_delete {z-index: 1045;}
     </style>
 </head>
 <body>
@@ -80,7 +85,7 @@
             <div id="sidebar" class="panel panel-default">
                 <div class="panel-heading"><a href="#" data-toggle="collapse"><i class="fa fa-angle-double-left"></i></a></div>
                 <ul class="nav nav-list">
-                    <li><a href="#"><i class="fa fa-dashboard"></i>&nbsp;仪表盘</a></li>
+                    <li role="presentation"><a href="#dashboard" data-toggle="tab" id="dashboard-tab"><i class="fa fa-dashboard"></i>&nbsp;仪表盘</a></li>
                     <li class="nav-header"><a href="#manage_article" data-toggle="collapse"><i class="fa fa-book"></i>&nbsp;图书馆<i class="fa fa-angle-down"></i></a></li>
                         <ul id="manage_article" class="nav nav-list collapse second-menu">
                             <li role="presentation"><a href="#new-article" data-toggle="tab"><i class="fa fa-plus-circle"></i>&nbsp;新增文章</a></li>
@@ -102,9 +107,14 @@
         </div>
         <div class="col-md-10">
             <div class="tab-content">
+                <!-- dashboard -->
+                <div class="tab-pane panel panel-info" id="dashboard">
+                    <div class="panel-heading">DashBoard</div>
+                    <div class="panel-body"></div>
+                </div>
                 <!--modal-->
                 <div class="modal fade" id="check_to_delete" tabindex="-1" role="dialog" aria-labelledby="modallabel" aria-hidden="true">
-                        <div class="modal-dialog modal-sm"><!--small modal-->
+                        <div class="modal-dialog modal-sm" id="check_to_delete"><!--small modal-->
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -163,7 +173,7 @@
                                         <tr>
                                             <td>文章状态</td>
                                             <td>
-                                                <select name="status" id="article_status">
+                                                <select name="status" id="article_status" class="form-control" style="width: 10%; text-align: center">
                                                     <option value="DRAFTED">草稿</option>
                                                     <option value="PUBLISHED">发布</option>
                                                 </select>
@@ -217,6 +227,7 @@
     var temp_1_url = "{{ url_for('main.main_temp_1') }}";
     var temp_3_url = "{{ url_for('main.main_temp_3') }}";
     var temp_4_url = "{{ url_for('main.main_temp_4') }}";
+    var temp_5_url = "{{ url_for('main.main_temp_5') }}";
 
     $(document).ready(function () {
         //tags input
@@ -316,6 +327,8 @@
             click: select_click,
             change: select_select
         });
+        //ajax for dashboard
+        $("#dashboard-tab").on("shown.bs.tab", get_dashboard);
         //ajax refresh the page after do changes with article
         $("#article-refresh").on('click', get_article);
         $("#article-tab").on("shown.bs.tab", get_article);

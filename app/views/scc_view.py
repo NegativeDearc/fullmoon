@@ -62,10 +62,15 @@ def article_editor(uuid):
         db.session.query(Article).filter(Article.uuid == uuid).update({
             "title": request.form.get("title"),
             "content": request.form.get("content"),
-            "edit_date": datetime.now()
+            "edit_date": datetime.now(),
+            "tags": ",".join(request.form.getlist("tag[]"))
         })
         db.session.commit()
-        return redirect(url_for("scc.scc_article", uuid=uuid))
+
+        if article_by_uuid.status == "PUBLISHED":
+            return redirect(url_for("scc.scc_article", uuid=uuid))
+        else:
+            return redirect(url_for("main.main_edit"))
     return render_template('ArticleTemplate.html', article_by_uuid=article_by_uuid, scripts=True)
 
 
