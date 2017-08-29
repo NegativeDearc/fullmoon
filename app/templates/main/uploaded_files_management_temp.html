@@ -16,8 +16,8 @@
             {% if r.content%}
                 <td>
                 {% for e in r.content %}
-                    <p><bold>文章编号:{{ e[0]|sanitize_html }}</bold></p>
-                    <p>所在字段:{{ e[1]|sanitize_html }}</p>
+                    <p><bold>文章编号:{{ e[0] }}</bold></p>
+                    <p>所在字段:{{ e[1] }}</p>
                     <hr>
                 {% endfor %}
                 </td>

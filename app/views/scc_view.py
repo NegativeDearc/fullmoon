@@ -12,6 +12,7 @@ def scc_root(page=1):
     recent_articles = Article.recent_articles(author='scc')
     recent_comments = Comment.recent_comments(author='scc')
     archive = Article.archive_statistic(author="scc")
+    tags = Article.tag_statistic(author="scc")
 
     if request.args.get("article", ""):
         # redirect to article URL if get the ?article=uuid
@@ -24,7 +25,8 @@ def scc_root(page=1):
                            pagination=pagination,
                            recent_articles=recent_articles,
                            recent_comments=recent_comments,
-                           archive=archive)
+                           archive=archive,
+                           tags=tags)
 
 
 @scc.route('/blog/article/<string:uuid>', methods=['GET', 'POST'])
@@ -78,3 +80,9 @@ def article_editor(uuid):
 def archive_all(date_filter):
     archive = Article.archive(date_filter=date_filter, author="scc")
     return render_template("AllArticle.html", archive=archive)
+
+
+@scc.route("/blog/tag/<string:tag_filter>")
+def tag_archive(tag_filter="all"):
+    published_article = Article.tag(tag_filter=tag_filter, author="scc")
+    return render_template("AllArticle.html", archive=published_article)

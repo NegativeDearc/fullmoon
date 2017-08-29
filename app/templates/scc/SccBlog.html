@@ -267,7 +267,9 @@
                 <aside id="categories">
                     <h3 class="widget-title">分类</h3>
                     <ul class="widget-list" id="sidebar-categories">
-                        <li class="widget-list-item"><a href="">1111</a></li>
+                        {% for k, v in tags.items() %}
+                            <li class="widget-list-item"><a href="{{ url_for("scc.tag_archive", tag_filter=k) }}" target="_blank">{{ k }}({{ v.nums }})</a></li>
+                        {% endfor %}
                     </ul>
                 </aside>
             </div>

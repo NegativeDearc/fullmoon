@@ -7,6 +7,7 @@ from sqlalchemy import event
 from database import db
 import uuid
 import base64
+import itertools
 from datetime import datetime
 from collections import OrderedDict
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -358,6 +359,55 @@ class Article(db.Model, ArticleBase):
         db.session.execute(sql4)
         rv = db.session.execute(sql5, params={"a": t}).fetchall()
         return rv
+
+    @classmethod
+    def dashboard(cls, author=None):
+        """
+        return dictionary data for dashboard in administrator panel
+        :param author: scc/cxw
+        :return: dict
+        """
+        dash = {}
+
+        total_published_article = db.session.query(func.count(Article.id)).\
+            filter(Article.author == author, Article.status == "PUBLISHED").one()
+        total_unpublished_article = db.session.query(func.count(Article.id)).\
+            filter(Article.author == author, Article.status != "PUBLISHED").one()
+        total_words = db.session.query(func.sum(func.length(Article.content))).\
+            filter(Article.author == author).one()
+        total_unpublished_words = db.session.query(func.sum(func.length(Article.content))).\
+            filter(Article.author == author, Article.status != "PUBLISHED").one()
+        last_article_date = db.session.query(Article.create_date).\
+            filter(Article.author == author, Article.status == "PUBLISHED").\
+            order_by(desc(Article.create_date)).first()
+        df1 = db.session.query(func.strftime("%Y/%m", Article.create_date),
+                               func.count(Article.id),
+                               func.sum(func.length(Article.content))).\
+            filter(Article.author == author, Article.status == "PUBLISHED").\
+            group_by(func.strftime("%Y/%m", Article.create_date)).all()
+
+        df2 = db.session.query(Article.tags).filter(Article.author == author, Article.status == "PUBLISHED").all()
+
+        df2_list = list(itertools.chain(*df2))
+        df2_list = [x.split(",") for x in df2_list if x is not None]
+        df2_list = list(itertools.chain(*df2_list))
+
+        unique_tag = list(set(df2_list))
+        tag_counts = [df2_list.count(x) for x in unique_tag]
+
+        dash.update({
+            "total_published_article": total_published_article[0],
+            "total_unpublished_article": total_unpublished_article[0],
+            "total_words": total_words[0],
+            "total_unpublished_words": total_unpublished_words[0],
+            "last_article": last_article_date[0].strftime("%Y-%m-%d"),
+            "df_1_month": map(lambda x: x[0], df1),
+            "df_1_counts": map(lambda x: x[1], df1),
+            "df_1_words": map(lambda x: x[2], df1),
+            "df_2_tags": unique_tag,
+            "df_2_tag_counts": tag_counts
+        })
+        return dash
 
 
 class CommentBase(object):

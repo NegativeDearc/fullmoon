@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
-
+<body id="dash_content">
 {% macro dash_tile(title="", icon="", number="", description="") %}
     <div class="title" style="font-size: 13px; font-weight: 400; color: #73879C">
         <i class={{ icon }}></i>
@@ -11,27 +10,114 @@
     <div class="description" style="font-size: 13px; font-weight: 400; color: #73879C">{{ description }}</div>
 {% endmacro %}
 
+{% set total_published_artilce =  dash["total_published_article"] %}
+{% set total_unpublished_article =  dash["total_unpublished_article"] %}
+{% set total_words =  dash["total_words"] %}
+{% set total_unpublished_words =  dash["total_unpublished_words"] %}
+{% set last_article_date =  dash["last_article"] %}
+
 <div class="row" style="padding: 3px;text-align: center;">
     <div class="col-xs-6 col-sm-3">
-        {{ dash_tile(title="Total Articles", icon="fa fa-table", number=2000, description="Till 2017-09-02") }}
+        {{ dash_tile(title="已发表文章总数", icon="fa fa-table", number=total_published_artilce, description="最近一篇在{0:>2}".format(last_article_date)) }}
     </div>
 
     <div class="col-xs-6 col-sm-3" style="border-left: 2px solid #ADB2B5;">
-        {{ dash_tile(title="Total Words", number=2000, description="Last Aritcle 2017-09-02") }}
+        {{ dash_tile(title="发表文字数", number=total_words, description="其中%s字未发表" % total_unpublished_words) }}
     </div>
 
     <div class="col-xs-6 col-sm-3" style="border-left: 2px solid #ADB2B5;">
-        {{ dash_tile(title="Total Comments", number=2000, description="till 2017-09-02") }}
+        {{ dash_tile(title="评论数", number="N/A", description="N/A") }}
     </div>
 
     <div class="col-xs-6 col-sm-3" style="border-left: 2px solid #ADB2B5;">
-        {{ dash_tile(title="Read Times", number=2000, description="till 2017-09-02") }}
+        {{ dash_tile(title="阅读次数", number="N/A", description="N/A") }}
     </div>
 
-    <!-- heat map with calender-->
-    <div class="col-xs-12 col-sm-12" style="border-top: 2px solid #ADB2B5;">5</div>
+    <!-- word cloud with calender-->
+    <div class="col-xs-6 col-sm-4" style="padding-top: 15px">
+        <canvas id="myChart2" width="" height="210"></canvas>
+    </div>
     <!-- curve by year/month -->
-    <div class="col-xs-12 col-sm-12" style="border-top: 2px solid #ADB2B5;">6</div>
+    <div class="col-xs-6 col-sm-8" style="padding-top: 15px">
+        <canvas id="myChart" width="" height="100"></canvas>
+    </div>
 </div>
+
+<script src="{{ url_for('main.static',filename='Chart.min.js') }}"></script>
+<script>
+    window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+
+    var df = {{ dash_d|safe }};
+    var data = {
+            labels : df["df_1_month"],
+            datasets : [
+                {
+                    backgroundColor: 'rgba(255, 99, 132, .5)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    type: "bar",
+                    label: "文章数量",
+                    yAxisID: "second-y-axis",
+                    data : df["df_1_counts"]
+                },
+                {
+                    backgroundColor: 'rgba(54, 162, 235, .5)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    type: "line",
+                    label: "文字数量",
+                    yAxisID: "first-y-axis",
+                    data : df["df_1_words"]
+                }
+            ]
+    };
+    var data2 = {
+        datasets: [{
+            data: df["df_2_tag_counts"],
+            backgroundColor: [window.chartColors.green, window.chartColors.red, window.chartColors.purple,
+                window.chartColors.grey,window.chartColors.orange,window.chartColors.yellow,window.chartColors.blue
+            ]
+        }],
+        labels: df["df_2_tags"]
+    };
+    //Get the context of the canvas element we want to select
+    var canvas = document.getElementById("myChart");
+    var canvas2 = document.getElementById("myChart2");
+
+    var ctx = canvas.getContext("2d");
+    var ctx2 = canvas2.getContext("2d");
+
+    var myNewChart2 = new Chart(ctx2, {
+        type: "doughnut",
+        data: data2,
+        options: {
+            legend :{
+                position: 'left'
+            }
+        }
+    });
+
+    var myNewChart = new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: {
+            scales :{
+                yAxes: [{
+                    id: "first-y-axis"
+                }, {
+                    id: "second-y-axis",
+                    position: "right"
+                }]
+            }
+        }
+    });
+
+</script>
 </body>
 </html>
