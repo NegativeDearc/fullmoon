@@ -42,7 +42,7 @@ class ArticleBase(object):
             html = render_template("mail_add_an_article.html", target=target)
             return {
                 "subject": subject,
-                "recipients": ["datingwithme@live.cn"],
+                "recipients": ["datingwithme@live.cn", "317970901@qq.com"],
                 "html": html
             }
 
@@ -96,6 +96,7 @@ class Article(db.Model, ArticleBase):
         status:status of article "PUBLISHED","DRAFTED","ARCHIVED","DELETED"
     }
     """
+    # todo:add foreign key relationships between 'Comment' and 'Article'
     __tablename__ = "Article"
     # use table configuration to constraint columns or table
     # not null != ''
@@ -545,10 +546,10 @@ class Comment(db.Model, CommentBase):
         return result
 
     @staticmethod
-    def approved_message():
-        # todo: filter user by article uuid
-        rv = db.session.query(Comment). \
-            filter(Comment.approved == False). \
+    def approved_message(usr=None):
+        # search the unapproved comment of the article filter by logined author
+        rv = db.session.query(Comment, Article). \
+            filter(Comment.approved == False, Article.uuid == Comment.uid, Article.author == usr). \
             order_by(desc(Comment.uid), desc(Comment.message_date)). \
             all()
         return rv
