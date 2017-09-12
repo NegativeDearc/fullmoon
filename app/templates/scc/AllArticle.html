@@ -26,6 +26,13 @@
             color:  #e7e7e7;
             background-color:#FF4949;
         }
+        .navbar-default .navbar-nav > li {
+            border-bottom: 3px solid transparent;
+        }
+        .navbar-default .navbar-nav > li:hover {
+            background: rgba(255, 185, 15, 0.4)!important;
+            border-bottom: 3px solid rgba(255, 0, 0, 1);
+        }
         .navbar-form > a {
             background-color: transparent;
             color: #ffffff;
@@ -125,7 +132,8 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1 archive col-xs-12">
             {% if archive %}
-                <h3>文章列表<span class="caret"></span></h3>
+                <!--todo:做一个类似Sphinx及RBookDown的功能-->
+                <h3>文章列表<span class="caret"></span>[阅读全部]</h3>
                 {% for ar in archive %}
                     <div style="border-bottom: 1px dashed #dadada;overflow: hidden">
                         <div style="float: left"><a href="{{ url_for("scc.scc_article", uuid=ar.uuid) }}" target="_blank">{{ ar.title }}</a></div>
