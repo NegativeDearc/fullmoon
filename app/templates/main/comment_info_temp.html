@@ -8,8 +8,8 @@
         <a name="comment-{{ element[0] }}" id="comment-{{ element[0] }}" style="display: none;"></a>
         <a href="#" class="pull-left"><img src="{{ element[3]|gravatar_url }}" alt="" class="media-object" width="25" height="25"></a>
         <div class="media-body">
-            <div class="media-heading">{{ element[4] }} at {{ element[-1][:16] }}</div>
-            <div class="media-content">{{ element[5] }}</div>
+            <div class="media-heading">{{ element[5] }} at {{ element[-1][:16] }}</div>
+            <div class="media-content">{{ element[4] }}</div>
         </div>
         <!--when pushed to reply, jQuery must get the reply_to_id otherwise it will reply to author directly-->
         <!--在父元素上设置overflow属性父元素设置overflow：auto；或overflow：hidden；来消除子元素float脱离文档流的问题注意：overflow属性并不是专门用来清除float的-->
